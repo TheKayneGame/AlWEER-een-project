@@ -1,12 +1,12 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2018-09-03T15:13:29
+# Project created by QtCreator 2018-09-03T19:51:58
 #
 #-------------------------------------------------
 
 QT       += core gui widgets
 
-TARGET = WeereenApplicatie
+TARGET = WeerProject
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -27,7 +27,7 @@ SOURCES += \
         mainwindow.cpp
 
 HEADERS += \
-        mainwindow.h
+    Mainwindow.h
 
 FORMS += \
         mainwindow.ui
