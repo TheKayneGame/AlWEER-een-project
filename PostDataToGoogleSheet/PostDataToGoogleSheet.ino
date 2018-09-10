@@ -6,15 +6,15 @@
 #include <ESP8266WiFi.h>
 #include "HTTPSRedirect.h"
 
-const char* ssid = "Netgear-berk";
-const char* password = "berk462993";
+const char* ssid = "AlWEER";
+const char* password = "12345678";
 
 // The ID below comes from Google Sheets.
 // Towards the bottom of this page, it will explain how this can be obtained
 const char *GScriptId = "AKfycbwSoArFpwKbgdzc_W7s-NYXGWeDZno51DX7_mxSTDB5j4ra1ihz";
 
 // Push data on this interval
-const int dataPostDelay = 60000;  // 15 minutes = 15 * 60 * 1000
+const int dataPostDelay = 58000;  // 15 minutes = 15 * 60 * 1000
 
 const char* host = "script.google.com";
 const char* googleRedirHost = "script.googleusercontent.com";
