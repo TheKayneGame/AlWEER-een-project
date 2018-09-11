@@ -1,12 +1,12 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2018-09-03T19:51:58
+# Project created by QtCreator 2018-09-10T15:00:51
 #
 #-------------------------------------------------
 
-QT       += core gui widgets charts
+QT       += core gui widgets
 
-TARGET = WeerProject
+TARGET = WeerEenProject
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -24,13 +24,13 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        weereenproject.cpp
 
 HEADERS += \
-    Mainwindow.h
+        weereenproject.h
 
 FORMS += \
-        mainwindow.ui
+        weereenproject.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
