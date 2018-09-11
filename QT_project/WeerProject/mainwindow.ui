@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>351</width>
-    <height>227</height>
+    <width>346</width>
+    <height>221</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,8 +23,20 @@
       <height>171</height>
      </rect>
     </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>160000</width>
+      <height>160000</height>
+     </size>
+    </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <property name="movable">
      <bool>true</bool>
@@ -163,6 +175,9 @@
      </widget>
     </widget>
     <widget class="QWidget" name="Graphs">
+     <property name="whatsThis">
+      <string/>
+     </property>
      <attribute name="title">
       <string>Graphs</string>
      </attribute>
@@ -174,7 +189,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>351</width>
+     <width>346</width>
      <height>21</height>
     </rect>
    </property>

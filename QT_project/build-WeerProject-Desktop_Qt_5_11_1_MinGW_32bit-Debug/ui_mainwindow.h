@@ -59,12 +59,18 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(351, 227);
+        MainWindow->resize(346, 221);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         tabWidget = new QTabWidget(centralWidget);
         tabWidget->setObjectName(QStringLiteral("tabWidget"));
         tabWidget->setGeometry(QRect(6, -1, 341, 171));
+        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(tabWidget->sizePolicy().hasHeightForWidth());
+        tabWidget->setSizePolicy(sizePolicy);
+        tabWidget->setMaximumSize(QSize(160000, 160000));
         tabWidget->setMovable(true);
         tabWidget->setTabBarAutoHide(false);
         General = new QWidget();
@@ -85,11 +91,11 @@ public:
 
         labelBrightness = new QLabel(gridLayoutWidget);
         labelBrightness->setObjectName(QStringLiteral("labelBrightness"));
-        QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(labelBrightness->sizePolicy().hasHeightForWidth());
-        labelBrightness->setSizePolicy(sizePolicy);
+        QSizePolicy sizePolicy1(QSizePolicy::Minimum, QSizePolicy::Minimum);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(labelBrightness->sizePolicy().hasHeightForWidth());
+        labelBrightness->setSizePolicy(sizePolicy1);
 
         gridLayout->addWidget(labelBrightness, 4, 0, 1, 1);
 
@@ -189,7 +195,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 351, 21));
+        menuBar->setGeometry(QRect(0, 0, 346, 21));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -200,7 +206,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -218,6 +224,9 @@ public:
         minOffset->setText(QApplication::translate("MainWindow", "offset -", nullptr));
         maxOffset->setText(QApplication::translate("MainWindow", "offset +", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(General), QApplication::translate("MainWindow", "General", nullptr));
+#ifndef QT_NO_WHATSTHIS
+        Graphs->setWhatsThis(QString());
+#endif // QT_NO_WHATSTHIS
         tabWidget->setTabText(tabWidget->indexOf(Graphs), QApplication::translate("MainWindow", "Graphs", nullptr));
     } // retranslateUi
 
