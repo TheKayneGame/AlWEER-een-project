@@ -18,7 +18,7 @@ void MainWindow::createChart()
 
     for (int i = 0; i < 4; i++)
         for (int k = 0; k < 64; k++)
-            values[i][k] = k * i;
+            values[i][k] = k * (i + 1);
 
     for (int i = 0; i < 4; i++)
         for (int k = 0; k < 64; k++)
@@ -36,5 +36,4 @@ void MainWindow::createChart()
     QGridLayout layout;
     layout.addWidget(chartView);
     this->ui->Graphs->setLayout(&layout);
-    this->ui->tabWidget->setCurrentIndex(this->ui->tabWidget->indexOf(this->ui->Graphs));
 }

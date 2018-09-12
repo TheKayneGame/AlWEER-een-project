@@ -27,6 +27,7 @@ public:
     QChart *chart;
     QChartView *chartView;
     void createChart();
+    void connectToDatabase();
 
 private:
     Ui::MainWindow *ui;

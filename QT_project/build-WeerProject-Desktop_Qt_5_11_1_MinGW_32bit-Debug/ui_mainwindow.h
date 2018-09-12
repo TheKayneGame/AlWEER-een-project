@@ -192,14 +192,21 @@ public:
         tabWidget->addTab(General, QString());
         Graphs = new QWidget();
         Graphs->setObjectName(QStringLiteral("Graphs"));
+        QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(Graphs->sizePolicy().hasHeightForWidth());
+        Graphs->setSizePolicy(sizePolicy2);
         widget = new QWidget(Graphs);
         widget->setObjectName(QStringLiteral("widget"));
-        widget->setGeometry(QRect(9, 9, 421, 271));
+        widget->setGeometry(QRect(9, 9, 751, 471));
+        sizePolicy2.setHeightForWidth(widget->sizePolicy().hasHeightForWidth());
+        widget->setSizePolicy(sizePolicy2);
         tabWidget->addTab(Graphs, QString());
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 815, 20));
+        menuBar->setGeometry(QRect(0, 0, 815, 21));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -210,7 +217,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
