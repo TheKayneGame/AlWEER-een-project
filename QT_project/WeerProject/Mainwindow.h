@@ -23,6 +23,7 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     QLineSeries *series[4];
+    QLineSeries *test;
     QChart *chart;
     QChartView *chartView;
     void createChart();

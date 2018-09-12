@@ -51,6 +51,7 @@ public:
     QLabel *minOffset;
     QLabel *maxOffset;
     QWidget *Graphs;
+    QWidget *widget;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -59,12 +60,12 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(346, 221);
+        MainWindow->resize(815, 578);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         tabWidget = new QTabWidget(centralWidget);
         tabWidget->setObjectName(QStringLiteral("tabWidget"));
-        tabWidget->setGeometry(QRect(6, -1, 341, 171));
+        tabWidget->setGeometry(QRect(20, 0, 781, 521));
         QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -77,7 +78,7 @@ public:
         General->setObjectName(QStringLiteral("General"));
         gridLayoutWidget = new QWidget(General);
         gridLayoutWidget->setObjectName(QStringLiteral("gridLayoutWidget"));
-        gridLayoutWidget->setGeometry(QRect(0, 0, 331, 141));
+        gridLayoutWidget->setGeometry(QRect(20, 20, 331, 141));
         gridLayout = new QGridLayout(gridLayoutWidget);
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
@@ -191,11 +192,14 @@ public:
         tabWidget->addTab(General, QString());
         Graphs = new QWidget();
         Graphs->setObjectName(QStringLiteral("Graphs"));
+        widget = new QWidget(Graphs);
+        widget->setObjectName(QStringLiteral("widget"));
+        widget->setGeometry(QRect(9, 9, 421, 271));
         tabWidget->addTab(Graphs, QString());
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 346, 21));
+        menuBar->setGeometry(QRect(0, 0, 815, 20));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -206,7 +210,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);

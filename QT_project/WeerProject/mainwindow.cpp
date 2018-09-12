@@ -18,8 +18,11 @@ void MainWindow::createChart()
 
     for (int i = 0; i < 4; i++)
         for (int k = 0; k < 64; k++)
-            series[i]->append(k, values[i][k]);
+            values[i][k] = k * i;
 
+    for (int i = 0; i < 4; i++)
+        for (int k = 0; k < 64; k++)
+            series[i]->append(k, values[i][k]);
 
     chart = new QChart();
     for (int i = 0; i < 4; i++)
@@ -27,11 +30,11 @@ void MainWindow::createChart()
     chart->createDefaultAxes();
     chart->setTitle("testthingy");
 
-    chartView = new QChartView();
+    chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
 
-    QTabWidget *tab = new QTabWidget();
-    tab->setTabText(2, "Graphs");
-    tab->addTab(chartView, "chart");
-    tab->setCurrentWidget(chartView);
+    QGridLayout layout;
+    layout.addWidget(chartView);
+    this->ui->Graphs->setLayout(&layout);
+    this->ui->tabWidget->setCurrentIndex(this->ui->tabWidget->indexOf(this->ui->Graphs));
 }
