@@ -1,0 +1,1 @@
+De versie die we nu gebruiken is "Wifi_SQL", maar als we nog terug willen kunnen we altijd nog naar de Google API versie
