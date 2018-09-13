@@ -4,16 +4,24 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
+/*
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("weer.db");
     db.setUserName("");
-    db.setPassword("");
+    db.setPassword("");*/
+
+    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
+    db.setHostName("www.sandervandenberk.nl");
+    db.setPort(3306);
+    db.setUserName("weer");
+    db.setPassword("admin");
+    db.setDatabaseName("alWeer");
+
     if(db.open()){
         QSqlQuery query;
 
         // avgtemp
-        query.prepare("SELECT avg(alWeer.Temperature) as avgtemp FROM alWeer;");
+        query.prepare("SELECT avg(Temp) as avgtemp FROM alWeer.weer;");
         if(query.exec()){
             int idName = query.record().indexOf("avgtemp");
             while(query.next()){
@@ -24,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         query.clear();
 
         // avghum
-        query.prepare("SELECT avg(alWeer.Humidity) as avghum FROM alWeer;");
+        query.prepare("SELECT avg(Humidity) as avghum FROM alWeer.weer;");
         if(query.exec()){
             int idName = query.record().indexOf("avghum");
             while(query.next()){
@@ -35,7 +43,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         query.clear();
 
         // avgbig
-        query.prepare("SELECT avg(alWeer.Bightness) as avgbig FROM alWeer;");
+        query.prepare("SELECT avg(Bightness) as avgbig FROM alWeer.weer;");
         if(query.exec()){
             int idName = query.record().indexOf("avgbig");
             while(query.next()){
@@ -46,7 +54,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         query.clear();
 
         // avgwin
-        query.prepare("SELECT avg(alWeer.Windsnelheid) as avgwin FROM alWeer;");
+        query.prepare("SELECT avg(Windsnelheid) as avgwin FROM alWeer.weer;");
         if(query.exec()){
             int idName = query.record().indexOf("avgwin");
             while(query.next()){
