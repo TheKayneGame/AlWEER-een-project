@@ -5,6 +5,14 @@
 #include "form.h"
 #include "graphwindow.h"
 
+// Toegevoegd voor de SQL code
+#include <QtSql/QSql>
+#include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlQuery>
+#include <QtSql/QSqlError>
+#include <QtSql/QSqlRecord>
+#include <QDebug>
+
 namespace Ui
 {
     class MainWindow;
