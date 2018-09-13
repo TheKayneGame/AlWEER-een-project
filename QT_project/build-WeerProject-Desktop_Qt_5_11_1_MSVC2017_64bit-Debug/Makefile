@@ -236,6 +236,7 @@ Makefile: ..\WeerProject\WeerProject.pro C:\Qt\5.11.1\msvc2017_64\mkspecs\win32-
 		C:\Qt\5.11.1\msvc2017_64\mkspecs\features\qt_config.prf \
 		C:\Qt\5.11.1\msvc2017_64\mkspecs\win32-msvc\qmake.conf \
 		C:\Qt\5.11.1\msvc2017_64\mkspecs\features\spec_post.prf \
+		.qmake.stash \
 		C:\Qt\5.11.1\msvc2017_64\mkspecs\features\exclusive_builds.prf \
 		C:\Qt\5.11.1\msvc2017_64\mkspecs\common\msvc-version.conf \
 		C:\Qt\5.11.1\msvc2017_64\mkspecs\features\toolchain.prf \
@@ -261,8 +262,10 @@ Makefile: ..\WeerProject\WeerProject.pro C:\Qt\5.11.1\msvc2017_64\mkspecs\win32-
 		C:\Qt\5.11.1\msvc2017_64\mkspecs\features\lex.prf \
 		..\WeerProject\WeerProject.pro \
 		C:\Qt\5.11.1\msvc2017_64\lib\qtmaind.prl \
+		C:\Qt\5.11.1\msvc2017_64\lib\Qt5Charts.prl \
 		C:\Qt\5.11.1\msvc2017_64\lib\Qt5Widgets.prl \
 		C:\Qt\5.11.1\msvc2017_64\lib\Qt5Gui.prl \
+		C:\Qt\5.11.1\msvc2017_64\lib\Qt5Sql.prl \
 		C:\Qt\5.11.1\msvc2017_64\lib\Qt5Core.prl
 	$(QMAKE) -o Makefile ..\WeerProject\WeerProject.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
 C:\Qt\5.11.1\msvc2017_64\mkspecs\features\spec_pre.prf:
@@ -426,6 +429,7 @@ C:\Qt\5.11.1\msvc2017_64\mkspecs\features\qt_functions.prf:
 C:\Qt\5.11.1\msvc2017_64\mkspecs\features\qt_config.prf:
 C:\Qt\5.11.1\msvc2017_64\mkspecs\win32-msvc\qmake.conf:
 C:\Qt\5.11.1\msvc2017_64\mkspecs\features\spec_post.prf:
+.qmake.stash:
 C:\Qt\5.11.1\msvc2017_64\mkspecs\features\exclusive_builds.prf:
 C:\Qt\5.11.1\msvc2017_64\mkspecs\common\msvc-version.conf:
 C:\Qt\5.11.1\msvc2017_64\mkspecs\features\toolchain.prf:
@@ -451,8 +455,10 @@ C:\Qt\5.11.1\msvc2017_64\mkspecs\features\yacc.prf:
 C:\Qt\5.11.1\msvc2017_64\mkspecs\features\lex.prf:
 ..\WeerProject\WeerProject.pro:
 C:\Qt\5.11.1\msvc2017_64\lib\qtmaind.prl:
+C:\Qt\5.11.1\msvc2017_64\lib\Qt5Charts.prl:
 C:\Qt\5.11.1\msvc2017_64\lib\Qt5Widgets.prl:
 C:\Qt\5.11.1\msvc2017_64\lib\Qt5Gui.prl:
+C:\Qt\5.11.1\msvc2017_64\lib\Qt5Sql.prl:
 C:\Qt\5.11.1\msvc2017_64\lib\Qt5Core.prl:
 qmake: FORCE
 	@$(QMAKE) -o Makefile ..\WeerProject\WeerProject.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"

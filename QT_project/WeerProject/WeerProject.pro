@@ -32,6 +32,7 @@ HEADERS += \
 FORMS += \
         mainwindow.ui
 
+INCLUDEPATH += C:\Users\hammi\OneDrive\Documenten\GitHub\curl-7.61.1-win64-mingw
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin

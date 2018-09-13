@@ -4,12 +4,16 @@
 #include <QSqlDatabase>
 #include <QDebug>
 
-#include <iomanip>
-#include <iostream>
-#include <fstream>
 #include <string>
-
-using namespace std;
+#include <sstream>
+#include <iostream>
+#include "curl-7.61.1-win64-mingw\include\curl\curl.h"
+#include "curl-7.61.1-win64-mingw\include\curl\easy.h"
+#include "curlpp-0.8.1\include\curlpp\cURLpp.hpp"
+#include "curlpp-0.8.1\include\curlpp\Options.hpp"
+#include "curlpp-0.8.1\include\curlpp\Easy.hpp"
+#include "curlpp-0.8.1\include\curlpp\Exception.hpp"
+#include "curlpp-0.8.1\include\curlpp\Infos.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -27,15 +31,6 @@ int main(int argc, char *argv[])
 
 //    }
 
-    ofstream outData;
-    string s;
-    cin >> s;
-
-    int n = 1;
-
-    outData.open("outfile.csv", ios::app);
-    outData << s << endl;
-    outData << n << endl;
 
     MainWindow w;
     w.createChart();
