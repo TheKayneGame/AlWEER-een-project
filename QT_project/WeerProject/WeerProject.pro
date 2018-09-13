@@ -25,15 +25,18 @@ CONFIG += c++
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    form.cpp
+    form.cpp \
+    graphwindow.cpp
 
 HEADERS += \
     Mainwindow.h \
-    form.h
+    form.h \
+    graphwindow.h
 
 FORMS += \
         mainwindow.ui \
-    form.ui
+    form.ui \
+    graphwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

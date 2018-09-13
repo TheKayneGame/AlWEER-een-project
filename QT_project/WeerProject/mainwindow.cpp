@@ -13,7 +13,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    form.show();
+    graph.createChart();
+    graph.setCentralWidget(graph.chartView);
+    graph.show();
+    graph.setWindowTitle("Graphs");
 }
 
 

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "form.h"
+#include "graphwindow.h"
 
 namespace Ui
 {
@@ -22,7 +23,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    Form form;
+    GraphWindow graph;
 };
 
 #endif // MAINWINDOW_H

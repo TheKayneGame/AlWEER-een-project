@@ -11,28 +11,43 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QDialog>
+#include <QtWidgets/QMainWindow>
+#include <QtWidgets/QMenuBar>
+#include <QtWidgets/QStatusBar>
+#include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
 
 class Ui_GraphWindow
 {
 public:
+    QMenuBar *menubar;
+    QWidget *centralwidget;
+    QStatusBar *statusbar;
 
-    void setupUi(QDialog *GraphWindow)
+    void setupUi(QMainWindow *GraphWindow)
     {
         if (GraphWindow->objectName().isEmpty())
             GraphWindow->setObjectName(QStringLiteral("GraphWindow"));
-        GraphWindow->resize(400, 300);
+        GraphWindow->resize(800, 600);
+        menubar = new QMenuBar(GraphWindow);
+        menubar->setObjectName(QStringLiteral("menubar"));
+        GraphWindow->setMenuBar(menubar);
+        centralwidget = new QWidget(GraphWindow);
+        centralwidget->setObjectName(QStringLiteral("centralwidget"));
+        GraphWindow->setCentralWidget(centralwidget);
+        statusbar = new QStatusBar(GraphWindow);
+        statusbar->setObjectName(QStringLiteral("statusbar"));
+        GraphWindow->setStatusBar(statusbar);
 
         retranslateUi(GraphWindow);
 
         QMetaObject::connectSlotsByName(GraphWindow);
     } // setupUi
 
-    void retranslateUi(QDialog *GraphWindow)
+    void retranslateUi(QMainWindow *GraphWindow)
     {
-        GraphWindow->setWindowTitle(QApplication::translate("GraphWindow", "Dialog", nullptr));
+        GraphWindow->setWindowTitle(QApplication::translate("GraphWindow", "MainWindow", nullptr));
     } // retranslateUi
 
 };
