@@ -13,40 +13,7 @@ void setup()
   Serial.begin(9600);   // open serial over USB at 9600 baud
 
   Wire.begin();
-  uint8_t ID_1;
-
-  // Check device ID
-  Wire.beginTransmission(ADDRESS);
-  Wire.write(0xFC);
-  Wire.write(0xC9);
-  Wire.endTransmission();
-
-  Wire.requestFrom(ADDRESS, 1);
-  uint8_t ID_Temp_Hum = Wire.read();;
-
-  int x = 0;
-
-  if (ID_Temp_Hum == 0x15) //Ping CheckID register
-    x = 1;
-  else if (ID_Temp_Hum == 0x32)
-    x = 2;
-  else
-    x = 0;
-
-  if (x == 1)
-  {
-    Serial.println("Si7021 Found");
-    //Serial.println(ID_Temp_Hum, HEX);
-  }
-  else if (x == 2)
-  {
-    Serial.println("HTU21D Found");
-    //Serial.println(ID_Temp_Hum, HEX);
-  }
-  else
-    Serial.println("No Devices Detected");
-  //Serial.println(ID_Temp_Hum, HEX);
-
+  
 }
 //---------------------------------------------------------------
 void loop()
