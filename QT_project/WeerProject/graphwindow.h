@@ -30,7 +30,7 @@ public:
 
 private:
     Ui::GraphWindow *ui;
-    double values[4][64];
+    double values[4][61];
     enum valueType {temperature = 0, humidity, brightness,  windspeed};
 };
 

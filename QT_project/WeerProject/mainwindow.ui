@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>351</width>
-    <height>246</height>
+    <width>350</width>
+    <height>248</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -93,7 +93,11 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="minTemperatureText"/>
+      <widget class="QLineEdit" name="minTemperatureText">
+       <property name="text">
+        <string>WIP</string>
+       </property>
+      </widget>
      </item>
      <item row="0" column="2">
       <widget class="QLabel" name="label">
@@ -103,25 +107,53 @@
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="minHumidityText"/>
+      <widget class="QLineEdit" name="minHumidityText">
+       <property name="text">
+        <string>WIP</string>
+       </property>
+      </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QLineEdit" name="minWindspeedText"/>
+      <widget class="QLineEdit" name="minWindspeedText">
+       <property name="text">
+        <string>WIP</string>
+       </property>
+      </widget>
      </item>
      <item row="4" column="1">
-      <widget class="QLineEdit" name="minBrightnessText"/>
+      <widget class="QLineEdit" name="minBrightnessText">
+       <property name="text">
+        <string>WIP</string>
+       </property>
+      </widget>
      </item>
      <item row="1" column="3">
-      <widget class="QLineEdit" name="maxTemperatureText"/>
+      <widget class="QLineEdit" name="maxTemperatureText">
+       <property name="text">
+        <string>WIP</string>
+       </property>
+      </widget>
      </item>
      <item row="2" column="3">
-      <widget class="QLineEdit" name="maxHumidityText"/>
+      <widget class="QLineEdit" name="maxHumidityText">
+       <property name="text">
+        <string>WIP</string>
+       </property>
+      </widget>
      </item>
      <item row="3" column="3">
-      <widget class="QLineEdit" name="maxWinspeedText"/>
+      <widget class="QLineEdit" name="maxWinspeedText">
+       <property name="text">
+        <string>WIP</string>
+       </property>
+      </widget>
      </item>
      <item row="4" column="3">
-      <widget class="QLineEdit" name="maxBrightnessText"/>
+      <widget class="QLineEdit" name="maxBrightnessText">
+       <property name="text">
+        <string>WIP</string>
+       </property>
+      </widget>
      </item>
      <item row="0" column="1">
       <widget class="QLabel" name="minOffset">
@@ -162,7 +194,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Import data</string>
+     <string>Import WIP</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_3">
@@ -175,7 +207,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Import data</string>
+     <string>Save WIP</string>
     </property>
    </widget>
   </widget>
@@ -184,8 +216,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>351</width>
-     <height>21</height>
+     <width>350</width>
+     <height>20</height>
     </rect>
    </property>
   </widget>

@@ -59,7 +59,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(351, 246);
+        MainWindow->resize(350, 248);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayoutWidget = new QWidget(centralWidget);
@@ -187,7 +187,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 351, 21));
+        menuBar->setGeometry(QRect(0, 0, 350, 20));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -209,12 +209,20 @@ public:
         labelHumidity->setText(QApplication::translate("MainWindow", "Humidity", nullptr));
         labelWindspeed->setText(QApplication::translate("MainWindow", "Windspeed", nullptr));
         showTemperature->setInputMask(QString());
+        minTemperatureText->setText(QApplication::translate("MainWindow", "WIP", nullptr));
         label->setText(QApplication::translate("MainWindow", "Direct", nullptr));
+        minHumidityText->setText(QApplication::translate("MainWindow", "WIP", nullptr));
+        minWindspeedText->setText(QApplication::translate("MainWindow", "WIP", nullptr));
+        minBrightnessText->setText(QApplication::translate("MainWindow", "WIP", nullptr));
+        maxTemperatureText->setText(QApplication::translate("MainWindow", "WIP", nullptr));
+        maxHumidityText->setText(QApplication::translate("MainWindow", "WIP", nullptr));
+        maxWinspeedText->setText(QApplication::translate("MainWindow", "WIP", nullptr));
+        maxBrightnessText->setText(QApplication::translate("MainWindow", "WIP", nullptr));
         minOffset->setText(QApplication::translate("MainWindow", "offset -", nullptr));
         maxOffset->setText(QApplication::translate("MainWindow", "offset +", nullptr));
         pushButton->setText(QApplication::translate("MainWindow", "Show Graphs", nullptr));
-        pushButton_2->setText(QApplication::translate("MainWindow", "Import data", nullptr));
-        pushButton_3->setText(QApplication::translate("MainWindow", "Import data", nullptr));
+        pushButton_2->setText(QApplication::translate("MainWindow", "Import WIP", nullptr));
+        pushButton_3->setText(QApplication::translate("MainWindow", "Save WIP", nullptr));
     } // retranslateUi
 
 };
