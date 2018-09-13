@@ -2,13 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QtWidgets/QApplication>
-#include <QtWidgets/QMainWindow>
-#include <QtCharts/QChartView>
-#include <QtCharts/QLineSeries>
-#include <QTabWidget>
-
-QT_CHARTS_USE_NAMESPACE
+#include "form.h"
 
 namespace Ui
 {
@@ -22,17 +16,13 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    QLineSeries *series[4];
-    QLineSeries *test;
-    QChart *chart;
-    QChartView *chartView;
-    void createChart();
-    void connectToDatabase();
+
+private slots:
+    void on_pushButton_clicked();
 
 private:
     Ui::MainWindow *ui;
-    double values[4][64];
-    enum valueType {temperature = 0, humidity, brightness,  windspeed};
+    Form form;
 };
 
 #endif // MAINWINDOW_H
