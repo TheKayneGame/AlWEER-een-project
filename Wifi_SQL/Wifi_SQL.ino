@@ -6,8 +6,8 @@
 #include <WiFiClient.h>
 
 // Netwerk stuff
-char ssid[] = "RINKE-LENOVO";                 // Network Name
-char pass[] = "12345678";                 // Network Password
+char ssid[] = "Netgear-berk";                 // Network Name
+char pass[] = "berk462993";                 // Network Password
 byte mac[6];
 
 // De server opzetten voor het sturen van de MySQL insert
@@ -83,10 +83,10 @@ void loop() {
 
   // Data binnnen krijgen
   
-  int Bightness = random(799, 1222);
-  int Humidity = random(658, 1101);
-  int Windsnelheid = random(254, 854);
-  int Temp = random(985, 1347);
+  int Bightness = random(15, 35);
+  int Humidity = random(25, 45);
+  int Windsnelheid = random(35, 55);
+  int Temp = random(45, 65);
 
 
   // Het wachten van de micro controller
