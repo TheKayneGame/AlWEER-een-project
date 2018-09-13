@@ -2,13 +2,16 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QtWidgets/QApplication>
-#include <QtWidgets/QMainWindow>
-#include <QtCharts/QChartView>
-#include <QtCharts/QLineSeries>
-#include <QTabWidget>
+#include "form.h"
+#include "graphwindow.h"
 
-QT_CHARTS_USE_NAMESPACE
+// Toegevoegd voor de SQL code
+#include <QtSql/QSql>
+#include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlQuery>
+#include <QtSql/QSqlError>
+#include <QtSql/QSqlRecord>
+#include <QDebug>
 
 namespace Ui
 {
@@ -22,17 +25,13 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    QLineSeries *series[4];
-    QLineSeries *test;
-    QChart *chart;
-    QChartView *chartView;
-    void createChart();
-    void connectToDatabase();
+
+private slots:
+    void on_pushButton_clicked();
 
 private:
     Ui::MainWindow *ui;
-    double values[4][64];
-    enum valueType {temperature = 0, humidity, brightness,  windspeed};
+    GraphWindow graph;
 };
 
 #endif // MAINWINDOW_H

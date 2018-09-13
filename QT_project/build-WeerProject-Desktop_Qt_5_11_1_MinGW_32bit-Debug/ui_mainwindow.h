@@ -16,8 +16,8 @@
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
-#include <QtWidgets/QTabWidget>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 
@@ -27,8 +27,6 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralWidget;
-    QTabWidget *tabWidget;
-    QWidget *General;
     QWidget *gridLayoutWidget;
     QGridLayout *gridLayout;
     QLabel *labelTemperature;
@@ -50,8 +48,9 @@ public:
     QLineEdit *maxBrightnessText;
     QLabel *minOffset;
     QLabel *maxOffset;
-    QWidget *Graphs;
-    QWidget *widget;
+    QPushButton *pushButton;
+    QPushButton *pushButton_2;
+    QPushButton *pushButton_3;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -60,25 +59,12 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(815, 578);
+        MainWindow->resize(351, 246);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        tabWidget = new QTabWidget(centralWidget);
-        tabWidget->setObjectName(QStringLiteral("tabWidget"));
-        tabWidget->setGeometry(QRect(20, 0, 781, 521));
-        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(tabWidget->sizePolicy().hasHeightForWidth());
-        tabWidget->setSizePolicy(sizePolicy);
-        tabWidget->setMaximumSize(QSize(160000, 160000));
-        tabWidget->setMovable(true);
-        tabWidget->setTabBarAutoHide(false);
-        General = new QWidget();
-        General->setObjectName(QStringLiteral("General"));
-        gridLayoutWidget = new QWidget(General);
+        gridLayoutWidget = new QWidget(centralWidget);
         gridLayoutWidget->setObjectName(QStringLiteral("gridLayoutWidget"));
-        gridLayoutWidget->setGeometry(QRect(20, 20, 331, 141));
+        gridLayoutWidget->setGeometry(QRect(10, 10, 331, 141));
         gridLayout = new QGridLayout(gridLayoutWidget);
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
@@ -92,11 +78,11 @@ public:
 
         labelBrightness = new QLabel(gridLayoutWidget);
         labelBrightness->setObjectName(QStringLiteral("labelBrightness"));
-        QSizePolicy sizePolicy1(QSizePolicy::Minimum, QSizePolicy::Minimum);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(labelBrightness->sizePolicy().hasHeightForWidth());
-        labelBrightness->setSizePolicy(sizePolicy1);
+        QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(labelBrightness->sizePolicy().hasHeightForWidth());
+        labelBrightness->setSizePolicy(sizePolicy);
 
         gridLayout->addWidget(labelBrightness, 4, 0, 1, 1);
 
@@ -189,24 +175,19 @@ public:
 
         gridLayout->addWidget(maxOffset, 0, 3, 1, 1);
 
-        tabWidget->addTab(General, QString());
-        Graphs = new QWidget();
-        Graphs->setObjectName(QStringLiteral("Graphs"));
-        QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Preferred);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(Graphs->sizePolicy().hasHeightForWidth());
-        Graphs->setSizePolicy(sizePolicy2);
-        widget = new QWidget(Graphs);
-        widget->setObjectName(QStringLiteral("widget"));
-        widget->setGeometry(QRect(9, 9, 751, 471));
-        sizePolicy2.setHeightForWidth(widget->sizePolicy().hasHeightForWidth());
-        widget->setSizePolicy(sizePolicy2);
-        tabWidget->addTab(Graphs, QString());
+        pushButton = new QPushButton(centralWidget);
+        pushButton->setObjectName(QStringLiteral("pushButton"));
+        pushButton->setGeometry(QRect(10, 160, 75, 23));
+        pushButton_2 = new QPushButton(centralWidget);
+        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
+        pushButton_2->setGeometry(QRect(90, 160, 75, 23));
+        pushButton_3 = new QPushButton(centralWidget);
+        pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
+        pushButton_3->setGeometry(QRect(170, 160, 75, 23));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 815, 21));
+        menuBar->setGeometry(QRect(0, 0, 351, 21));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -216,9 +197,6 @@ public:
         MainWindow->setStatusBar(statusBar);
 
         retranslateUi(MainWindow);
-
-        tabWidget->setCurrentIndex(1);
-
 
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
@@ -234,11 +212,9 @@ public:
         label->setText(QApplication::translate("MainWindow", "Direct", nullptr));
         minOffset->setText(QApplication::translate("MainWindow", "offset -", nullptr));
         maxOffset->setText(QApplication::translate("MainWindow", "offset +", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(General), QApplication::translate("MainWindow", "General", nullptr));
-#ifndef QT_NO_WHATSTHIS
-        Graphs->setWhatsThis(QString());
-#endif // QT_NO_WHATSTHIS
-        tabWidget->setTabText(tabWidget->indexOf(Graphs), QApplication::translate("MainWindow", "Graphs", nullptr));
+        pushButton->setText(QApplication::translate("MainWindow", "Show Graphs", nullptr));
+        pushButton_2->setText(QApplication::translate("MainWindow", "Import data", nullptr));
+        pushButton_3->setText(QApplication::translate("MainWindow", "Import data", nullptr));
     } // retranslateUi
 
 };

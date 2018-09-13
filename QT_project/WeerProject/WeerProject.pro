@@ -24,15 +24,20 @@ CONFIG += c++
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    form.cpp \
+    graphwindow.cpp
 
 HEADERS += \
-    Mainwindow.h
+    Mainwindow.h \
+    form.h \
+    graphwindow.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    form.ui \
+    graphwindow.ui
 
-INCLUDEPATH += C:\Users\hammi\OneDrive\Documenten\GitHub\curl-7.61.1-win64-mingw
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin

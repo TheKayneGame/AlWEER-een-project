@@ -11,13 +11,9 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QGridLayout>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QStatusBar>
-#include <QtWidgets/QTabWidget>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 
@@ -26,199 +22,30 @@ QT_BEGIN_NAMESPACE
 class Ui_MainWindow
 {
 public:
-    QWidget *centralWidget;
-    QTabWidget *tabWidget;
-    QWidget *General;
-    QWidget *gridLayoutWidget;
-    QGridLayout *gridLayout;
-    QLabel *labelTemperature;
-    QLabel *labelBrightness;
-    QLabel *labelHumidity;
-    QLabel *labelWindspeed;
-    QLineEdit *showTemperature;
-    QLineEdit *showBrightness;
-    QLineEdit *showWindspeed;
-    QLineEdit *showHumidity;
-    QLineEdit *minTemperatureText;
-    QLabel *label;
-    QLineEdit *minHumidityText;
-    QLineEdit *minWindspeedText;
-    QLineEdit *minBrightnessText;
-    QLineEdit *maxTemperatureText;
-    QLineEdit *maxHumidityText;
-    QLineEdit *maxWinspeedText;
-    QLineEdit *maxBrightnessText;
-    QLabel *minOffset;
-    QLabel *maxOffset;
-    QWidget *Graphs;
-    QWidget *widget;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
+    QWidget *centralWidget;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(815, 578);
-        centralWidget = new QWidget(MainWindow);
-        centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        tabWidget = new QTabWidget(centralWidget);
-        tabWidget->setObjectName(QStringLiteral("tabWidget"));
-        tabWidget->setGeometry(QRect(20, 0, 781, 521));
-        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(tabWidget->sizePolicy().hasHeightForWidth());
-        tabWidget->setSizePolicy(sizePolicy);
-        tabWidget->setMaximumSize(QSize(160000, 160000));
-        tabWidget->setMovable(true);
-        tabWidget->setTabBarAutoHide(false);
-        General = new QWidget();
-        General->setObjectName(QStringLiteral("General"));
-        gridLayoutWidget = new QWidget(General);
-        gridLayoutWidget->setObjectName(QStringLiteral("gridLayoutWidget"));
-        gridLayoutWidget->setGeometry(QRect(20, 20, 331, 141));
-        gridLayout = new QGridLayout(gridLayoutWidget);
-        gridLayout->setSpacing(6);
-        gridLayout->setContentsMargins(11, 11, 11, 11);
-        gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        gridLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);
-        gridLayout->setContentsMargins(0, 0, 0, 0);
-        labelTemperature = new QLabel(gridLayoutWidget);
-        labelTemperature->setObjectName(QStringLiteral("labelTemperature"));
-
-        gridLayout->addWidget(labelTemperature, 1, 0, 1, 1);
-
-        labelBrightness = new QLabel(gridLayoutWidget);
-        labelBrightness->setObjectName(QStringLiteral("labelBrightness"));
-        QSizePolicy sizePolicy1(QSizePolicy::Minimum, QSizePolicy::Minimum);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(labelBrightness->sizePolicy().hasHeightForWidth());
-        labelBrightness->setSizePolicy(sizePolicy1);
-
-        gridLayout->addWidget(labelBrightness, 4, 0, 1, 1);
-
-        labelHumidity = new QLabel(gridLayoutWidget);
-        labelHumidity->setObjectName(QStringLiteral("labelHumidity"));
-
-        gridLayout->addWidget(labelHumidity, 2, 0, 1, 1);
-
-        labelWindspeed = new QLabel(gridLayoutWidget);
-        labelWindspeed->setObjectName(QStringLiteral("labelWindspeed"));
-
-        gridLayout->addWidget(labelWindspeed, 3, 0, 1, 1);
-
-        showTemperature = new QLineEdit(gridLayoutWidget);
-        showTemperature->setObjectName(QStringLiteral("showTemperature"));
-        showTemperature->setReadOnly(true);
-
-        gridLayout->addWidget(showTemperature, 1, 2, 1, 1);
-
-        showBrightness = new QLineEdit(gridLayoutWidget);
-        showBrightness->setObjectName(QStringLiteral("showBrightness"));
-        showBrightness->setReadOnly(true);
-
-        gridLayout->addWidget(showBrightness, 4, 2, 1, 1);
-
-        showWindspeed = new QLineEdit(gridLayoutWidget);
-        showWindspeed->setObjectName(QStringLiteral("showWindspeed"));
-        showWindspeed->setReadOnly(true);
-
-        gridLayout->addWidget(showWindspeed, 3, 2, 1, 1);
-
-        showHumidity = new QLineEdit(gridLayoutWidget);
-        showHumidity->setObjectName(QStringLiteral("showHumidity"));
-        showHumidity->setReadOnly(true);
-
-        gridLayout->addWidget(showHumidity, 2, 2, 1, 1);
-
-        minTemperatureText = new QLineEdit(gridLayoutWidget);
-        minTemperatureText->setObjectName(QStringLiteral("minTemperatureText"));
-
-        gridLayout->addWidget(minTemperatureText, 1, 1, 1, 1);
-
-        label = new QLabel(gridLayoutWidget);
-        label->setObjectName(QStringLiteral("label"));
-
-        gridLayout->addWidget(label, 0, 2, 1, 1);
-
-        minHumidityText = new QLineEdit(gridLayoutWidget);
-        minHumidityText->setObjectName(QStringLiteral("minHumidityText"));
-
-        gridLayout->addWidget(minHumidityText, 2, 1, 1, 1);
-
-        minWindspeedText = new QLineEdit(gridLayoutWidget);
-        minWindspeedText->setObjectName(QStringLiteral("minWindspeedText"));
-
-        gridLayout->addWidget(minWindspeedText, 3, 1, 1, 1);
-
-        minBrightnessText = new QLineEdit(gridLayoutWidget);
-        minBrightnessText->setObjectName(QStringLiteral("minBrightnessText"));
-
-        gridLayout->addWidget(minBrightnessText, 4, 1, 1, 1);
-
-        maxTemperatureText = new QLineEdit(gridLayoutWidget);
-        maxTemperatureText->setObjectName(QStringLiteral("maxTemperatureText"));
-
-        gridLayout->addWidget(maxTemperatureText, 1, 3, 1, 1);
-
-        maxHumidityText = new QLineEdit(gridLayoutWidget);
-        maxHumidityText->setObjectName(QStringLiteral("maxHumidityText"));
-
-        gridLayout->addWidget(maxHumidityText, 2, 3, 1, 1);
-
-        maxWinspeedText = new QLineEdit(gridLayoutWidget);
-        maxWinspeedText->setObjectName(QStringLiteral("maxWinspeedText"));
-
-        gridLayout->addWidget(maxWinspeedText, 3, 3, 1, 1);
-
-        maxBrightnessText = new QLineEdit(gridLayoutWidget);
-        maxBrightnessText->setObjectName(QStringLiteral("maxBrightnessText"));
-
-        gridLayout->addWidget(maxBrightnessText, 4, 3, 1, 1);
-
-        minOffset = new QLabel(gridLayoutWidget);
-        minOffset->setObjectName(QStringLiteral("minOffset"));
-
-        gridLayout->addWidget(minOffset, 0, 1, 1, 1);
-
-        maxOffset = new QLabel(gridLayoutWidget);
-        maxOffset->setObjectName(QStringLiteral("maxOffset"));
-
-        gridLayout->addWidget(maxOffset, 0, 3, 1, 1);
-
-        tabWidget->addTab(General, QString());
-        Graphs = new QWidget();
-        Graphs->setObjectName(QStringLiteral("Graphs"));
-        QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Preferred);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(Graphs->sizePolicy().hasHeightForWidth());
-        Graphs->setSizePolicy(sizePolicy2);
-        widget = new QWidget(Graphs);
-        widget->setObjectName(QStringLiteral("widget"));
-        widget->setGeometry(QRect(9, 9, 751, 471));
-        sizePolicy2.setHeightForWidth(widget->sizePolicy().hasHeightForWidth());
-        widget->setSizePolicy(sizePolicy2);
-        tabWidget->addTab(Graphs, QString());
-        MainWindow->setCentralWidget(centralWidget);
+        MainWindow->resize(400, 300);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 815, 21));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
-        MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
+        MainWindow->addToolBar(mainToolBar);
+        centralWidget = new QWidget(MainWindow);
+        centralWidget->setObjectName(QStringLiteral("centralWidget"));
+        MainWindow->setCentralWidget(centralWidget);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QStringLiteral("statusBar"));
         MainWindow->setStatusBar(statusBar);
 
         retranslateUi(MainWindow);
-
-        tabWidget->setCurrentIndex(1);
-
 
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
@@ -226,19 +53,6 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
-        labelTemperature->setText(QApplication::translate("MainWindow", "Temperature", nullptr));
-        labelBrightness->setText(QApplication::translate("MainWindow", "Brightness", nullptr));
-        labelHumidity->setText(QApplication::translate("MainWindow", "Humidity", nullptr));
-        labelWindspeed->setText(QApplication::translate("MainWindow", "Windspeed", nullptr));
-        showTemperature->setInputMask(QString());
-        label->setText(QApplication::translate("MainWindow", "Direct", nullptr));
-        minOffset->setText(QApplication::translate("MainWindow", "offset -", nullptr));
-        maxOffset->setText(QApplication::translate("MainWindow", "offset +", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(General), QApplication::translate("MainWindow", "General", nullptr));
-#ifndef QT_NO_WHATSTHIS
-        Graphs->setWhatsThis(QString());
-#endif // QT_NO_WHATSTHIS
-        tabWidget->setTabText(tabWidget->indexOf(Graphs), QApplication::translate("MainWindow", "Graphs", nullptr));
     } // retranslateUi
 
 };
