@@ -50,6 +50,8 @@
 #include "main.h"
 #include "stm32f0xx_hal.h"
 #include "cmsis_os.h"
+#include "si7021.h"
+#include "ssd1306.h"
 
 /* USER CODE BEGIN Includes */
 
@@ -465,6 +467,13 @@ void StartDefaultTask(void const * argument)
 
   /* USER CODE BEGIN 5 */
 	/* Infinite loop */
+	float result;
+	float humidity;
+	float tempf;
+	char lcd_buf[25];
+	char ldr[25];
+	uint32_t adcResult = 0;
+
 	for (;;) {
 		uint16_t RH_Code = makeMeasurment(HUMD_MEASURE_NOHOLD);
 		result = (125.0 * RH_Code / 65536) - 6;
@@ -479,7 +488,16 @@ void StartDefaultTask(void const * argument)
 		ssd1306_SetCursor(0, 10);	//set cursor position x=0, y=0
 		ssd1306_WriteString(lcd_buf, Font_7x10, White);
 		ssd1306_UpdateScreen();
-		osDelay(1000);
+		osDelay(0);
+
+		HAL_ADC_Start(&hadc);
+		HAL_ADC_PollForConversion(&hadc, 100);
+		adcResult = HAL_ADC_GetValue(&hadc);
+		HAL_ADC_Stop(&hadc);
+
+		ssd1306_SetCursor(0, 20);	//set cursor position x=0, y=0
+		ssd1306_WriteString(itoa(adcResult,ldr,10), Font_7x10, White);
+		ssd1306_UpdateScreen();
 	}
 
   /* USER CODE END 5 */ 
