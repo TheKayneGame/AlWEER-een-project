@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui widgets charts sql
+QT       += core gui widgets charts sql networkauth network
 
 TARGET = WeerProject
 TEMPLATE = app

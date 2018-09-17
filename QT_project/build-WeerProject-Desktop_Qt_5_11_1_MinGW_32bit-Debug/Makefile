@@ -245,6 +245,8 @@ Makefile: ../WeerProject/WeerProject.pro C:/Qt/5.11.1/mingw53_32/mkspecs/win32-g
 		C:/Qt/5.11.1/mingw53_32/lib/Qt5Widgets.prl \
 		C:/Qt/5.11.1/mingw53_32/lib/Qt5Gui.prl \
 		C:/Qt/5.11.1/mingw53_32/lib/Qt5Sql.prl \
+		C:/Qt/5.11.1/mingw53_32/lib/Qt5NetworkAuth.prl \
+		C:/Qt/5.11.1/mingw53_32/lib/Qt5Network.prl \
 		C:/Qt/5.11.1/mingw53_32/lib/Qt5Core.prl
 	$(QMAKE) -o Makefile ..\WeerProject\WeerProject.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug"
 C:/Qt/5.11.1/mingw53_32/mkspecs/features/spec_pre.prf:
@@ -431,6 +433,8 @@ C:/Qt/5.11.1/mingw53_32/lib/Qt5Charts.prl:
 C:/Qt/5.11.1/mingw53_32/lib/Qt5Widgets.prl:
 C:/Qt/5.11.1/mingw53_32/lib/Qt5Gui.prl:
 C:/Qt/5.11.1/mingw53_32/lib/Qt5Sql.prl:
+C:/Qt/5.11.1/mingw53_32/lib/Qt5NetworkAuth.prl:
+C:/Qt/5.11.1/mingw53_32/lib/Qt5Network.prl:
 C:/Qt/5.11.1/mingw53_32/lib/Qt5Core.prl:
 qmake: FORCE
 	@$(QMAKE) -o Makefile ..\WeerProject\WeerProject.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug"
