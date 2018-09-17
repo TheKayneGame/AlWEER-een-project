@@ -472,9 +472,12 @@ void StartDefaultTask(void const * argument)
 	float tempf;
 	char lcd_buf[25];
 	char ldr[25];
+	char ldr2[25];
 	uint32_t adcResult = 0;
 
 	for (;;) {
+
+		ssd1306_Fill(Black);
 		uint16_t RH_Code = makeMeasurment(HUMD_MEASURE_NOHOLD);
 		result = (125.0 * RH_Code / 65536) - 6;
 		humidity = result;
@@ -482,21 +485,32 @@ void StartDefaultTask(void const * argument)
 		result = ((175.72 * temp_Code) / 65536) - 46.85;
 		tempf = result;
 		itoa((int)(tempf * 10),lcd_buf,10);
+		lcd_buf[3] = lcd_buf[2];
+		lcd_buf[2] = ',';
 		ssd1306_SetCursor(0, 0);	//set cursor position x=0, y=0
 		ssd1306_WriteString(lcd_buf, Font_7x10, White);
 		itoa((int)(humidity * 10),lcd_buf,10);
+		lcd_buf[3] = lcd_buf[2];
+		lcd_buf[2] = ',';
 		ssd1306_SetCursor(0, 10);	//set cursor position x=0, y=0
 		ssd1306_WriteString(lcd_buf, Font_7x10, White);
-		ssd1306_UpdateScreen();
 		osDelay(0);
 
 		HAL_ADC_Start(&hadc);
 		HAL_ADC_PollForConversion(&hadc, 100);
+
+			adcResult = 0;
+
 		adcResult = HAL_ADC_GetValue(&hadc);
 		HAL_ADC_Stop(&hadc);
-
+		itoa(adcResult,ldr2,10);
 		ssd1306_SetCursor(0, 20);	//set cursor position x=0, y=0
-		ssd1306_WriteString(itoa(adcResult,ldr,10), Font_7x10, White);
+		if(adcResult > 800)strcpy(ldr,"Ah My EyEs") ;
+		if(adcResult < 800 && adcResult > 100)strcpy(ldr,"ThIs GuT");
+		if(adcResult < 100)strcpy(ldr,"ItZ dAnK");
+		ssd1306_WriteString(ldr, Font_7x10, White);
+		ssd1306_SetCursor(75, 20);	//set cursor position x=0, y=0
+		ssd1306_WriteString(ldr2, Font_7x10, White);
 		ssd1306_UpdateScreen();
 	}
 
