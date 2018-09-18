@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "form.h"
 #include "graphwindow.h"
+#include "settings.h"
 
 // Toegevoegd voor de SQL code
 #include <QtSql/QSql>
@@ -11,6 +12,7 @@
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlError>
 #include <QtSql/QSqlRecord>
+#include <QtSql/qsqlquerymodel.h>
 #include <QDebug>
 
 namespace Ui
@@ -27,11 +29,14 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pushButton_clicked();
+    void on_ImportData_clicked();
+    void on_ShowGraphs_clicked();
+    void on_Settings_clicked();
 
 private:
     Ui::MainWindow *ui;
     GraphWindow graph;
+    Settings settings;
 };
 
 #endif // MAINWINDOW_H

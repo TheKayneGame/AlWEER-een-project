@@ -1,12 +1,12 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2018-09-03T19:51:58
+# Project created by QtCreator 2018-09-10T15:00:51
 #
 #-------------------------------------------------
 
-QT       += core gui widgets charts sql networkauth network
+QT       += core gui widgets
 
-TARGET = WeerProject
+TARGET = WeerEenProject
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -20,23 +20,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-CONFIG += c++
+CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp \
-    graphwindow.cpp \
-    settings.cpp
+        weereenproject.cpp
 
 HEADERS += \
-    Mainwindow.h \
-    graphwindow.h \
-    settings.h
+        weereenproject.h
 
 FORMS += \
-        mainwindow.ui \
-    graphwindow.ui \
-    settings.ui
+        weereenproject.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
