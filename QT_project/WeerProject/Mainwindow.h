@@ -15,7 +15,6 @@
 #include <QtSql/qsqlquerymodel.h>
 #include <QDebug>
 
-
 namespace Ui
 {
     class MainWindow;
@@ -28,6 +27,11 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    QLineSeries *series[4];
+    QLineSeries *test;
+    QChart *chart;
+    QChartView *chartView;
+    void createChart();
 
 private slots:
     void on_ImportData_clicked();
@@ -38,6 +42,8 @@ private:
     Ui::MainWindow *ui;
     GraphWindow graph;
     Settings settings;
+    double values[4][64];
+    enum valueType {temperature = 0, humidity, brightness,  windspeed};
 };
 
 #endif // MAINWINDOW_H

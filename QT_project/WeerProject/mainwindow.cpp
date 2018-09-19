@@ -1,6 +1,11 @@
 #include "Mainwindow.h"
 #include "ui_mainwindow.h"
 
+int extern TempVar;
+int extern HumidityVar;
+int extern WindSpeedVar;
+int extern BrightnessVar;
+
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
@@ -24,12 +29,21 @@ void MainWindow::on_ImportData_clicked()
     {
         QSqlQueryModel *mod = new QSqlQueryModel;
         QSqlQuery *query = new QSqlQuery(db);
+        QModelIndex *modIndex = new QModelIndex();
 
-        query->prepare("select * from alWeer.weer");
+        query->prepare("SELECT * FROM alWeer.weer");
 
         query->exec();
         mod->setQuery(*query);
         ui->tableView->setModel(mod);
+        query->clear();
+
+        for (int i = 0; i < 4; i++)
+            for (int k = 0; k < 64; k++)
+                values[i][k] = ui->tableView->model()->data(ui->tableView->model()->index(k,i+1)).toString().toDouble();
+
+        delete query;
+        delete modIndex;
     }
     else
     {
@@ -40,10 +54,38 @@ void MainWindow::on_ImportData_clicked()
     }
 }
 
+void MainWindow::createChart()
+{
+    for (int i = 0; i < 4; i++)
+        series[i] = new QLineSeries();
+
+    for (int i = 0; i < 4; i++)
+        for (int k = 0; k < 64; k++)
+            series[i]->append(k, values[i][k]);
+
+    chart = new QChart();
+
+    chart->addSeries(series[temperature]);
+    chart->addSeries(series[humidity]);
+    chart->addSeries(series[brightness]);
+    chart->addSeries(series[windspeed]);
+
+    if(TempVar == 1)chart->removeSeries((series[temperature]));
+    if(BrightnessVar == 1)chart->removeSeries((series[brightness]));
+    if(WindSpeedVar == 1)chart->removeSeries((series[windspeed]));
+    if(HumidityVar == 1)chart->removeSeries((series[humidity]));
+
+    chart->createDefaultAxes();
+    chart->setTitle("testthingy");
+
+    chartView = new QChartView(chart);
+    chartView->setRenderHint(QPainter::Antialiasing);
+}
+
 void MainWindow::on_ShowGraphs_clicked()
 {
-    graph.createChart();
-    graph.setCentralWidget(graph.chartView);
+    createChart();
+    graph.setCentralWidget(chartView);
     graph.show();
     graph.setWindowTitle("Graphs");
 }
