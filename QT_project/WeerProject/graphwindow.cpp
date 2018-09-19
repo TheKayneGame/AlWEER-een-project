@@ -1,15 +1,11 @@
 #include "graphwindow.h"
 #include "ui_graphwindow.h"
 #include <QDebug>
-<<<<<<< HEAD
-#include "Mainwindow.h"
-=======
 
 int extern TempVar;
 int extern HumidityVar;
 int extern WindSpeedVar;
 int extern BrightnessVar;
->>>>>>> be680a5ae400a979bdca615bea83f3b4db31d6b8
 
 GraphWindow::GraphWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::GraphWindow)
 {
@@ -21,9 +17,19 @@ GraphWindow::~GraphWindow()
     delete ui;
 }
 
+void GraphWindow::createChart()
+{
+    for (int i = 0; i < 4; i++)
+        series[i] = new QLineSeries();
 
-<<<<<<< HEAD
-=======
+    for (int i = 0; i < 4; i++)
+        for (int k = 0; k < 64; k++)
+            values[i][k] = k * (i + 1);
+
+    for (int i = 0; i < 4; i++)
+        for (int k = 0; k < 64; k++)
+            series[i]->append(k, values[i][k]);
+
     chart = new QChart();
 
     chart->addSeries(series[temperature]);
@@ -42,4 +48,3 @@ GraphWindow::~GraphWindow()
     chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
 }
->>>>>>> be680a5ae400a979bdca615bea83f3b4db31d6b8
