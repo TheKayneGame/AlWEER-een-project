@@ -26,6 +26,11 @@ public:
 
 private:
     Ui::GraphWindow *ui;
+<<<<<<< HEAD
+=======
+    double values[4][64];
+    enum valueType {temperature = 0, humidity, brightness,  windspeed};
+>>>>>>> be680a5ae400a979bdca615bea83f3b4db31d6b8
     Settings settings;
 };
 

@@ -17,6 +17,7 @@
 class settings;
 
 
+
 namespace Ui
 {
     class MainWindow;
@@ -52,7 +53,10 @@ private:
     Ui::MainWindow *ui;
     GraphWindow graph;
     Settings settings;
+<<<<<<< HEAD
     bool isImported = false;
+=======
+>>>>>>> be680a5ae400a979bdca615bea83f3b4db31d6b8
 };
 
 #endif // MAINWINDOW_H

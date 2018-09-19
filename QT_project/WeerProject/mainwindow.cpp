@@ -1,21 +1,33 @@
 #include "Mainwindow.h"
 #include "ui_mainwindow.h"
 
+<<<<<<< HEAD
 int extern TempVar;
 int extern HumidityVar;
 int extern WindSpeedVar;
 int extern BrightnessVar;
 
+=======
+>>>>>>> be680a5ae400a979bdca615bea83f3b4db31d6b8
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 }
+<<<<<<< HEAD
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
 
+=======
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+
+>>>>>>> be680a5ae400a979bdca615bea83f3b4db31d6b8
 void MainWindow::on_ImportData_clicked()
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
@@ -25,6 +37,7 @@ void MainWindow::on_ImportData_clicked()
     db.setPassword("admin");
     db.setDatabaseName("alWeer");
 
+<<<<<<< HEAD
     values = new double*[4];
     for(int i = 0; i < settings.amount; ++i)
     {
@@ -38,10 +51,19 @@ void MainWindow::on_ImportData_clicked()
         modIndex = new QModelIndex();
 
         query->prepare("SELECT * FROM alWeer.weer");
+=======
+    if(db.open())
+    {
+        QSqlQueryModel *mod = new QSqlQueryModel;
+        QSqlQuery *query = new QSqlQuery(db);
+
+        query->prepare("select * from alWeer.weer");
+>>>>>>> be680a5ae400a979bdca615bea83f3b4db31d6b8
 
         query->exec();
         mod->setQuery(*query);
         ui->tableView->setModel(mod);
+<<<<<<< HEAD
         query->clear();
 
         for (int i = 0; i < 4; i++)
@@ -53,6 +75,8 @@ void MainWindow::on_ImportData_clicked()
         isImported = true;
         delete query;
         delete modIndex;
+=======
+>>>>>>> be680a5ae400a979bdca615bea83f3b4db31d6b8
     }
     else
     {
@@ -62,6 +86,7 @@ void MainWindow::on_ImportData_clicked()
         qDebug() << "Text: " << err.text();
         isImported = false;
     }
+<<<<<<< HEAD
 }
 
 
@@ -87,6 +112,11 @@ void MainWindow::on_Settings_clicked()
 }
 
 void MainWindow::createChart()
+=======
+}
+
+void MainWindow::on_ShowGraphs_clicked()
+>>>>>>> be680a5ae400a979bdca615bea83f3b4db31d6b8
 {
     for (int i = 0; i < 4; i++)
         series[i] = new QLineSeries();
@@ -114,6 +144,12 @@ void MainWindow::createChart()
 
     chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
+}
+
+void MainWindow::on_Settings_clicked()
+{
+    settings.show();
+    settings.setWindowTitle("Settings");
 }
 
 
