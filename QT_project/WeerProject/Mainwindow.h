@@ -32,6 +32,7 @@ public:
     QChart *chart;
     QChartView *chartView;
     void createChart();
+    double** values;
 
 private slots:
     void on_ImportData_clicked();
@@ -42,7 +43,6 @@ private:
     Ui::MainWindow *ui;
     GraphWindow graph;
     Settings settings;
-    double values[4][64];
     enum valueType {temperature = 0, humidity, brightness,  windspeed};
 };
 

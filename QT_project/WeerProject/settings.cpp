@@ -6,9 +6,7 @@ int extern HumidityVar;
 int extern WindSpeedVar;
 int extern BrightnessVar;
 
-Settings::Settings(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::Settings)
+Settings::Settings(QWidget *parent) : QDialog(parent), ui(new Ui::Settings)
 {
     ui->setupUi(this);
 }
@@ -48,4 +46,28 @@ void Settings::on_Apply_clicked()
     BrightnessVar = BrightnessVarLocal;
     WindSpeedVar = WindSpeedVarLocal;
     HumidityVar = HumidityVarLocal;
+
+    localAmount = ui->AmountValue->toPlainText().toInt();
+    localResolution = ui->ResolutionValue->toPlainText().toInt();
+
+    if (localAmount < 1)
+    {
+        localAmount = 1;
+        ui->AmountValue->setText(QString("1"));
+    }
+    if (localAmount > 256)
+    {
+        localAmount = 256;
+        ui->AmountValue->setText(QString("256"));
+    }
+    if (localResolution < 1)
+    {
+        localResolution = 1;
+        ui->ResolutionValue->setText(QString("1"));
+    }
+    if (localResolution > 20)
+    {
+        localResolution = 20;
+        ui->ResolutionValue->setText(QString("20"));
+    }
 }

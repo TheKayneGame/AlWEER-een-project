@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>144</width>
-    <height>272</height>
+    <width>151</width>
+    <height>252</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,29 +17,13 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>10</y>
-     <width>121</width>
-     <height>251</height>
+     <y>70</y>
+     <width>131</width>
+     <height>171</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <widget class="QComboBox" name="Resolution"/>
-    </item>
-    <item row="3" column="0">
-     <widget class="QCheckBox" name="cbHumid">
-      <property name="text">
-       <string>Show Humidity</string>
-      </property>
-      <property name="checked">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QComboBox" name="Amount"/>
-    </item>
-    <item row="6" column="0">
+    <item row="4" column="0">
      <widget class="QCheckBox" name="cbBright">
       <property name="text">
        <string>Show Brightness</string>
@@ -49,7 +33,17 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="0">
+    <item row="1" column="0">
+     <widget class="QCheckBox" name="cbHumid">
+      <property name="text">
+       <string>Show Humidity</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
      <widget class="QCheckBox" name="cbTemp">
       <property name="enabled">
        <bool>true</bool>
@@ -62,7 +56,14 @@
       </property>
      </widget>
     </item>
-    <item row="4" column="0">
+    <item row="5" column="0">
+     <widget class="QPushButton" name="Apply">
+      <property name="text">
+       <string>Apply</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
      <widget class="QCheckBox" name="cbSpeed">
       <property name="text">
        <string>Show Windspeed</string>
@@ -72,12 +73,43 @@
       </property>
      </widget>
     </item>
-    <item row="7" column="0">
-     <widget class="QPushButton" name="Apply">
-      <property name="text">
-       <string>Apply</string>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="gridLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>131</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="1" column="2">
+     <widget class="QTextEdit" name="AmountValue">
+      <property name="font">
+       <font>
+        <pointsize>8</pointsize>
+       </font>
       </property>
      </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>Amount</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Resolution</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QTextEdit" name="ResolutionValue"/>
     </item>
    </layout>
   </widget>

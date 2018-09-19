@@ -16,17 +16,15 @@ class Settings : public QDialog
 public:
     explicit Settings(QWidget *parent = nullptr);
     ~Settings();
+    int amount = 0;
+    int resolution = 0;
 
 
 private slots:
     void on_cbTemp_stateChanged();
-
     void on_cbHumid_stateChanged();
-
     void on_cbSpeed_stateChanged();
-
     void on_cbBright_stateChanged();
-
     void on_Apply_clicked();
 
 private:
@@ -35,6 +33,8 @@ private:
     int HumidityVarLocal;
     int WindSpeedVarLocal;
     int BrightnessVarLocal;
+    int localAmount = 0;
+    int localResolution = 0;
 
 };
 

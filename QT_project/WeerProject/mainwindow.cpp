@@ -25,6 +25,10 @@ void MainWindow::on_ImportData_clicked()
     db.setPassword("admin");
     db.setDatabaseName("alWeer");
 
+    values = new double*[4];
+    for(int i = 0; i < settings.amount; ++i)
+        values[i] = new double[4];
+
     if(db.open())
     {
         QSqlQueryModel *mod = new QSqlQueryModel;
@@ -39,7 +43,7 @@ void MainWindow::on_ImportData_clicked()
         query->clear();
 
         for (int i = 0; i < 4; i++)
-            for (int k = 0; k < 64; k++)
+            for (int k = 0; k < settings.amount; k++)
                 values[i][k] = ui->tableView->model()->data(ui->tableView->model()->index(k,i+1)).toString().toDouble();
 
         delete query;
@@ -70,10 +74,10 @@ void MainWindow::createChart()
     chart->addSeries(series[brightness]);
     chart->addSeries(series[windspeed]);
 
-    if(TempVar == 1)chart->removeSeries((series[temperature]));
-    if(BrightnessVar == 1)chart->removeSeries((series[brightness]));
-    if(WindSpeedVar == 1)chart->removeSeries((series[windspeed]));
-    if(HumidityVar == 1)chart->removeSeries((series[humidity]));
+    if(TempVar == 1)        chart->removeSeries((series[temperature]));
+    if(BrightnessVar == 1)  chart->removeSeries((series[brightness]));
+    if(WindSpeedVar == 1)   chart->removeSeries((series[windspeed]));
+    if(HumidityVar == 1)    chart->removeSeries((series[humidity]));
 
     chart->createDefaultAxes();
     chart->setTitle("testthingy");
