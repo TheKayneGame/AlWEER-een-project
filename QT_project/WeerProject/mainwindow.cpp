@@ -7,6 +7,7 @@ int extern WindSpeedVar;
 int extern BrightnessVar;
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
+, values(nullptr)
 {
     ui->setupUi(this);
 }
@@ -26,8 +27,8 @@ void MainWindow::on_ImportData_clicked()
     db.setDatabaseName("alWeer");
 
     values = new double*[4];
-    for(int i = 0; i < settings.amount; ++i)
-        values[i] = new double[4];
+    for(int i = 0; i < 4; ++i)
+        values[i] = new double[10];
 
     if(db.open())
     {
@@ -43,11 +44,15 @@ void MainWindow::on_ImportData_clicked()
         query->clear();
 
         for (int i = 0; i < 4; i++)
-            for (int k = 0; k < settings.amount; k++)
+            for (int k = 0; k < 10; k++)
                 values[i][k] = ui->tableView->model()->data(ui->tableView->model()->index(k,i+1)).toString().toDouble();
+
+        createChart();
 
         delete query;
         delete modIndex;
+        delete values;
+        values = nullptr;
     }
     else
     {
@@ -64,7 +69,7 @@ void MainWindow::createChart()
         series[i] = new QLineSeries();
 
     for (int i = 0; i < 4; i++)
-        for (int k = 0; k < 64; k++)
+        for (int k = 0; k < 10; k++)
             series[i]->append(k, values[i][k]);
 
     chart = new QChart();
@@ -88,7 +93,6 @@ void MainWindow::createChart()
 
 void MainWindow::on_ShowGraphs_clicked()
 {
-    createChart();
     graph.setCentralWidget(chartView);
     graph.show();
     graph.setWindowTitle("Graphs");
