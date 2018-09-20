@@ -28,7 +28,7 @@ void MainWindow::on_ImportData_clicked()
 
     values = new double*[4];
     for(int i = 0; i < 4; ++i)
-        values[i] = new double[10];
+        values[i] = new double[settings.amount];
 
     if(db.open())
     {
@@ -41,10 +41,11 @@ void MainWindow::on_ImportData_clicked()
         query->exec();
         mod->setQuery(*query);
         ui->tableView->setModel(mod);
+        rowCount = mod->rowCount();
         query->clear();
 
         for (int i = 0; i < 4; i++)
-            for (int k = 0; k < 10; k++)
+            for (int k = 0; k < settings.amount; k++)
                 values[i][k] = ui->tableView->model()->data(ui->tableView->model()->index(k,i+1)).toString().toDouble();
 
         createChart();
@@ -69,7 +70,7 @@ void MainWindow::createChart()
         series[i] = new QLineSeries();
 
     for (int i = 0; i < 4; i++)
-        for (int k = 0; k < 10; k++)
+        for (int k = 0; k < settings.amount; k++)
             series[i]->append(k, values[i][k]);
 
     chart = new QChart();

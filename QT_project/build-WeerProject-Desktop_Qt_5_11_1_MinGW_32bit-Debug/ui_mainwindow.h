@@ -29,7 +29,7 @@ public:
     QWidget *layoutWidget;
     QGridLayout *gridLayout;
     QPushButton *ImportData;
-    QPushButton *ExportData_2;
+    QPushButton *ExportData;
     QPushButton *ShowGraphs;
     QPushButton *Settings;
     QTableView *tableView;
@@ -40,21 +40,20 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(499, 416);
+        MainWindow->resize(341, 288);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         layoutWidget = new QWidget(centralWidget);
         layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
-        layoutWidget->setGeometry(QRect(10, 10, 481, 361));
+        layoutWidget->setGeometry(QRect(10, 10, 320, 223));
         gridLayout = new QGridLayout(layoutWidget);
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        gridLayout->setSizeConstraint(QLayout::SetDefaultConstraint);
         gridLayout->setContentsMargins(0, 0, 0, 0);
         ImportData = new QPushButton(layoutWidget);
         ImportData->setObjectName(QStringLiteral("ImportData"));
-        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(ImportData->sizePolicy().hasHeightForWidth());
@@ -63,13 +62,13 @@ public:
 
         gridLayout->addWidget(ImportData, 1, 0, 1, 1);
 
-        ExportData_2 = new QPushButton(layoutWidget);
-        ExportData_2->setObjectName(QStringLiteral("ExportData_2"));
-        sizePolicy.setHeightForWidth(ExportData_2->sizePolicy().hasHeightForWidth());
-        ExportData_2->setSizePolicy(sizePolicy);
-        ExportData_2->setLayoutDirection(Qt::LeftToRight);
+        ExportData = new QPushButton(layoutWidget);
+        ExportData->setObjectName(QStringLiteral("ExportData"));
+        sizePolicy.setHeightForWidth(ExportData->sizePolicy().hasHeightForWidth());
+        ExportData->setSizePolicy(sizePolicy);
+        ExportData->setLayoutDirection(Qt::LeftToRight);
 
-        gridLayout->addWidget(ExportData_2, 1, 1, 1, 1);
+        gridLayout->addWidget(ExportData, 1, 1, 1, 1);
 
         ShowGraphs = new QPushButton(layoutWidget);
         ShowGraphs->setObjectName(QStringLiteral("ShowGraphs"));
@@ -81,30 +80,23 @@ public:
 
         Settings = new QPushButton(layoutWidget);
         Settings->setObjectName(QStringLiteral("Settings"));
-        sizePolicy.setHeightForWidth(Settings->sizePolicy().hasHeightForWidth());
-        Settings->setSizePolicy(sizePolicy);
 
-        gridLayout->addWidget(Settings, 1, 3, 1, 1, Qt::AlignVCenter);
+        gridLayout->addWidget(Settings, 1, 3, 1, 1);
 
         tableView = new QTableView(layoutWidget);
         tableView->setObjectName(QStringLiteral("tableView"));
-        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(tableView->sizePolicy().hasHeightForWidth());
-        tableView->setSizePolicy(sizePolicy1);
+        sizePolicy.setHeightForWidth(tableView->sizePolicy().hasHeightForWidth());
+        tableView->setSizePolicy(sizePolicy);
 
         gridLayout->addWidget(tableView, 0, 0, 1, 4);
 
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setEnabled(false);
-        menuBar->setGeometry(QRect(0, 0, 499, 21));
+        menuBar->setGeometry(QRect(0, 0, 341, 21));
         MainWindow->setMenuBar(menuBar);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QStringLiteral("statusBar"));
-        statusBar->setEnabled(false);
         MainWindow->setStatusBar(statusBar);
 
         retranslateUi(MainWindow);
@@ -115,8 +107,8 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
-        ImportData->setText(QApplication::translate("MainWindow", "Import Data", nullptr));
-        ExportData_2->setText(QApplication::translate("MainWindow", "Export Data", nullptr));
+        ImportData->setText(QApplication::translate("MainWindow", "Refresh", nullptr));
+        ExportData->setText(QApplication::translate("MainWindow", "Export Data", nullptr));
         ShowGraphs->setText(QApplication::translate("MainWindow", "Show Graphs", nullptr));
         Settings->setText(QApplication::translate("MainWindow", "Settings", nullptr));
     } // retranslateUi

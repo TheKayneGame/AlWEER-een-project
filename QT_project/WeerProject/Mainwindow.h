@@ -33,6 +33,7 @@ public:
     QChartView *chartView;
     void createChart();
     double** values;
+    int rowCount;
 
 private slots:
     void on_ImportData_clicked();

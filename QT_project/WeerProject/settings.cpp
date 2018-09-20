@@ -47,8 +47,8 @@ void Settings::on_Apply_clicked()
     WindSpeedVar = WindSpeedVarLocal;
     HumidityVar = HumidityVarLocal;
 
-    localAmount = ui->AmountValue->toPlainText().toInt();
-    localResolution = ui->ResolutionValue->toPlainText().toInt();
+    amount = ui->AmountValue->toPlainText().toInt();
+    resolution = ui->ResolutionValue->toPlainText().toInt();
 
     if (localAmount < 1)
     {
@@ -70,4 +70,5 @@ void Settings::on_Apply_clicked()
         localResolution = 20;
         ui->ResolutionValue->setText(QString("20"));
     }
+    this->close();
 }
