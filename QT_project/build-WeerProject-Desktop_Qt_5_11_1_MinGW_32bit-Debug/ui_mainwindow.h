@@ -40,12 +40,12 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(341, 288);
+        MainWindow->resize(481, 425);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         layoutWidget = new QWidget(centralWidget);
         layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
-        layoutWidget->setGeometry(QRect(10, 10, 320, 223));
+        layoutWidget->setGeometry(QRect(10, 10, 461, 371));
         gridLayout = new QGridLayout(layoutWidget);
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
@@ -53,7 +53,7 @@ public:
         gridLayout->setContentsMargins(0, 0, 0, 0);
         ImportData = new QPushButton(layoutWidget);
         ImportData->setObjectName(QStringLiteral("ImportData"));
-        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(ImportData->sizePolicy().hasHeightForWidth());
@@ -80,20 +80,25 @@ public:
 
         Settings = new QPushButton(layoutWidget);
         Settings->setObjectName(QStringLiteral("Settings"));
+        sizePolicy.setHeightForWidth(Settings->sizePolicy().hasHeightForWidth());
+        Settings->setSizePolicy(sizePolicy);
 
         gridLayout->addWidget(Settings, 1, 3, 1, 1);
 
         tableView = new QTableView(layoutWidget);
         tableView->setObjectName(QStringLiteral("tableView"));
-        sizePolicy.setHeightForWidth(tableView->sizePolicy().hasHeightForWidth());
-        tableView->setSizePolicy(sizePolicy);
+        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(tableView->sizePolicy().hasHeightForWidth());
+        tableView->setSizePolicy(sizePolicy1);
 
         gridLayout->addWidget(tableView, 0, 0, 1, 4);
 
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 341, 21));
+        menuBar->setGeometry(QRect(0, 0, 481, 21));
         MainWindow->setMenuBar(menuBar);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QStringLiteral("statusBar"));
