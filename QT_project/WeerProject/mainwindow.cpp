@@ -6,8 +6,7 @@ int extern HumidityVar;
 int extern WindSpeedVar;
 int extern BrightnessVar;
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
-, values(nullptr)
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), values(nullptr), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 }
