@@ -50,8 +50,6 @@
 #include "main.h"
 #include "stm32f0xx_hal.h"
 #include "cmsis_os.h"
-#include "si7021.h"
-#include "ssd1306.h"
 
 /* USER CODE BEGIN Includes */
 
@@ -79,7 +77,6 @@ I2C_HandleTypeDef hi2c2;
 
 TIM_HandleTypeDef htim6;
 
-UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
 
 osThreadId defaultTaskHandle;
@@ -95,11 +92,10 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_I2C2_Init(void);
-static void MX_USART1_UART_Init(void);
-static void MX_USART2_UART_Init(void);
 static void MX_CRC_Init(void);
 static void MX_TIM6_Init(void);
 static void MX_ADC_Init(void);
+static void MX_USART2_UART_Init(void);
 void StartDefaultTask(void const * argument);
 void StartTask02(void const * argument);
 
@@ -108,7 +104,7 @@ void StartTask02(void const * argument);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
-
+uint8_t data[10];
 /* USER CODE END 0 */
 
 /**
@@ -142,11 +138,10 @@ int main(void)
   MX_GPIO_Init();
   MX_I2C1_Init();
   MX_I2C2_Init();
-  MX_USART1_UART_Init();
-  MX_USART2_UART_Init();
   MX_CRC_Init();
   MX_TIM6_Init();
   MX_ADC_Init();
+  MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 	/*void I2C1Send(uint8_t address, uint8_t data) {
 	 HAL_I2C_Master_Transmit(&hi2c1, address, &data, I2CTIMEOUT);
@@ -195,7 +190,7 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-
+		HAL_UART_Receive(&huart2, data, 10, 1000);
 	}
   /* USER CODE END 3 */
 
@@ -219,7 +214,10 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.HSI14State = RCC_HSI14_ON;
   RCC_OscInitStruct.HSICalibrationValue = 16;
   RCC_OscInitStruct.HSI14CalibrationValue = 16;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
+  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL8;
+  RCC_OscInitStruct.PLL.PREDIV = RCC_PREDIV_DIV1;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     _Error_Handler(__FILE__, __LINE__);
@@ -229,17 +227,16 @@ void SystemClock_Config(void)
     */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
   {
     _Error_Handler(__FILE__, __LINE__);
   }
 
-  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART1|RCC_PERIPHCLK_I2C1;
-  PeriphClkInit.Usart1ClockSelection = RCC_USART1CLKSOURCE_PCLK1;
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_I2C1;
   PeriphClkInit.I2c1ClockSelection = RCC_I2C1CLKSOURCE_HSI;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
@@ -358,7 +355,7 @@ static void MX_I2C2_Init(void)
 {
 
   hi2c2.Instance = I2C2;
-  hi2c2.Init.Timing = 0x2000090E;
+  hi2c2.Init.Timing = 0x00707CBB;
   hi2c2.Init.OwnAddress1 = 0;
   hi2c2.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
   hi2c2.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
@@ -403,33 +400,12 @@ static void MX_TIM6_Init(void)
 
 }
 
-/* USART1 init function */
-static void MX_USART1_UART_Init(void)
-{
-
-  huart1.Instance = USART1;
-  huart1.Init.BaudRate = 115200;
-  huart1.Init.WordLength = UART_WORDLENGTH_8B;
-  huart1.Init.StopBits = UART_STOPBITS_1;
-  huart1.Init.Parity = UART_PARITY_NONE;
-  huart1.Init.Mode = UART_MODE_TX_RX;
-  huart1.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-  huart1.Init.OverSampling = UART_OVERSAMPLING_16;
-  huart1.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
-  huart1.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
-  if (HAL_UART_Init(&huart1) != HAL_OK)
-  {
-    _Error_Handler(__FILE__, __LINE__);
-  }
-
-}
-
 /* USART2 init function */
 static void MX_USART2_UART_Init(void)
 {
 
   huart2.Instance = USART2;
-  huart2.Init.BaudRate = 38400;
+  huart2.Init.BaudRate = 115200;
   huart2.Init.WordLength = UART_WORDLENGTH_8B;
   huart2.Init.StopBits = UART_STOPBITS_1;
   huart2.Init.Parity = UART_PARITY_NONE;
@@ -466,54 +442,11 @@ void StartDefaultTask(void const * argument)
 {
 
   /* USER CODE BEGIN 5 */
-	/* Infinite loop */
-	float result;
-	float humidity;
-	float tempf;
-	char lcd_buf[25];
-	char ldr[25];
-	char ldr2[25];
-	uint32_t adcResult = 0;
-
-	for (;;) {
-
-		ssd1306_Fill(Black);
-		uint16_t RH_Code = makeMeasurment(HUMD_MEASURE_NOHOLD);
-		result = (125.0 * RH_Code / 65536) - 6;
-		humidity = result;
-		uint16_t temp_Code = makeMeasurment(TEMP_MEASURE_NOHOLD);
-		result = ((175.72 * temp_Code) / 65536) - 46.85;
-		tempf = result;
-		itoa((int)(tempf * 10),lcd_buf,10);
-		lcd_buf[3] = lcd_buf[2];
-		lcd_buf[2] = ',';
-		ssd1306_SetCursor(0, 0);	//set cursor position x=0, y=0
-		ssd1306_WriteString(lcd_buf, Font_7x10, White);
-		itoa((int)(humidity * 10),lcd_buf,10);
-		lcd_buf[3] = lcd_buf[2];
-		lcd_buf[2] = ',';
-		ssd1306_SetCursor(0, 10);	//set cursor position x=0, y=0
-		ssd1306_WriteString(lcd_buf, Font_7x10, White);
-		osDelay(0);
-
-		HAL_ADC_Start(&hadc);
-		HAL_ADC_PollForConversion(&hadc, 100);
-
-			adcResult = 0;
-
-		adcResult = HAL_ADC_GetValue(&hadc);
-		HAL_ADC_Stop(&hadc);
-		itoa(adcResult,ldr2,10);
-		ssd1306_SetCursor(0, 20);	//set cursor position x=0, y=0
-		if(adcResult > 800)strcpy(ldr,"Ah My EyEs") ;
-		if(adcResult < 800 && adcResult > 100)strcpy(ldr,"ThIs GuT");
-		if(adcResult < 100)strcpy(ldr,"ItZ dAnK");
-		ssd1306_WriteString(ldr, Font_7x10, White);
-		ssd1306_SetCursor(75, 20);	//set cursor position x=0, y=0
-		ssd1306_WriteString(ldr2, Font_7x10, White);
-		ssd1306_UpdateScreen();
-	}
-
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
   /* USER CODE END 5 */ 
 }
 
@@ -521,7 +454,6 @@ void StartDefaultTask(void const * argument)
 void StartTask02(void const * argument)
 {
   /* USER CODE BEGIN StartTask02 */
-	/* Infinite loop */
 	for (;;) {
 		osDelay(1);
 	}
