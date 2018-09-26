@@ -1,10 +1,6 @@
 #include "settings.h"
 #include "ui_settings.h"
-
-int extern TempVar;
-int extern HumidityVar;
-int extern WindSpeedVar;
-int extern BrightnessVar;
+#include "Mainwindow.h"
 
 Settings::Settings(QWidget *parent) : QDialog(parent), ui(new Ui::Settings)
 {
@@ -16,59 +12,69 @@ Settings::~Settings()
     delete ui;
 }
 
-void Settings::on_cbTemp_stateChanged()
-{
-    if(TempVarLocal == 0) TempVarLocal = 1;
-    else TempVarLocal = 0;
-}
-
-void Settings::on_cbHumid_stateChanged()
-{
-    if(HumidityVarLocal == 0) HumidityVarLocal = 1;
-    else HumidityVarLocal = 0;
-}
-
-void Settings::on_cbSpeed_stateChanged()
-{
-    if(WindSpeedVarLocal == 0) WindSpeedVarLocal = 1;
-    else WindSpeedVarLocal = 0;
-}
-
-void Settings::on_cbBright_stateChanged()
-{
-    if(BrightnessVarLocal == 0) BrightnessVarLocal = 1;
-    else BrightnessVarLocal = 0;
-}
-
 void Settings::on_Apply_clicked()
 {
-    TempVar = TempVarLocal;
-    BrightnessVar = BrightnessVarLocal;
-    WindSpeedVar = WindSpeedVarLocal;
-    HumidityVar = HumidityVarLocal;
-
+    //read values from the inputbox
+    localAmount = ui->AmountValue->toPlainText().toInt();
+    localResolution = ui->ResolutionValue->toPlainText().toInt();
+    //correct overshoot values
+    localAmount = setLimits(localAmount, 1, 256);
+    localResolution = setLimits(localResolution, 1, 20);
+    //set the correct overshot values back in with the correct number
+    ui->AmountValue->setText(QString::number(localAmount));
+    ui->ResolutionValue->setText(QString::number(localResolution));
+    //set public variables to the input values for usage in other functions
     amount = ui->AmountValue->toPlainText().toInt();
     resolution = ui->ResolutionValue->toPlainText().toInt();
+    //transfer the local booleans to the public so it can be used outside the function
+    publicTemp = localTemp;
+    publicHumid = localHumid;
+    publicSpeed = localSpeed;
+    publicBright = localBright;
+}
 
-    if (localAmount < 1)
+void Settings::on_ApplyDataButton_clicked()
+{
+    MainWindow window;
+    window.setDatabaseLogin("Login.xml",
+                            ui->NameText->toPlainText(),
+                            ui->AddressText->toPlainText(),
+                            ui->PortText->toPlainText(),
+                            ui->UsernameText->toPlainText(),
+                            ui->PasswordText->toPlainText());
+}
+
+void Settings::on_cbTemp_stateChanged(int arg1)
+{
+    localTemp = arg1;
+}
+
+void Settings::on_cbHumid_stateChanged(int arg1)
+{
+    localHumid = arg1;
+}
+
+void Settings::on_cbBright_stateChanged(int arg1)
+{
+    localBright = arg1;
+}
+
+void Settings::on_cbSpeed_stateChanged(int arg1)
+{
+    localSpeed = arg1;
+}
+
+int Settings::setLimits(int var, int min, int max)
+{
+    if (var < min)
     {
-        localAmount = 1;
-        ui->AmountValue->setText(QString("1"));
+        var = min;
+        return var;
     }
-    if (localAmount > 256)
+    else if (var > max)
     {
-        localAmount = 256;
-        ui->AmountValue->setText(QString("256"));
+        var = max;
+        return var;
     }
-    if (localResolution < 1)
-    {
-        localResolution = 1;
-        ui->ResolutionValue->setText(QString("1"));
-    }
-    if (localResolution > 20)
-    {
-        localResolution = 20;
-        ui->ResolutionValue->setText(QString("20"));
-    }
-    this->close();
+    else return var;
 }

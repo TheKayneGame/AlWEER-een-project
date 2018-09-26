@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "form.h"
 #include "graphwindow.h"
 #include "settings.h"
 
@@ -31,9 +30,28 @@ public:
     QLineSeries *test;
     QChart *chart;
     QChartView *chartView;
-    void createChart();
     double** values;
     int rowCount;
+    void createChart();
+    //database variables/functions
+    QSqlDatabase initializeDatabase(QSqlDatabase db,
+                                    QString address,
+                                    QString port,
+                                    QString username,
+                                    QString password,
+                                    QString databaseName);
+    void setDatabaseLogin(QString filename,
+                          QString name,
+                          QString address,
+                          QString port,
+                          QString username,
+                          QString password);
+    void getDatabaseLogin();
+    QString address = "www.sandervandenberk.nl";
+    QString port = "3306";
+    QString username = "weer";
+    QString password = "admin";
+    QString databaseName = "alWeer";
 
 private slots:
     void on_ImportData_clicked();
@@ -44,7 +62,8 @@ private:
     Ui::MainWindow *ui;
     GraphWindow graph;
     Settings settings;
-    enum valueType {temperature = 0, humidity, brightness,  windspeed};
+    QSqlDatabase db;
+    enum valueType {temperature = 0, humidity, windspeed, brightness};
 };
 
 #endif // MAINWINDOW_H
