@@ -5,6 +5,8 @@
 Settings::Settings(QWidget *parent) : QDialog(parent), ui(new Ui::Settings)
 {
     ui->setupUi(this);
+    amount      = localAmount;
+    resolution  = localResolution;
 }
 
 Settings::~Settings()
@@ -12,8 +14,20 @@ Settings::~Settings()
     delete ui;
 }
 
-void Settings::on_Apply_clicked()
+void Settings::on_ApplyAllButton_clicked()
 {
+    MainWindow window;
+    //set the logindata tot a file
+    window.setLogin("Login.txt",
+                    ui->AddressText->toPlainText(),
+                    ui->PortText->toPlainText(),
+                    ui->UsernameText->toPlainText(),
+                    ui->PasswordText->toPlainText(),
+                    ui->NameText->toPlainText());
+    //read the logindata from the file
+    window.getLogin("Login.txt");
+    setLoginText(window.address, window.port, window.username, window.password, window.databaseName);
+
     //read values from the inputbox
     localAmount = ui->AmountValue->toPlainText().toInt();
     localResolution = ui->ResolutionValue->toPlainText().toInt();
@@ -26,6 +40,7 @@ void Settings::on_Apply_clicked()
     //set public variables to the input values for usage in other functions
     amount = ui->AmountValue->toPlainText().toInt();
     resolution = ui->ResolutionValue->toPlainText().toInt();
+
     //transfer the local booleans to the public so it can be used outside the function
     publicTemp = localTemp;
     publicHumid = localHumid;
@@ -33,15 +48,22 @@ void Settings::on_Apply_clicked()
     publicBright = localBright;
 }
 
-void Settings::on_ApplyDataButton_clicked()
+void Settings::on_CancelButton_clicked()
 {
-    MainWindow window;
-    window.setDatabaseLogin("Login.xml",
-                            ui->NameText->toPlainText(),
-                            ui->AddressText->toPlainText(),
-                            ui->PortText->toPlainText(),
-                            ui->UsernameText->toPlainText(),
-                            ui->PasswordText->toPlainText());
+    this->close();
+}
+
+void Settings::setLoginText(QString address,
+                            QString port,
+                            QString username,
+                            QString password,
+                            QString name)
+{
+    ui->AddressText->setText(address);
+    ui->PortText->setText(port);
+    ui->UsernameText->setText(username);
+    ui->PasswordText->setText(password);
+    ui->NameText->setText(name);
 }
 
 void Settings::on_cbTemp_stateChanged(int arg1)

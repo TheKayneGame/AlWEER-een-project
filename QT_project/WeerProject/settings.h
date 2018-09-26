@@ -2,8 +2,6 @@
 #define SETTINGS_H
 
 #include <QDialog>
-#include <QtXml/QtXml>
-#include <QXmlStreamWriter>
 #include <QFile>
 #include <QIODevice>
 #include <QFileDialog>
@@ -26,20 +24,26 @@ public:
     bool publicHumid;
     bool publicSpeed;
     bool publicBright;
+    void setLoginText(QString address,
+                      QString port,
+                      QString username,
+                      QString password,
+                      QString name);
 
 
 private slots:
-    void on_Apply_clicked();
-    void on_ApplyDataButton_clicked();
     void on_cbTemp_stateChanged(int arg1);
     void on_cbHumid_stateChanged(int arg1);
     void on_cbSpeed_stateChanged(int arg1);
     void on_cbBright_stateChanged(int arg1);
+    void on_ApplyAllButton_clicked();
+
+    void on_CancelButton_clicked();
 
 private:
     Ui::Settings *ui;
-    int localAmount = 0;
-    int localResolution = 0;
+    int localAmount = 32;
+    int localResolution = 1;
     bool localTemp;
     bool localHumid;
     bool localSpeed;

@@ -1,20 +1,17 @@
 #include "Mainwindow.h"
 #include "ui_mainwindow.h"
 
-<<<<<<< HEAD
-int extern TempVar;
-int extern HumidityVar;
-int extern WindSpeedVar;
-int extern BrightnessVar;
-
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), values(nullptr), ui(new Ui::MainWindow)
-=======
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
-, values(nullptr)
-, ui(new Ui::MainWindow)
->>>>>>> e5b30c6d32b2ca947ff9d9ed642f275f0cc6f0eb
+                    , values(nullptr)
+                    , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    getLogin("login.txt");
+    settings.setLoginText(address,
+                          port,
+                          username,
+                          password,
+                          databaseName);
 }
 
 MainWindow::~MainWindow()
@@ -22,21 +19,53 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::on_ShowGraphs_clicked()
+{
+    showGraphWindow();
+}
+
+void MainWindow::on_Settings_clicked()
+{
+    settings.show();
+
+    settings.setWindowTitle("Settings");
+    settings.setFixedSize(632,303);
+}
+
+void MainWindow::showGraphWindow(void)
+{
+    if (graph.isVisible())
+    {
+        graph.close();
+    }
+    graph.setCentralWidget(chartView);
+    graph.show();
+
+    graph.setWindowTitle("Graphs");
+    graph.setFixedSize(640,460);
+}
+
 void MainWindow::on_ImportData_clicked()
 {
-    db = initializeDatabase(db, address, port, username, password, databaseName);
+    getLogin("login.txt");
+    db = initializeDatabase(db,
+                            address,
+                            port,
+                            username,
+                            password,
+                            databaseName);
 
-    values = new double*[4];
-    for(int i = 0; i < 4; ++i)
+    values = new double*[sensorAmount];
+    for(int i = 0; i < sensorAmount; ++i)
         values[i] = new double[settings.amount];
 
     if(db.open())
     {
-        QSqlQueryModel *mod = new QSqlQueryModel;
-        QSqlQuery *query = new QSqlQuery(db);
-        QModelIndex *modIndex = new QModelIndex();
+        QSqlQueryModel *mod     = new QSqlQueryModel;
+        QSqlQuery *query        = new QSqlQuery(db);
+        QModelIndex *modIndex   = new QModelIndex();
 
-        query->prepare("SELECT * FROM alWeer.weer");
+        query->prepare("SELECT Temp as temperature, Humidity, Windsnelheid as Windspeed, Bightness as Brightness FROM alWeer.weer");
 
         query->exec();
         mod->setQuery(*query);
@@ -44,7 +73,7 @@ void MainWindow::on_ImportData_clicked()
         rowCount = mod->rowCount();
         query->clear();
 
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < sensorAmount; i++)
             for (int k = 0; k < settings.amount; k++)
                 values[i][k] = ui->tableView->model()->data(ui->tableView->model()->index(k,i+1)).toString().toDouble();
 
@@ -55,44 +84,38 @@ void MainWindow::on_ImportData_clicked()
         delete values;
         values = nullptr;
 
-        if (graph.isVisible())
-        {
-            graph.close();
-            graph.setCentralWidget(chartView);
-            graph.show();
-            graph.setWindowTitle("Graphs");
-        }
+        showGraphWindow();
     }
     else
     {
         QSqlError err = db.lastError();
-        qDebug() << "Database: " << err.databaseText();
-        qDebug() << "Driver: " << err.driverText();
-        qDebug() << "Text: " << err.text();
+        qDebug() << "Database: "    << err.databaseText();
+        qDebug() << "Driver: "      << err.driverText();
+        qDebug() << "Text: "        << err.text();
         //create a popup window
     }
 }
 
 void MainWindow::createChart()
 {
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < sensorAmount; i++)
         series[i] = new QLineSeries();
 
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < sensorAmount; i++)
         for (int k = 0; k < settings.amount; k++)
             series[i]->append(k, values[i][k]);
 
     chart = new QChart();
 
-    if (!settings.publicTemp)    chart->removeSeries((series[temperature]));
-    if (!settings.publicHumid)   chart->removeSeries((series[humidity]));
-    if (!settings.publicSpeed)   chart->removeSeries((series[windspeed]));
-    if (!settings.publicBright)  chart->removeSeries((series[brightness]));
+    chart->addSeries(series[temperature]);
+    chart->addSeries(series[humidity]);
+    chart->addSeries(series[windspeed]);
+    chart->addSeries(series[brightness]);
 
-    if (settings.publicTemp)    chart->addSeries(series[temperature]);
-    if (settings.publicHumid)   chart->addSeries(series[humidity]);
-    if (settings.publicSpeed)   chart->addSeries(series[windspeed]);
-    if (settings.publicBright)  chart->addSeries(series[brightness]);
+    if (!settings.publicTemp)   chart->removeSeries((series[temperature]));
+    if (!settings.publicHumid)  chart->removeSeries((series[humidity]));
+    if (!settings.publicSpeed)  chart->removeSeries((series[windspeed]));
+    if (!settings.publicBright) chart->removeSeries((series[brightness]));
 
     chart->createDefaultAxes();
     chart->setTitle("testthingy");
@@ -109,11 +132,11 @@ QSqlDatabase MainWindow::initializeDatabase(QSqlDatabase db,
                                             QString databaseName)
 {
     db = QSqlDatabase::addDatabase("QMYSQL");
-    db.setHostName(address);
+    db.setHostName(QString(address));
     db.setPort(port.toInt());
-    db.setUserName(username);
-    db.setPassword(password);
-    db.setDatabaseName(databaseName);
+    db.setUserName(QString(username));
+    db.setPassword(QString(password));
+    db.setDatabaseName(QString(databaseName));
     if (db.open())
     {
         return db;
@@ -126,55 +149,56 @@ QSqlDatabase MainWindow::initializeDatabase(QSqlDatabase db,
     return db;
 }
 
-void MainWindow::getDatabaseLogin()
-{
-
-}
-
-void MainWindow::setDatabaseLogin(QString filename,
-                                  QString name,
-                                  QString address,
-                                  QString port,
-                                  QString username,
-                                  QString password)
+void MainWindow::getLogin(QString filename)
 {
     QFile file(filename);
+    file.open(QIODevice::ReadOnly);
     if (!file.exists())
     {
-        qDebug() << "File Login.xml not found...";
+        //give error message
+        qDebug() << "File not found...";
     }
     else
     {
-        file.open(QIODevice::WriteOnly);
+        QTextStream txt(&file);
 
-        QXmlStreamWriter xmlWriter(&file);
-        xmlWriter.setAutoFormatting(true);
-        xmlWriter.writeStartDocument();
+        txt.seek(0);
+        address     = txt.readLine();
+        port        = txt.readLine();
+        username    = txt.readLine();
+        password    = txt.readLine();
+        databaseName = txt.readLine();
 
-        xmlWriter.writeStartElement("Login");
-        xmlWriter.writeTextElement("Name", name);
-        xmlWriter.writeTextElement("Address", address);
-        xmlWriter.writeTextElement("Port", port);
-        xmlWriter.writeTextElement("Username", username);
-        xmlWriter.writeTextElement("Password", password);
-
-        xmlWriter.writeEndElement();
-
-        file.close();
+        //qDebug() << address << "\n" << port << "\n" <<  username << "\n" <<  password << "\n" <<  databaseName;
     }
+    file.close();
 }
 
-void MainWindow::on_ShowGraphs_clicked()
+void MainWindow::setLogin(QString filename,
+                          QString address,
+                          QString port,
+                          QString username,
+                          QString password,
+                          QString name)
 {
-    graph.setCentralWidget(chartView);
-    graph.show();
-    graph.setWindowTitle("Graphs");
-}
+    QFile file(filename);
+    file.open(QIODevice::WriteOnly);
 
-void MainWindow::on_Settings_clicked()
-{
-    settings.show();
-    settings.setWindowTitle("Settings");
+    if (file.exists())
+    {
+        QTextStream txt(&file);
+        txt << address  << "\n";
+        txt << port     << "\n";
+        txt << username << "\n";
+        txt << password << "\n";
+        txt << name     << "\n";
+    }
+    else
+    {
+        //give error message
+        qDebug() << "File not found...";
+    }
+    file.close();
 }
 
 

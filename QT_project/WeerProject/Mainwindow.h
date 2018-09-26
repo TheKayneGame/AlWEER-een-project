@@ -40,18 +40,19 @@ public:
                                     QString username,
                                     QString password,
                                     QString databaseName);
-    void setDatabaseLogin(QString filename,
-                          QString name,
-                          QString address,
-                          QString port,
-                          QString username,
-                          QString password);
-    void getDatabaseLogin();
-    QString address = "www.sandervandenberk.nl";
-    QString port = "3306";
-    QString username = "weer";
-    QString password = "admin";
-    QString databaseName = "alWeer";
+    void setLogin(QString filename,
+                  QString address,
+                  QString port,
+                  QString username,
+                  QString password,
+                  QString name);
+    void getLogin(QString filename); //returns the loginvalues from the file sets them to the correct variables
+
+    QString address;
+    QString port;
+    QString username;
+    QString password;
+    QString databaseName;
 
 private slots:
     void on_ImportData_clicked();
@@ -64,6 +65,8 @@ private:
     Settings settings;
     QSqlDatabase db;
     enum valueType {temperature = 0, humidity, windspeed, brightness};
+    int sensorAmount = 4;
+    void showGraphWindow(void);
 };
 
 #endif // MAINWINDOW_H

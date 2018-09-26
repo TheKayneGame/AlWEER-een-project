@@ -10,6 +10,7 @@ int main(int argc, char *argv[])
 
     MainWindow widget;
     widget.show();
+    widget.setFixedSize(460, 425);
 
     return a.exec();
 }
