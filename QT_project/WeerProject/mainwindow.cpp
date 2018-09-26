@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    settings.setLoginText(address, port, username, password, databaseName);
 }
 
 MainWindow::~MainWindow()
@@ -46,7 +47,7 @@ void MainWindow::on_ImportData_clicked()
         delete values;
         values = nullptr;
 
-        if (graph.isVisible())
+        if (graph.isActiveWindow())
         {
             graph.close();
             graph.setCentralWidget(chartView);
@@ -101,7 +102,7 @@ QSqlDatabase MainWindow::initializeDatabase(QSqlDatabase db,
 {
     db = QSqlDatabase::addDatabase("QMYSQL");
     db.setHostName(address);
-    db.setPort(port.toInt());
+    db.setPort(3306);
     db.setUserName(username);
     db.setPassword(password);
     db.setDatabaseName(databaseName);
@@ -117,42 +118,53 @@ QSqlDatabase MainWindow::initializeDatabase(QSqlDatabase db,
     return db;
 }
 
-void MainWindow::getDatabaseLogin()
-{
-
-}
-
-void MainWindow::setDatabaseLogin(QString filename,
-                                  QString name,
-                                  QString address,
-                                  QString port,
-                                  QString username,
-                                  QString password)
+void MainWindow::getLogin(QString filename)
 {
     QFile file(filename);
+    file.open(QIODevice::ReadOnly);
     if (!file.exists())
     {
-        qDebug() << "File Login.xml not found...";
+        qDebug() << "File not found...";
     }
     else
     {
-        file.open(QIODevice::WriteOnly);
+        QTextStream txt(&file);
 
-        QXmlStreamWriter xmlWriter(&file);
-        xmlWriter.setAutoFormatting(true);
-        xmlWriter.writeStartDocument();
+        int x = 0;
 
-        xmlWriter.writeStartElement("Login");
-        xmlWriter.writeTextElement("Name", name);
-        xmlWriter.writeTextElement("Address", address);
-        xmlWriter.writeTextElement("Port", port);
-        xmlWriter.writeTextElement("Username", username);
-        xmlWriter.writeTextElement("Password", password);
-
-        xmlWriter.writeEndElement();
-
-        file.close();
+        txt.seek(x);
+        address = txt.readLine();
+        x++;
+        port = txt.readLine();
+        x++;
+        username = txt.readLine();
+        x++;
+        password = txt.readLine();
+        x++;
+        databaseName = txt.readLine();
+        qDebug() << address << "\n" << port << "\n" <<  username << "\n" <<  password << "\n" <<  databaseName;
     }
+    file.close();
+}
+
+void MainWindow::setLogin(QString filename, QString address, QString port, QString username, QString password, QString name)
+{
+    QFile file(filename);
+    file.open(QIODevice::WriteOnly);
+    if (!file.exists())
+    {
+        qDebug() << "File not found...";
+    }
+    else
+    {
+        QTextStream txt(&file);
+        txt << address  << "\n";
+        txt << port     << "\n";
+        txt << username << "\n";
+        txt << password << "\n";
+        txt << name     << "\n";
+    }
+    file.close();
 }
 
 void MainWindow::on_ShowGraphs_clicked()

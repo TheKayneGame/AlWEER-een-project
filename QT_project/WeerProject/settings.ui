@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>628</width>
-    <height>364</height>
+    <height>303</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
      <x>20</x>
      <y>120</y>
      <width>131</width>
-     <height>181</height>
+     <height>141</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
@@ -27,16 +27,6 @@
      <widget class="QCheckBox" name="cbBright">
       <property name="text">
        <string>Show Brightness</string>
-      </property>
-      <property name="checked">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QCheckBox" name="cbSpeed">
-      <property name="text">
-       <string>Show Windspeed</string>
       </property>
       <property name="checked">
        <bool>true</bool>
@@ -66,10 +56,13 @@
       </property>
      </widget>
     </item>
-    <item row="5" column="0">
-     <widget class="QPushButton" name="Apply">
+    <item row="2" column="0">
+     <widget class="QCheckBox" name="cbSpeed">
       <property name="text">
-       <string>Apply to Graphs</string>
+       <string>Show Windspeed</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
       </property>
      </widget>
     </item>
@@ -99,7 +92,7 @@
      <x>150</x>
      <y>0</y>
      <width>16</width>
-     <height>311</height>
+     <height>261</height>
     </rect>
    </property>
    <property name="orientation">
@@ -263,7 +256,7 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>300</y>
+     <y>250</y>
      <width>641</width>
      <height>21</height>
     </rect>
@@ -355,24 +348,11 @@
     <string>Resolution:</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="ApplyDataButton">
-   <property name="geometry">
-    <rect>
-     <x>510</x>
-     <y>270</y>
-     <width>111</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Apply to Database</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="ApplyAllButton">
    <property name="geometry">
     <rect>
-     <x>454</x>
-     <y>320</y>
+     <x>430</x>
+     <y>270</y>
      <width>81</width>
      <height>23</height>
     </rect>
@@ -384,8 +364,8 @@
   <widget class="QPushButton" name="CancelButton">
    <property name="geometry">
     <rect>
-     <x>540</x>
-     <y>320</y>
+     <x>530</x>
+     <y>270</y>
      <width>81</width>
      <height>23</height>
     </rect>

@@ -28,10 +28,9 @@ public:
     QWidget *layoutWidget;
     QGridLayout *gridLayout;
     QCheckBox *cbBright;
-    QCheckBox *cbSpeed;
     QCheckBox *cbTemp;
     QCheckBox *cbHumid;
-    QPushButton *Apply;
+    QCheckBox *cbSpeed;
     QLabel *label_3;
     QFrame *line;
     QLabel *label_4;
@@ -51,7 +50,6 @@ public:
     QTextEdit *ResolutionValue;
     QTextEdit *AmountValue;
     QLabel *label;
-    QPushButton *ApplyDataButton;
     QPushButton *ApplyAllButton;
     QPushButton *CancelButton;
 
@@ -59,10 +57,10 @@ public:
     {
         if (Settings->objectName().isEmpty())
             Settings->setObjectName(QStringLiteral("Settings"));
-        Settings->resize(628, 364);
+        Settings->resize(628, 303);
         layoutWidget = new QWidget(Settings);
         layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
-        layoutWidget->setGeometry(QRect(20, 120, 131, 181));
+        layoutWidget->setGeometry(QRect(20, 120, 131, 141));
         gridLayout = new QGridLayout(layoutWidget);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         gridLayout->setContentsMargins(0, 0, 0, 0);
@@ -71,12 +69,6 @@ public:
         cbBright->setChecked(true);
 
         gridLayout->addWidget(cbBright, 4, 0, 1, 1);
-
-        cbSpeed = new QCheckBox(layoutWidget);
-        cbSpeed->setObjectName(QStringLiteral("cbSpeed"));
-        cbSpeed->setChecked(true);
-
-        gridLayout->addWidget(cbSpeed, 2, 0, 1, 1);
 
         cbTemp = new QCheckBox(layoutWidget);
         cbTemp->setObjectName(QStringLiteral("cbTemp"));
@@ -91,10 +83,11 @@ public:
 
         gridLayout->addWidget(cbHumid, 1, 0, 1, 1);
 
-        Apply = new QPushButton(layoutWidget);
-        Apply->setObjectName(QStringLiteral("Apply"));
+        cbSpeed = new QCheckBox(layoutWidget);
+        cbSpeed->setObjectName(QStringLiteral("cbSpeed"));
+        cbSpeed->setChecked(true);
 
-        gridLayout->addWidget(Apply, 5, 0, 1, 1);
+        gridLayout->addWidget(cbSpeed, 2, 0, 1, 1);
 
         label_3 = new QLabel(Settings);
         label_3->setObjectName(QStringLiteral("label_3"));
@@ -104,7 +97,7 @@ public:
         label_3->setFont(font);
         line = new QFrame(Settings);
         line->setObjectName(QStringLiteral("line"));
-        line->setGeometry(QRect(150, 0, 16, 311));
+        line->setGeometry(QRect(150, 0, 16, 261));
         line->setFrameShape(QFrame::VLine);
         line->setFrameShadow(QFrame::Sunken);
         label_4 = new QLabel(Settings);
@@ -151,7 +144,7 @@ public:
         NameText->setGeometry(QRect(260, 180, 361, 24));
         line_3 = new QFrame(Settings);
         line_3->setObjectName(QStringLiteral("line_3"));
-        line_3->setGeometry(QRect(0, 300, 641, 21));
+        line_3->setGeometry(QRect(0, 250, 641, 21));
         line_3->setFrameShape(QFrame::HLine);
         line_3->setFrameShadow(QFrame::Sunken);
         label_9 = new QLabel(Settings);
@@ -182,15 +175,12 @@ public:
         label = new QLabel(Settings);
         label->setObjectName(QStringLiteral("label"));
         label->setGeometry(QRect(20, 57, 81, 27));
-        ApplyDataButton = new QPushButton(Settings);
-        ApplyDataButton->setObjectName(QStringLiteral("ApplyDataButton"));
-        ApplyDataButton->setGeometry(QRect(510, 270, 111, 23));
         ApplyAllButton = new QPushButton(Settings);
         ApplyAllButton->setObjectName(QStringLiteral("ApplyAllButton"));
-        ApplyAllButton->setGeometry(QRect(454, 320, 81, 23));
+        ApplyAllButton->setGeometry(QRect(430, 270, 81, 23));
         CancelButton = new QPushButton(Settings);
         CancelButton->setObjectName(QStringLiteral("CancelButton"));
-        CancelButton->setGeometry(QRect(540, 320, 81, 23));
+        CancelButton->setGeometry(QRect(530, 270, 81, 23));
 
         retranslateUi(Settings);
 
@@ -201,10 +191,9 @@ public:
     {
         Settings->setWindowTitle(QApplication::translate("Settings", "Dialog", nullptr));
         cbBright->setText(QApplication::translate("Settings", "Show Brightness", nullptr));
-        cbSpeed->setText(QApplication::translate("Settings", "Show Windspeed", nullptr));
         cbTemp->setText(QApplication::translate("Settings", "Show Temperature", nullptr));
         cbHumid->setText(QApplication::translate("Settings", "Show Humidity", nullptr));
-        Apply->setText(QApplication::translate("Settings", "Apply to Graphs", nullptr));
+        cbSpeed->setText(QApplication::translate("Settings", "Show Windspeed", nullptr));
         label_3->setText(QApplication::translate("Settings", "Graph", nullptr));
         label_4->setText(QApplication::translate("Settings", "Database", nullptr));
         label_5->setText(QApplication::translate("Settings", "Address:", nullptr));
@@ -214,7 +203,6 @@ public:
         label_9->setText(QApplication::translate("Settings", ":", nullptr));
         label_2->setText(QApplication::translate("Settings", "Amount:", nullptr));
         label->setText(QApplication::translate("Settings", "Resolution:", nullptr));
-        ApplyDataButton->setText(QApplication::translate("Settings", "Apply to Database", nullptr));
         ApplyAllButton->setText(QApplication::translate("Settings", "Apply all", nullptr));
         CancelButton->setText(QApplication::translate("Settings", "Cancel", nullptr));
     } // retranslateUi
