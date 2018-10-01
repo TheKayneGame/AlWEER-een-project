@@ -4,16 +4,20 @@
 #include <MySQL_Cursor.h>
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
+#include <SoftwareSerial.h>
+
+#define CO2_TX D1
+#define CO2_RX D2
 
 // Netwerk stuff
-char ssid[] = "Netgear-berk";                 // Network Name
-char pass[] = "berk462993";                 // Network Password
+char ssid[] = "alleenVoorRoen";                 // Network Name
+char pass[] = "roenislekker";                 // Network Password
 byte mac[6];
 
 // De server opzetten voor het sturen van de MySQL insert
 WiFiServer server(80);
 IPAddress ip(192, 168, 137, 159);
-IPAddress gateway(192, 168, 137, 1);
+IPAddress gateway(192, 168, 43, 90);
 IPAddress subnet(255, 255, 255, 0);
 
 WiFiClient client;
@@ -27,8 +31,12 @@ IPAddress server_addr(54,36,191,190);         // MySQL server IP
 char user[] = "weer";           // MySQL user
 char password[] = "admin";       // MySQL password
 
+SoftwareSerial SerialCO2(CO2_RX, CO2_TX);
+
 void setup() {
 
+  SerialCO2.begin(9600);
+  
   Serial.begin(9600);
   randomSeed(analogRead(0));
 
@@ -71,6 +79,8 @@ void setup() {
 
   Serial.println("Connecting to database");
 
+
+  // If it not works than you need to check the gatway. THE GAYWAY!!!!!!!!!
   while (conn.connect(server_addr, 3306, user, password) != true) {
     delay(200);
     Serial.print ( "." );
@@ -81,8 +91,9 @@ void setup() {
 
 void loop() {
 
-  // Data binnnen krijgen
   
+/*  
+  // Data binnnen krijgen
   int Bightness = random(15, 35);
   int Humidity = random(25, 45);
   int Windsnelheid = random(35, 55);
@@ -104,7 +115,7 @@ void loop() {
   cur_mem->execute(query);
 
   delete cur_mem;
-
+*/
   
 
 }
