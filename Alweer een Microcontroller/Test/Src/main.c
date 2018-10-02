@@ -52,6 +52,8 @@
 #include "cmsis_os.h"
 #include "si7021.h"
 #include "ssd1306.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 /* USER CODE BEGIN Includes */
 
@@ -64,9 +66,6 @@
 
 #define I2CTIMEOUT 				100
 
-#define ADDRESS      			0x40
-#define TEMP_MEASURE_NOHOLD  	0xF3
-#define HUMD_MEASURE_NOHOLD  	0xF5
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -470,48 +469,57 @@ void StartDefaultTask(void const * argument)
 	float result;
 	float humidity;
 	float tempf;
-	char lcd_buf[25];
-	char ldr[25];
-	char ldr2[25];
+	char temp_buf[10];
+	char humd_buf[10];
+	char ldr[16];
+	char ldr2[16];
+	char uartbuf[32] = "test";
 	uint32_t adcResult = 0;
+	uint16_t RH_Code;
+	uint16_t temp_Code;
 
 	for (;;) {
 
 		ssd1306_Fill(Black);
-		uint16_t RH_Code = makeMeasurment(HUMD_MEASURE_NOHOLD);
+		RH_Code = makeMeasurment(HUMD_MEASURE_NOHOLD);
 		result = (125.0 * RH_Code / 65536) - 6;
 		humidity = result;
-		uint16_t temp_Code = makeMeasurment(TEMP_MEASURE_NOHOLD);
+		temp_Code = makeMeasurment(TEMP_MEASURE_NOHOLD);
 		result = ((175.72 * temp_Code) / 65536) - 46.85;
 		tempf = result;
-		itoa((int)(tempf * 10),lcd_buf,10);
-		lcd_buf[3] = lcd_buf[2];
-		lcd_buf[2] = ',';
+		itoa((int)(tempf * 10),temp_buf,10);
+		temp_buf[3] = temp_buf[2];
+		temp_buf[2] = ',';
+
+		itoa((int)(humidity * 10),humd_buf,10);
+				humd_buf[3] = humd_buf[2];
+				humd_buf[2] = ',';
+
 		ssd1306_SetCursor(0, 0);	//set cursor position x=0, y=0
-		ssd1306_WriteString(lcd_buf, Font_7x10, White);
-		itoa((int)(humidity * 10),lcd_buf,10);
-		lcd_buf[3] = lcd_buf[2];
-		lcd_buf[2] = ',';
+		ssd1306_WriteString(temp_buf, Font_7x10, White);
+
 		ssd1306_SetCursor(0, 10);	//set cursor position x=0, y=0
-		ssd1306_WriteString(lcd_buf, Font_7x10, White);
+		ssd1306_WriteString(humd_buf, Font_7x10, White);
 		osDelay(0);
 
 		HAL_ADC_Start(&hadc);
 		HAL_ADC_PollForConversion(&hadc, 100);
 
-			adcResult = 0;
-
+		adcResult = 0;
 		adcResult = HAL_ADC_GetValue(&hadc);
 		HAL_ADC_Stop(&hadc);
 		itoa(adcResult,ldr2,10);
 		ssd1306_SetCursor(0, 20);	//set cursor position x=0, y=0
-		if(adcResult > 800)strcpy(ldr,"Ah My EyEs") ;
+		/*if(adcResult > 800)strcpy(ldr,"Ah My EyEs") ;
 		if(adcResult < 800 && adcResult > 100)strcpy(ldr,"ThIs GuT");
 		if(adcResult < 100)strcpy(ldr,"ItZ dAnK");
 		ssd1306_WriteString(ldr, Font_7x10, White);
 		ssd1306_SetCursor(75, 20);	//set cursor position x=0, y=0
-		ssd1306_WriteString(ldr2, Font_7x10, White);
+		ssd1306_WriteString(ldr2, Font_7x10, White);*/
 		ssd1306_UpdateScreen();
+		sprintf(uartbuf,"temp: %s humd: %s \n", temp_buf, humd_buf);
+		HAL_UART_Transmit(&huart2,uartbuf,32,100);
+
 	}
 
   /* USER CODE END 5 */ 
