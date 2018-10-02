@@ -21,15 +21,44 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_ShowGraphs_clicked()
 {
-    showGraphWindow();
+    if (createChart())
+        showGraphWindow();
 }
 
 void MainWindow::on_Settings_clicked()
 {
     settings.show();
-
     settings.setWindowTitle("Settings");
     settings.setFixedSize(632,303);
+}
+
+void MainWindow::on_ExportData_clicked()
+{
+    QString filename = QFileDialog::getSaveFileName(this, "Save as...") + ".csv";
+    QFile file(filename);
+    file.open(QIODevice::WriteOnly);
+
+    if (file.exists())
+    {
+        QTextStream txt(&file);
+
+        txt << "Temperature" << "," << "Humidity" << "," << "Windspeed" << "," << "Brightness" << "\n";
+
+        for (int i = 0; i < settings.amount; i++)
+        {
+            for (int k = 0; k < sensorAmount; k++)
+            {
+                txt << ui->tableView->model()->data(ui->tableView->model()->index(i,k)).toString().toDouble() << ",";
+            }
+            txt << "\n";
+        }
+    }
+    else
+    {
+        //give error message
+        qDebug() << "File not found...";
+    }
+    file.close();
 }
 
 void MainWindow::showGraphWindow(void)
@@ -61,9 +90,9 @@ void MainWindow::on_ImportData_clicked()
 
     if(db.open())
     {
-        QSqlQueryModel *mod     = new QSqlQueryModel;
-        QSqlQuery *query        = new QSqlQuery(db);
-        QModelIndex *modIndex   = new QModelIndex();
+        mod         = new QSqlQueryModel;
+        query       = new QSqlQuery(db);
+        modIndex    = new QModelIndex();
 
         query->prepare("SELECT Temp as temperature, Humidity, Windsnelheid as Windspeed, Bightness as Brightness FROM alWeer.weer");
 
@@ -75,7 +104,7 @@ void MainWindow::on_ImportData_clicked()
 
         for (int i = 0; i < sensorAmount; i++)
             for (int k = 0; k < settings.amount; k++)
-                values[i][k] = ui->tableView->model()->data(ui->tableView->model()->index(k,i+1)).toString().toDouble();
+                values[i][k] = ui->tableView->model()->data(ui->tableView->model()->index(k,i)).toString().toDouble();
 
         createChart();
 
@@ -84,7 +113,8 @@ void MainWindow::on_ImportData_clicked()
         delete values;
         values = nullptr;
 
-        showGraphWindow();
+        if (graph.isVisible())
+            showGraphWindow();
     }
     else
     {
@@ -96,7 +126,7 @@ void MainWindow::on_ImportData_clicked()
     }
 }
 
-void MainWindow::createChart()
+bool MainWindow::createChart()
 {
     for (int i = 0; i < sensorAmount; i++)
         series[i] = new QLineSeries();
@@ -118,10 +148,15 @@ void MainWindow::createChart()
     if (!settings.publicBright) chart->removeSeries((series[brightness]));
 
     chart->createDefaultAxes();
-    chart->setTitle("testthingy");
+    chart->setTitle("Weather graph:");
 
     chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
+
+    if (chart != nullptr)
+        return true;
+    else
+        return false;
 }
 
 QSqlDatabase MainWindow::initializeDatabase(QSqlDatabase db,

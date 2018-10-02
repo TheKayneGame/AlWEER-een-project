@@ -32,7 +32,7 @@ public:
     QChartView *chartView;
     double** values;
     int rowCount;
-    void createChart();
+    bool createChart();
     //database variables/functions
     QSqlDatabase initializeDatabase(QSqlDatabase db,
                                     QString address,
@@ -58,15 +58,20 @@ private slots:
     void on_ImportData_clicked();
     void on_ShowGraphs_clicked();
     void on_Settings_clicked();
+    void on_ExportData_clicked();
 
 private:
     Ui::MainWindow *ui;
     GraphWindow graph;
     Settings settings;
     QSqlDatabase db;
+    QSqlQueryModel *mod;
+    QSqlQuery *query;
+    QModelIndex *modIndex;
     enum valueType {temperature = 0, humidity, windspeed, brightness};
     int sensorAmount = 4;
     void showGraphWindow(void);
+    bool isRefreshed = false;
 };
 
 #endif // MAINWINDOW_H

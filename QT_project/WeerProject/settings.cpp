@@ -5,8 +5,8 @@
 Settings::Settings(QWidget *parent) : QDialog(parent), ui(new Ui::Settings)
 {
     ui->setupUi(this);
-    amount      = localAmount;
-    resolution  = localResolution;
+
+    setGraphSettings(localAmount, localResolution, false, false, false, false);
 }
 
 Settings::~Settings()
@@ -46,6 +46,8 @@ void Settings::on_ApplyAllButton_clicked()
     publicHumid = localHumid;
     publicSpeed = localSpeed;
     publicBright = localBright;
+
+    this->close();
 }
 
 void Settings::on_CancelButton_clicked()
@@ -64,6 +66,17 @@ void Settings::setLoginText(QString address,
     ui->UsernameText->setText(username);
     ui->PasswordText->setText(password);
     ui->NameText->setText(name);
+}
+
+void Settings::setGraphSettings(int amount, int resolution, bool temp, bool humid, bool speed, bool bright)
+{
+    ui->AmountValue->setText(QString::number(amount));
+    ui->ResolutionValue->setText(QString::number(resolution));
+
+    ui->cbTemp->setCheckState(Qt::CheckState(temp));
+    ui->cbHumid->setCheckState(Qt::CheckState(humid));
+    ui->cbSpeed->setCheckState(Qt::CheckState(speed));
+    ui->cbBright->setCheckState(Qt::CheckState(bright));
 }
 
 void Settings::on_cbTemp_stateChanged(int arg1)

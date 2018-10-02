@@ -29,6 +29,7 @@ public:
                       QString username,
                       QString password,
                       QString name);
+    void setGraphSettings(int amount, int resolution, bool temp, bool humid, bool speed, bool bright);
 
 
 private slots:
@@ -37,7 +38,6 @@ private slots:
     void on_cbSpeed_stateChanged(int arg1);
     void on_cbBright_stateChanged(int arg1);
     void on_ApplyAllButton_clicked();
-
     void on_CancelButton_clicked();
 
 private:
