@@ -32,7 +32,7 @@ public:
     QChartView *chartView;
     double** values;
     int rowCount;
-    bool createChart();
+    void createChart();
     //database variables/functions
     QSqlDatabase initializeDatabase(QSqlDatabase db,
                                     QString address,
@@ -70,7 +70,7 @@ private:
     QModelIndex *modIndex;
     enum valueType {temperature = 0, humidity, windspeed, brightness};
     int sensorAmount = 4;
-    void showGraphWindow(void);
+    void showGraphWindow();
     bool isRefreshed = false;
 };
 

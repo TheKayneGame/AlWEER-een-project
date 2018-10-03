@@ -2,8 +2,9 @@
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
-                    , values(nullptr)
-                    , ui(new Ui::MainWindow)
+  , chart(nullptr)
+  , values(nullptr)
+  , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     getLogin("login.txt");
@@ -21,7 +22,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_ShowGraphs_clicked()
 {
-    if (createChart())
+    if (chart != nullptr)
         showGraphWindow();
 }
 
@@ -61,8 +62,10 @@ void MainWindow::on_ExportData_clicked()
     file.close();
 }
 
-void MainWindow::showGraphWindow(void)
+void MainWindow::showGraphWindow()
 {
+    createChart();
+
     if (graph.isVisible())
     {
         graph.close();
@@ -84,9 +87,6 @@ void MainWindow::on_ImportData_clicked()
                             password,
                             databaseName);
 
-    values = new double*[sensorAmount];
-    for(int i = 0; i < sensorAmount; ++i)
-        values[i] = new double[settings.amount];
 
     if(db.open())
     {
@@ -100,11 +100,6 @@ void MainWindow::on_ImportData_clicked()
         mod->setQuery(*query);
         ui->tableView->setModel(mod);
         rowCount = mod->rowCount();
-        query->clear();
-
-        for (int i = 0; i < sensorAmount; i++)
-            for (int k = 0; k < settings.amount; k++)
-                values[i][k] = ui->tableView->model()->data(ui->tableView->model()->index(k,i)).toString().toDouble();
 
         createChart();
 
@@ -126,8 +121,16 @@ void MainWindow::on_ImportData_clicked()
     }
 }
 
-bool MainWindow::createChart()
+void MainWindow::createChart()
 {
+    values = new double*[sensorAmount];
+    for(int i = 0; i < sensorAmount; ++i)
+        values[i] = new double[settings.amount];
+
+    for (int i = 0; i < sensorAmount; i++)
+        for (int k = 0; k < settings.amount; k++)
+            values[i][k] = ui->tableView->model()->data(ui->tableView->model()->index(k,i)).toString().toDouble();
+
     for (int i = 0; i < sensorAmount; i++)
         series[i] = new QLineSeries();
 
@@ -152,11 +155,6 @@ bool MainWindow::createChart()
 
     chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
-
-    if (chart != nullptr)
-        return true;
-    else
-        return false;
 }
 
 QSqlDatabase MainWindow::initializeDatabase(QSqlDatabase db,
