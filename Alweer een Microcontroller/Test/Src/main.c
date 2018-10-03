@@ -52,7 +52,6 @@
 #include "cmsis_os.h"
 #include "si7021.h"
 #include "ssd1306.h"
-
 /* USER CODE BEGIN Includes */
 
 #include "string.h"
@@ -78,6 +77,7 @@ I2C_HandleTypeDef hi2c1;
 I2C_HandleTypeDef hi2c2;
 
 TIM_HandleTypeDef htim6;
+TIM_HandleTypeDef htim14;
 
 UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
@@ -100,6 +100,7 @@ static void MX_USART2_UART_Init(void);
 static void MX_CRC_Init(void);
 static void MX_TIM6_Init(void);
 static void MX_ADC_Init(void);
+static void MX_TIM14_Init(void);
 void StartDefaultTask(void const * argument);
 void StartTask02(void const * argument);
 
@@ -147,6 +148,7 @@ int main(void)
   MX_CRC_Init();
   MX_TIM6_Init();
   MX_ADC_Init();
+  MX_TIM14_Init();
   /* USER CODE BEGIN 2 */
 	/*void I2C1Send(uint8_t address, uint8_t data) {
 	 HAL_I2C_Master_Transmit(&hi2c1, address, &data, I2CTIMEOUT);
@@ -403,6 +405,23 @@ static void MX_TIM6_Init(void)
 
 }
 
+/* TIM14 init function */
+static void MX_TIM14_Init(void)
+{
+
+  htim14.Instance = TIM14;
+  htim14.Init.Prescaler = 0;
+  htim14.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim14.Init.Period = 0;
+  htim14.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim14.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim14) != HAL_OK)
+  {
+    _Error_Handler(__FILE__, __LINE__);
+  }
+
+}
+
 /* USART1 init function */
 static void MX_USART1_UART_Init(void)
 {
@@ -445,15 +464,28 @@ static void MX_USART2_UART_Init(void)
 
 }
 
-/** Pinout Configuration
+/** Configure pins as 
+        * Analog 
+        * Input 
+        * Output
+        * EVENT_OUT
+        * EXTI
 */
 static void MX_GPIO_Init(void)
 {
+
+  GPIO_InitTypeDef GPIO_InitStruct;
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
+
+  /*Configure GPIO pin : PB4 */
+  GPIO_InitStruct.Pin = GPIO_PIN_4;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 }
 
@@ -474,8 +506,14 @@ void StartDefaultTask(void const * argument)
 	char ldr[25];
 	char ldr2[25];
 	uint32_t adcResult = 0;
+	ssd1306_Init();
+	int array_windspeed[4];
+	int count_windspeed = 0;
+	int millis_begin = 0;
+	int millis_end = 0;
 
 	for (;;) {
+
 
 		ssd1306_Fill(Black);
 		uint16_t RH_Code = makeMeasurment(HUMD_MEASURE_NOHOLD);
@@ -492,9 +530,9 @@ void StartDefaultTask(void const * argument)
 		itoa((int)(humidity * 10),lcd_buf,10);
 		lcd_buf[3] = lcd_buf[2];
 		lcd_buf[2] = ',';
-		ssd1306_SetCursor(0, 10);	//set cursor position x=0, y=0
+		ssd1306_SetCursor(50, 0);	//set cursor position x=0, y=0
 		ssd1306_WriteString(lcd_buf, Font_7x10, White);
-		osDelay(0);
+		//osDelay(0);
 
 		HAL_ADC_Start(&hadc);
 		HAL_ADC_PollForConversion(&hadc, 100);
@@ -504,13 +542,26 @@ void StartDefaultTask(void const * argument)
 		adcResult = HAL_ADC_GetValue(&hadc);
 		HAL_ADC_Stop(&hadc);
 		itoa(adcResult,ldr2,10);
-		ssd1306_SetCursor(0, 20);	//set cursor position x=0, y=0
-		if(adcResult > 800)strcpy(ldr,"Ah My EyEs") ;
-		if(adcResult < 800 && adcResult > 100)strcpy(ldr,"ThIs GuT");
-		if(adcResult < 100)strcpy(ldr,"ItZ dAnK");
-		ssd1306_WriteString(ldr, Font_7x10, White);
-		ssd1306_SetCursor(75, 20);	//set cursor position x=0, y=0
+
+
+		ssd1306_SetCursor(0, 10);	//set cursor position x=0, y=0
+		itoa(adcResult,ldr2,10);
 		ssd1306_WriteString(ldr2, Font_7x10, White);
+
+		GPIO_PinState state= 0;
+
+		state =  HAL_GPIO_ReadPin( GPIOB, GPIO_PIN_4 );
+		if(state == 1)
+		{
+			millis_end = xTaskGetTickCount() - millis_begin;
+			millis_begin = xTaskGetTickCount();
+			//count_windspeed++;
+			//if(count_windspeed == 4)count_windspeed = 0;
+		}
+		ssd1306_SetCursor(50, 10);
+		itoa(millis_end,ldr2,10);
+		ssd1306_WriteString(ldr2, Font_7x10, White);
+
 		ssd1306_UpdateScreen();
 	}
 

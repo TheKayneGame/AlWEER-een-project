@@ -1,7 +1,7 @@
 [PreviousGenFiles]
-HeaderPath=D:/Documents/GitHub/AlWEER-een-project/Alweer een Microcontroller/Test/Inc
+HeaderPath=C:/Users/Rinke.RINKE-LENOVO/Documents/GitHub/AlWEER-een-project/Alweer een Microcontroller/Test/Inc
 HeaderFiles=FreeRTOSConfig.h;stm32f0xx_it.h;stm32f0xx_hal_conf.h;main.h;
-SourcePath=D:/Documents/GitHub/AlWEER-een-project/Alweer een Microcontroller/Test/Src
+SourcePath=C:/Users/Rinke.RINKE-LENOVO/Documents/GitHub/AlWEER-een-project/Alweer een Microcontroller/Test/Src
 SourceFiles=freertos.c;stm32f0xx_it.c;stm32f0xx_hal_msp.c;stm32f0xx_hal_timebase_TIM.c;main.c;
 
 [PreviousLibFiles]
