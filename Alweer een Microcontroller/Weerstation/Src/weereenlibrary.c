@@ -16,6 +16,24 @@ int16_t ldrCheckVal() {
 	return adcResult;
 }
 
+GPIO_PinState windfCheckVal()
+{
+	GPIO_PinState state= 0;
+
+	state =  HAL_GPIO_ReadPin( GPIOB, GPIO_PIN_4 );
+//	if(state == 1)
+//	{
+//		int millis_begin = 0;
+//		int millis_end = 0;
+//		millis_end = xTaskGetTickCount() - millis_begin;
+//		millis_begin = xTaskGetTickCount();
+//		//count_windspeed++;
+//		//if(count_windspeed == 4)count_windspeed = 0;
+//	}
+	return state;
+
+}
+
 void viewValOnOLED(float temp, float humd, float wind, int16_t light) {
 	char tempbuf[6];
 	char humdbuf[6];
@@ -25,14 +43,14 @@ void viewValOnOLED(float temp, float humd, float wind, int16_t light) {
 	gcvt(humd, 4, humdbuf);
 	gcvt(wind, 4, windbuf);
 	itoa(light, lightbuf, 10);
-	ssd1306_Fill(White);
+	ssd1306_Fill(Black);
 	ssd1306_SetCursor(0, 0);    //set cursor position x=0, y=0
 	ssd1306_WriteString(tempbuf, Font_7x10, White);
-	ssd1306_SetCursor(0, 50);
+	ssd1306_SetCursor(64, 0);
 	ssd1306_WriteString(humdbuf, Font_7x10, White);
-	ssd1306_SetCursor(10, 0);
+	ssd1306_SetCursor(0, 15);
 	ssd1306_WriteString(windbuf, Font_7x10, White);
-	ssd1306_SetCursor(10, 50);
+	ssd1306_SetCursor(64, 15);
 	ssd1306_WriteString(lightbuf, Font_7x10, White);
 	ssd1306_UpdateScreen();
 }

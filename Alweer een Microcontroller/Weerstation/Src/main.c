@@ -134,6 +134,7 @@ int main(void)
   MX_I2C1_Init();
   MX_USART2_UART_Init();
   MX_ADC_Init();
+
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -414,20 +415,21 @@ void StartDefaultTask(void const * argument)
 	char temp_buf[10];
 	char humd_buf[10];
 	char uartbuf[32] = "test";
+	ssd1306_Init();
 	/* Infinite loop */
 	for (;;) {
 
-		ssd1306_Fill(Black);
-		result = makeMeasurment(HUMD_MEASURE_NOHOLD);
+		result = measHumd(HUMD_MEASURE_NOHOLD);
 		humidf = result;
-		result = makeMeasurment(TEMP_MEASURE_NOHOLD);
+		result = measTemp(TEMP_MEASURE_NOHOLD);
 		tempf = result;
 		light = ldrCheckVal();
+		windf = (float)windfCheckVal();
 		viewValOnOLED(tempf, humidf, windf, light);
 		huart1toesp(tempf, humidf, windf, light);
-		sprintf(uartbuf, "temp: %s humd: %s \n", temp_buf, humd_buf);
-		HAL_UART_Transmit(&huart1, uartbuf, 32, 100);
-		osDelay(1000);
+		//sprintf(uartbuf, "temp: %s humd: %s \n", temp_buf, humd_buf);
+		//HAL_UART_Transmit(&huart1, uartbuf, 32, 100);
+		osDelay(10);
 	}
   /* USER CODE END 5 */ 
 }

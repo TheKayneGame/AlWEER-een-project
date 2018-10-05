@@ -16,6 +16,7 @@ extern UART_HandleTypeDef huart1;
 extern ADC_HandleTypeDef hadc;
 
 int16_t ldrCheckVal(); //Reads ldr val and returns
+GPIO_PinState windfCheckVal();
 void viewValOnOLED(float temp, float humd, float wind, int16_t light);
 void haurt1toesp(float temp, float humd, float wind, int16_t light);
 

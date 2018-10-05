@@ -17,6 +17,6 @@
 
 extern I2C_HandleTypeDef hi2c1;
 
-float makeMeasurment(uint8_t command);
-
+float measTemp(uint8_t command);
+float measHumd(uint8_t command);
 #endif /* SI7021_H_ */
