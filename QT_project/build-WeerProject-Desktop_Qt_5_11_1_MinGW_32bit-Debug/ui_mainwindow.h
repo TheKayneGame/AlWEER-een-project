@@ -11,14 +11,14 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QGridLayout>
-#include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QListView>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
-#include <QtWidgets/QPlainTextEdit>
-#include <QtWidgets/QPushButton>
+#include <QtWidgets/QRadioButton>
 #include <QtWidgets/QStatusBar>
-#include <QtWidgets/QTableView>
+#include <QtWidgets/QTextEdit>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -27,15 +27,27 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralWidget;
-    QWidget *layoutWidget;
-    QGridLayout *gridLayout;
-    QPushButton *Table1;
-    QPushButton *Table2;
-    QPushButton *Table3;
-    QPushButton *Table4;
-    QTableView *tableView;
-    QPlainTextEdit *plainTextEdit;
-    QPushButton *RunQuery;
+    QListView *MerkList;
+    QListView *TypeList;
+    QLabel *Imageviewer;
+    QLabel *label_6;
+    QLabel *label_7;
+    QTextEdit *vermogen;
+    QLabel *label_4;
+    QRadioButton *kW;
+    QRadioButton *pk;
+    QWidget *verticalLayoutWidget;
+    QVBoxLayout *verticalLayout;
+    QLabel *label;
+    QLabel *label_2;
+    QLabel *label_3;
+    QLabel *label_5;
+    QWidget *verticalLayoutWidget_2;
+    QVBoxLayout *verticalLayout_2;
+    QTextEdit *Merk;
+    QTextEdit *Naam;
+    QTextEdit *Stad;
+    QTextEdit *Land;
     QMenuBar *menuBar;
     QStatusBar *statusBar;
 
@@ -43,73 +55,137 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(461, 644);
+        MainWindow->resize(932, 1123);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        layoutWidget = new QWidget(centralWidget);
-        layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
-        layoutWidget->setGeometry(QRect(10, 10, 441, 371));
-        gridLayout = new QGridLayout(layoutWidget);
-        gridLayout->setSpacing(6);
-        gridLayout->setContentsMargins(11, 11, 11, 11);
-        gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        gridLayout->setContentsMargins(0, 0, 0, 0);
-        Table1 = new QPushButton(layoutWidget);
-        Table1->setObjectName(QStringLiteral("Table1"));
+        MerkList = new QListView(centralWidget);
+        MerkList->setObjectName(QStringLiteral("MerkList"));
+        MerkList->setGeometry(QRect(10, 30, 121, 371));
+        TypeList = new QListView(centralWidget);
+        TypeList->setObjectName(QStringLiteral("TypeList"));
+        TypeList->setGeometry(QRect(140, 30, 121, 371));
+        Imageviewer = new QLabel(centralWidget);
+        Imageviewer->setObjectName(QStringLiteral("Imageviewer"));
+        Imageviewer->setGeometry(QRect(270, 30, 211, 211));
+        label_6 = new QLabel(centralWidget);
+        label_6->setObjectName(QStringLiteral("label_6"));
+        label_6->setGeometry(QRect(10, 0, 81, 31));
+        QFont font;
+        font.setPointSize(14);
+        font.setBold(true);
+        font.setWeight(75);
+        label_6->setFont(font);
+        label_7 = new QLabel(centralWidget);
+        label_7->setObjectName(QStringLiteral("label_7"));
+        label_7->setGeometry(QRect(140, 0, 81, 31));
+        label_7->setFont(font);
+        vermogen = new QTextEdit(centralWidget);
+        vermogen->setObjectName(QStringLiteral("vermogen"));
+        vermogen->setGeometry(QRect(330, 378, 71, 24));
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(Table1->sizePolicy().hasHeightForWidth());
-        Table1->setSizePolicy(sizePolicy);
-        Table1->setLayoutDirection(Qt::LeftToRight);
+        sizePolicy.setHeightForWidth(vermogen->sizePolicy().hasHeightForWidth());
+        vermogen->setSizePolicy(sizePolicy);
+        label_4 = new QLabel(centralWidget);
+        label_4->setObjectName(QStringLiteral("label_4"));
+        label_4->setGeometry(QRect(270, 380, 52, 17));
+        kW = new QRadioButton(centralWidget);
+        kW->setObjectName(QStringLiteral("kW"));
+        kW->setGeometry(QRect(450, 380, 34, 17));
+        pk = new QRadioButton(centralWidget);
+        pk->setObjectName(QStringLiteral("pk"));
+        pk->setGeometry(QRect(410, 380, 34, 17));
+        verticalLayoutWidget = new QWidget(centralWidget);
+        verticalLayoutWidget->setObjectName(QStringLiteral("verticalLayoutWidget"));
+        verticalLayoutWidget->setGeometry(QRect(270, 249, 31, 121));
+        verticalLayout = new QVBoxLayout(verticalLayoutWidget);
+        verticalLayout->setSpacing(6);
+        verticalLayout->setContentsMargins(11, 11, 11, 11);
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setContentsMargins(0, 0, 0, 0);
+        label = new QLabel(verticalLayoutWidget);
+        label->setObjectName(QStringLiteral("label"));
+        sizePolicy.setHeightForWidth(label->sizePolicy().hasHeightForWidth());
+        label->setSizePolicy(sizePolicy);
 
-        gridLayout->addWidget(Table1, 1, 0, 1, 1);
+        verticalLayout->addWidget(label);
 
-        Table2 = new QPushButton(layoutWidget);
-        Table2->setObjectName(QStringLiteral("Table2"));
-        sizePolicy.setHeightForWidth(Table2->sizePolicy().hasHeightForWidth());
-        Table2->setSizePolicy(sizePolicy);
-        Table2->setLayoutDirection(Qt::LeftToRight);
+        label_2 = new QLabel(verticalLayoutWidget);
+        label_2->setObjectName(QStringLiteral("label_2"));
+        sizePolicy.setHeightForWidth(label_2->sizePolicy().hasHeightForWidth());
+        label_2->setSizePolicy(sizePolicy);
 
-        gridLayout->addWidget(Table2, 1, 1, 1, 1);
+        verticalLayout->addWidget(label_2);
 
-        Table3 = new QPushButton(layoutWidget);
-        Table3->setObjectName(QStringLiteral("Table3"));
-        sizePolicy.setHeightForWidth(Table3->sizePolicy().hasHeightForWidth());
-        Table3->setSizePolicy(sizePolicy);
-        Table3->setLayoutDirection(Qt::LeftToRight);
+        label_3 = new QLabel(verticalLayoutWidget);
+        label_3->setObjectName(QStringLiteral("label_3"));
+        sizePolicy.setHeightForWidth(label_3->sizePolicy().hasHeightForWidth());
+        label_3->setSizePolicy(sizePolicy);
 
-        gridLayout->addWidget(Table3, 1, 2, 1, 1);
+        verticalLayout->addWidget(label_3);
 
-        Table4 = new QPushButton(layoutWidget);
-        Table4->setObjectName(QStringLiteral("Table4"));
-        sizePolicy.setHeightForWidth(Table4->sizePolicy().hasHeightForWidth());
-        Table4->setSizePolicy(sizePolicy);
+        label_5 = new QLabel(verticalLayoutWidget);
+        label_5->setObjectName(QStringLiteral("label_5"));
+        sizePolicy.setHeightForWidth(label_5->sizePolicy().hasHeightForWidth());
+        label_5->setSizePolicy(sizePolicy);
 
-        gridLayout->addWidget(Table4, 1, 3, 1, 1);
+        verticalLayout->addWidget(label_5);
 
-        tableView = new QTableView(layoutWidget);
-        tableView->setObjectName(QStringLiteral("tableView"));
-        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(tableView->sizePolicy().hasHeightForWidth());
-        tableView->setSizePolicy(sizePolicy1);
+        verticalLayoutWidget_2 = new QWidget(centralWidget);
+        verticalLayoutWidget_2->setObjectName(QStringLiteral("verticalLayoutWidget_2"));
+        verticalLayoutWidget_2->setGeometry(QRect(300, 250, 181, 121));
+        verticalLayout_2 = new QVBoxLayout(verticalLayoutWidget_2);
+        verticalLayout_2->setSpacing(6);
+        verticalLayout_2->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        verticalLayout_2->setContentsMargins(0, 0, 0, 0);
+        Merk = new QTextEdit(verticalLayoutWidget_2);
+        Merk->setObjectName(QStringLiteral("Merk"));
+        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Minimum);
+        sizePolicy1.setHorizontalStretch(100);
+        sizePolicy1.setVerticalStretch(24);
+        sizePolicy1.setHeightForWidth(Merk->sizePolicy().hasHeightForWidth());
+        Merk->setSizePolicy(sizePolicy1);
+        Merk->setAutoFillBackground(true);
+        Merk->setReadOnly(true);
 
-        gridLayout->addWidget(tableView, 0, 0, 1, 4);
+        verticalLayout_2->addWidget(Merk);
 
-        plainTextEdit = new QPlainTextEdit(centralWidget);
-        plainTextEdit->setObjectName(QStringLiteral("plainTextEdit"));
-        plainTextEdit->setGeometry(QRect(10, 390, 441, 181));
-        RunQuery = new QPushButton(centralWidget);
-        RunQuery->setObjectName(QStringLiteral("RunQuery"));
-        RunQuery->setGeometry(QRect(340, 580, 105, 21));
-        sizePolicy.setHeightForWidth(RunQuery->sizePolicy().hasHeightForWidth());
-        RunQuery->setSizePolicy(sizePolicy);
+        Naam = new QTextEdit(verticalLayoutWidget_2);
+        Naam->setObjectName(QStringLiteral("Naam"));
+        sizePolicy1.setHeightForWidth(Naam->sizePolicy().hasHeightForWidth());
+        Naam->setSizePolicy(sizePolicy1);
+        Naam->setAutoFillBackground(true);
+        Naam->setReadOnly(true);
+
+        verticalLayout_2->addWidget(Naam);
+
+        Stad = new QTextEdit(verticalLayoutWidget_2);
+        Stad->setObjectName(QStringLiteral("Stad"));
+        QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Minimum);
+        sizePolicy2.setHorizontalStretch(100);
+        sizePolicy2.setVerticalStretch(25);
+        sizePolicy2.setHeightForWidth(Stad->sizePolicy().hasHeightForWidth());
+        Stad->setSizePolicy(sizePolicy2);
+        Stad->setAutoFillBackground(true);
+        Stad->setReadOnly(true);
+
+        verticalLayout_2->addWidget(Stad);
+
+        Land = new QTextEdit(verticalLayoutWidget_2);
+        Land->setObjectName(QStringLiteral("Land"));
+        sizePolicy1.setHeightForWidth(Land->sizePolicy().hasHeightForWidth());
+        Land->setSizePolicy(sizePolicy1);
+        Land->setAutoFillBackground(true);
+        Land->setReadOnly(true);
+
+        verticalLayout_2->addWidget(Land);
+
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 461, 20));
+        menuBar->setGeometry(QRect(0, 0, 932, 21));
         MainWindow->setMenuBar(menuBar);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QStringLiteral("statusBar"));
@@ -123,11 +199,16 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
-        Table1->setText(QApplication::translate("MainWindow", "Table 1", nullptr));
-        Table2->setText(QApplication::translate("MainWindow", "Table 2", nullptr));
-        Table3->setText(QApplication::translate("MainWindow", "Table 3", nullptr));
-        Table4->setText(QApplication::translate("MainWindow", "Table 4", nullptr));
-        RunQuery->setText(QApplication::translate("MainWindow", "Run query", nullptr));
+        Imageviewer->setText(QString());
+        label_6->setText(QApplication::translate("MainWindow", "Merk", nullptr));
+        label_7->setText(QApplication::translate("MainWindow", "Type", nullptr));
+        label_4->setText(QApplication::translate("MainWindow", "Vermogen:", nullptr));
+        kW->setText(QApplication::translate("MainWindow", "kW", nullptr));
+        pk->setText(QApplication::translate("MainWindow", "pk", nullptr));
+        label->setText(QApplication::translate("MainWindow", "Merk:", nullptr));
+        label_2->setText(QApplication::translate("MainWindow", "Type:", nullptr));
+        label_3->setText(QApplication::translate("MainWindow", "Stad:", nullptr));
+        label_5->setText(QApplication::translate("MainWindow", "Land:", nullptr));
     } // retranslateUi
 
 };
