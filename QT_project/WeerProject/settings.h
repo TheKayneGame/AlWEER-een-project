@@ -20,6 +20,9 @@ public:
     ~Settings();
     int amount = 0;
     int resolution = 0;
+    int resLimit = 256;
+    int amountLimit = 20;
+    QString query = "";
     bool publicTemp;
     bool publicHumid;
     bool publicSpeed;
@@ -28,9 +31,9 @@ public:
                       QString port,
                       QString username,
                       QString password,
-                      QString name);
+                      QString name,
+                      QString query);
     void setGraphSettings(int amount, int resolution, bool temp, bool humid, bool speed, bool bright);
-
 
 private slots:
     void on_cbTemp_stateChanged(int arg1);
@@ -48,7 +51,9 @@ private:
     bool localHumid;
     bool localSpeed;
     bool localBright;
+    QString localQuery = "";
     int setLimits(int var, int min, int max);
+    QString getQuery(QString q);
 };
 
 #endif // SETTINGS_H

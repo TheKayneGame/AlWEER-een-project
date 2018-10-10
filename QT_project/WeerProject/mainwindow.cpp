@@ -12,7 +12,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                           port,
                           username,
                           password,
-                          databaseName);
+                          databaseName,
+                          queryText);
 }
 
 MainWindow::~MainWindow()
@@ -30,7 +31,7 @@ void MainWindow::on_Settings_clicked()
 {
     settings.show();
     settings.setWindowTitle("Settings");
-    settings.setFixedSize(632,303);
+    settings.setFixedSize(632,340);
 }
 
 void MainWindow::on_ExportData_clicked()
@@ -90,16 +91,25 @@ void MainWindow::on_ImportData_clicked()
 
     if(db.open())
     {
+        //declare mod, query and modIndex
         mod         = new QSqlQueryModel;
         query       = new QSqlQuery(db);
         modIndex    = new QModelIndex();
 
-        query->prepare("SELECT Temp as temperature, Humidity, Windsnelheid as Windspeed, Bightness as Brightness FROM alWeer.weer");
-
+        //Prepare the query and execute it
+        query->prepare(queryText);
         query->exec();
+
+        //bind the query to the model
         mod->setQuery(*query);
         ui->tableView->setModel(mod);
+        //count the rows of the model for later use
         rowCount = mod->rowCount();
+
+        ui->Temperature->setText(   QString(mod->record(rowCount-1).value("Temperature (C)").toString())    + " C");
+        ui->Humidity->setText(      QString(mod->record(rowCount-1).value("Humidity (%)").toString())       + " %");
+        ui->Windspeed->setText(     QString(mod->record(rowCount-1).value("Windspeed (km/h)").toString())      + " km/h");
+        ui->Brightness->setText(    QString(mod->record(rowCount-1).value("Brightness (Lux)").toString()      + " Lux"));
 
         createChart();
 
@@ -201,6 +211,7 @@ void MainWindow::getLogin(QString filename)
         username    = txt.readLine();
         password    = txt.readLine();
         databaseName = txt.readLine();
+        queryText   = txt.readLine();
 
         //qDebug() << address << "\n" << port << "\n" <<  username << "\n" <<  password << "\n" <<  databaseName;
     }
@@ -212,7 +223,8 @@ void MainWindow::setLogin(QString filename,
                           QString port,
                           QString username,
                           QString password,
-                          QString name)
+                          QString name,
+                          QString query)
 {
     QFile file(filename);
     file.open(QIODevice::WriteOnly);
@@ -225,6 +237,7 @@ void MainWindow::setLogin(QString filename,
         txt << username << "\n";
         txt << password << "\n";
         txt << name     << "\n";
+        txt << query    << "\n";
     }
     else
     {

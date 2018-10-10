@@ -11,11 +11,12 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QFrame>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
-#include <QtWidgets/QPlainTextEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTableView>
@@ -29,13 +30,22 @@ public:
     QWidget *centralWidget;
     QWidget *layoutWidget;
     QGridLayout *gridLayout;
-    QPushButton *Table1;
-    QPushButton *Table2;
-    QPushButton *Table3;
-    QPushButton *Table4;
+    QPushButton *ExportData;
+    QPushButton *ShowGraphs;
+    QPushButton *Settings;
+    QPushButton *ImportData;
+    QLabel *Brightness;
     QTableView *tableView;
-    QPlainTextEdit *plainTextEdit;
-    QPushButton *RunQuery;
+    QFrame *line;
+    QFrame *line_2;
+    QLabel *label_3;
+    QLabel *Temperature;
+    QLabel *label_2;
+    QLabel *label_4;
+    QLabel *Windspeed;
+    QLabel *Humidity;
+    QLabel *label;
+    QFrame *line_3;
     QMenuBar *menuBar;
     QStatusBar *statusBar;
 
@@ -43,50 +53,58 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(461, 644);
+        MainWindow->resize(510, 480);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         layoutWidget = new QWidget(centralWidget);
         layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
-        layoutWidget->setGeometry(QRect(10, 10, 441, 371));
+        layoutWidget->setGeometry(QRect(10, 10, 491, 421));
         gridLayout = new QGridLayout(layoutWidget);
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         gridLayout->setContentsMargins(0, 0, 0, 0);
-        Table1 = new QPushButton(layoutWidget);
-        Table1->setObjectName(QStringLiteral("Table1"));
+        ExportData = new QPushButton(layoutWidget);
+        ExportData->setObjectName(QStringLiteral("ExportData"));
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(Table1->sizePolicy().hasHeightForWidth());
-        Table1->setSizePolicy(sizePolicy);
-        Table1->setLayoutDirection(Qt::LeftToRight);
+        sizePolicy.setHeightForWidth(ExportData->sizePolicy().hasHeightForWidth());
+        ExportData->setSizePolicy(sizePolicy);
+        ExportData->setLayoutDirection(Qt::LeftToRight);
 
-        gridLayout->addWidget(Table1, 1, 0, 1, 1);
+        gridLayout->addWidget(ExportData, 3, 2, 1, 1);
 
-        Table2 = new QPushButton(layoutWidget);
-        Table2->setObjectName(QStringLiteral("Table2"));
-        sizePolicy.setHeightForWidth(Table2->sizePolicy().hasHeightForWidth());
-        Table2->setSizePolicy(sizePolicy);
-        Table2->setLayoutDirection(Qt::LeftToRight);
+        ShowGraphs = new QPushButton(layoutWidget);
+        ShowGraphs->setObjectName(QStringLiteral("ShowGraphs"));
+        sizePolicy.setHeightForWidth(ShowGraphs->sizePolicy().hasHeightForWidth());
+        ShowGraphs->setSizePolicy(sizePolicy);
+        ShowGraphs->setLayoutDirection(Qt::LeftToRight);
 
-        gridLayout->addWidget(Table2, 1, 1, 1, 1);
+        gridLayout->addWidget(ShowGraphs, 3, 4, 1, 1);
 
-        Table3 = new QPushButton(layoutWidget);
-        Table3->setObjectName(QStringLiteral("Table3"));
-        sizePolicy.setHeightForWidth(Table3->sizePolicy().hasHeightForWidth());
-        Table3->setSizePolicy(sizePolicy);
-        Table3->setLayoutDirection(Qt::LeftToRight);
+        Settings = new QPushButton(layoutWidget);
+        Settings->setObjectName(QStringLiteral("Settings"));
+        sizePolicy.setHeightForWidth(Settings->sizePolicy().hasHeightForWidth());
+        Settings->setSizePolicy(sizePolicy);
 
-        gridLayout->addWidget(Table3, 1, 2, 1, 1);
+        gridLayout->addWidget(Settings, 3, 6, 1, 1);
 
-        Table4 = new QPushButton(layoutWidget);
-        Table4->setObjectName(QStringLiteral("Table4"));
-        sizePolicy.setHeightForWidth(Table4->sizePolicy().hasHeightForWidth());
-        Table4->setSizePolicy(sizePolicy);
+        ImportData = new QPushButton(layoutWidget);
+        ImportData->setObjectName(QStringLiteral("ImportData"));
+        sizePolicy.setHeightForWidth(ImportData->sizePolicy().hasHeightForWidth());
+        ImportData->setSizePolicy(sizePolicy);
+        ImportData->setLayoutDirection(Qt::LeftToRight);
 
-        gridLayout->addWidget(Table4, 1, 3, 1, 1);
+        gridLayout->addWidget(ImportData, 3, 0, 1, 1);
+
+        Brightness = new QLabel(layoutWidget);
+        Brightness->setObjectName(QStringLiteral("Brightness"));
+        QFont font;
+        font.setPointSize(10);
+        Brightness->setFont(font);
+
+        gridLayout->addWidget(Brightness, 1, 6, 1, 1);
 
         tableView = new QTableView(layoutWidget);
         tableView->setObjectName(QStringLiteral("tableView"));
@@ -96,20 +114,79 @@ public:
         sizePolicy1.setHeightForWidth(tableView->sizePolicy().hasHeightForWidth());
         tableView->setSizePolicy(sizePolicy1);
 
-        gridLayout->addWidget(tableView, 0, 0, 1, 4);
+        gridLayout->addWidget(tableView, 2, 0, 1, 7);
 
-        plainTextEdit = new QPlainTextEdit(centralWidget);
-        plainTextEdit->setObjectName(QStringLiteral("plainTextEdit"));
-        plainTextEdit->setGeometry(QRect(10, 390, 441, 181));
-        RunQuery = new QPushButton(centralWidget);
-        RunQuery->setObjectName(QStringLiteral("RunQuery"));
-        RunQuery->setGeometry(QRect(340, 580, 105, 21));
-        sizePolicy.setHeightForWidth(RunQuery->sizePolicy().hasHeightForWidth());
-        RunQuery->setSizePolicy(sizePolicy);
+        line = new QFrame(layoutWidget);
+        line->setObjectName(QStringLiteral("line"));
+        line->setFrameShape(QFrame::VLine);
+        line->setFrameShadow(QFrame::Sunken);
+
+        gridLayout->addWidget(line, 0, 1, 2, 1);
+
+        line_2 = new QFrame(layoutWidget);
+        line_2->setObjectName(QStringLiteral("line_2"));
+        line_2->setFrameShape(QFrame::VLine);
+        line_2->setFrameShadow(QFrame::Sunken);
+
+        gridLayout->addWidget(line_2, 0, 3, 2, 1);
+
+        label_3 = new QLabel(layoutWidget);
+        label_3->setObjectName(QStringLiteral("label_3"));
+        QFont font1;
+        font1.setPointSize(12);
+        font1.setBold(true);
+        font1.setWeight(75);
+        label_3->setFont(font1);
+
+        gridLayout->addWidget(label_3, 0, 4, 1, 1);
+
+        Temperature = new QLabel(layoutWidget);
+        Temperature->setObjectName(QStringLiteral("Temperature"));
+        Temperature->setFont(font);
+
+        gridLayout->addWidget(Temperature, 1, 0, 1, 1);
+
+        label_2 = new QLabel(layoutWidget);
+        label_2->setObjectName(QStringLiteral("label_2"));
+        label_2->setFont(font1);
+
+        gridLayout->addWidget(label_2, 0, 2, 1, 1);
+
+        label_4 = new QLabel(layoutWidget);
+        label_4->setObjectName(QStringLiteral("label_4"));
+        label_4->setFont(font1);
+
+        gridLayout->addWidget(label_4, 0, 6, 1, 1);
+
+        Windspeed = new QLabel(layoutWidget);
+        Windspeed->setObjectName(QStringLiteral("Windspeed"));
+        Windspeed->setFont(font);
+
+        gridLayout->addWidget(Windspeed, 1, 4, 1, 1);
+
+        Humidity = new QLabel(layoutWidget);
+        Humidity->setObjectName(QStringLiteral("Humidity"));
+        Humidity->setFont(font);
+
+        gridLayout->addWidget(Humidity, 1, 2, 1, 1);
+
+        label = new QLabel(layoutWidget);
+        label->setObjectName(QStringLiteral("label"));
+        label->setFont(font1);
+
+        gridLayout->addWidget(label, 0, 0, 1, 1);
+
+        line_3 = new QFrame(layoutWidget);
+        line_3->setObjectName(QStringLiteral("line_3"));
+        line_3->setFrameShape(QFrame::VLine);
+        line_3->setFrameShadow(QFrame::Sunken);
+
+        gridLayout->addWidget(line_3, 0, 5, 2, 1);
+
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 461, 20));
+        menuBar->setGeometry(QRect(0, 0, 510, 21));
         MainWindow->setMenuBar(menuBar);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QStringLiteral("statusBar"));
@@ -123,11 +200,18 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
-        Table1->setText(QApplication::translate("MainWindow", "Table 1", nullptr));
-        Table2->setText(QApplication::translate("MainWindow", "Table 2", nullptr));
-        Table3->setText(QApplication::translate("MainWindow", "Table 3", nullptr));
-        Table4->setText(QApplication::translate("MainWindow", "Table 4", nullptr));
-        RunQuery->setText(QApplication::translate("MainWindow", "Run query", nullptr));
+        ExportData->setText(QApplication::translate("MainWindow", "Export Data", nullptr));
+        ShowGraphs->setText(QApplication::translate("MainWindow", "Show Graphs", nullptr));
+        Settings->setText(QApplication::translate("MainWindow", "Settings", nullptr));
+        ImportData->setText(QApplication::translate("MainWindow", "Refresh", nullptr));
+        Brightness->setText(QApplication::translate("MainWindow", "...", nullptr));
+        label_3->setText(QApplication::translate("MainWindow", "Windspeed", nullptr));
+        Temperature->setText(QApplication::translate("MainWindow", "...", nullptr));
+        label_2->setText(QApplication::translate("MainWindow", "Humidity", nullptr));
+        label_4->setText(QApplication::translate("MainWindow", "Brightness", nullptr));
+        Windspeed->setText(QApplication::translate("MainWindow", "...", nullptr));
+        Humidity->setText(QApplication::translate("MainWindow", "...", nullptr));
+        label->setText(QApplication::translate("MainWindow", "Temperature", nullptr));
     } // retranslateUi
 
 };
