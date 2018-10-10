@@ -6,12 +6,17 @@ Settings::Settings(QWidget *parent) : QDialog(parent), ui(new Ui::Settings)
 {
     ui->setupUi(this);
 
-    setGraphSettings(localAmount, localResolution, false, false, false, false);
+    setGraphSettings(localResolution, false, false, false, false);
 }
 
 Settings::~Settings()
 {
     delete ui;
+}
+
+QString Settings::getQuery(QString q)
+{
+    return q + " LIMIT 1000";
 }
 
 void Settings::on_ApplyAllButton_clicked()
@@ -23,26 +28,24 @@ void Settings::on_ApplyAllButton_clicked()
                     ui->PortText->toPlainText(),
                     ui->UsernameText->toPlainText(),
                     ui->PasswordText->toPlainText(),
-                    ui->NameText->toPlainText());
+                    ui->NameText->toPlainText(),
+                    ui->NameText_2->toPlainText());
     //read the logindata from the file
     window.getLogin("Login.txt");
-    setLoginText(window.address, window.port, window.username, window.password, window.databaseName);
+    setLoginText(window.address, window.port, window.username, window.password, window.databaseName, window.queryText);
 
     //read values from the inputbox
-    localAmount = ui->AmountValue->toPlainText().toInt();
     localResolution = ui->ResolutionValue->toPlainText().toInt();
     //correct overshoot values
-    localAmount = setLimits(localAmount, 1, 256);
-    localResolution = setLimits(localResolution, 1, 20);
+    localAmount = setLimits(localAmount, 1, resLimit);
+    localResolution = setLimits(localResolution, 1, amountLimit);
     //set the correct overshot values back in with the correct number
-    ui->AmountValue->setText(QString::number(localAmount));
     ui->ResolutionValue->setText(QString::number(localResolution));
     //set public variables to the input values for usage in other functions
-    amount = ui->AmountValue->toPlainText().toInt();
     resolution = ui->ResolutionValue->toPlainText().toInt();
 
     //transfer the local booleans to the public so it can be used outside the function
-    publicTemp = localTemp;
+    publicTemp  = localTemp;
     publicHumid = localHumid;
     publicSpeed = localSpeed;
     publicBright = localBright;
@@ -59,18 +62,19 @@ void Settings::setLoginText(QString address,
                             QString port,
                             QString username,
                             QString password,
-                            QString name)
+                            QString name,
+                            QString query)
 {
     ui->AddressText->setText(address);
     ui->PortText->setText(port);
     ui->UsernameText->setText(username);
     ui->PasswordText->setText(password);
     ui->NameText->setText(name);
+    ui->NameText_2->setText(query);
 }
 
-void Settings::setGraphSettings(int amount, int resolution, bool temp, bool humid, bool speed, bool bright)
+void Settings::setGraphSettings(int resolution, bool temp, bool humid, bool speed, bool bright)
 {
-    ui->AmountValue->setText(QString::number(amount));
     ui->ResolutionValue->setText(QString::number(resolution));
 
     ui->cbTemp->setCheckState(Qt::CheckState(temp));
@@ -112,4 +116,9 @@ int Settings::setLimits(int var, int min, int max)
         return var;
     }
     else return var;
+}
+
+void Settings::on_checkBox_stateChanged(int arg1)
+{
+    isLabled = arg1;
 }

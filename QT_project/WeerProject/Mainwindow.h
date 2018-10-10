@@ -13,6 +13,7 @@
 #include <QtSql/QSqlRecord>
 #include <QtSql/qsqlquerymodel.h>
 #include <QDebug>
+#include <QMessageBox>
 
 namespace Ui
 {
@@ -30,6 +31,7 @@ public:
     QLineSeries *test;
     QChart *chart;
     QChartView *chartView;
+    QString queryText = "";
     double** values;
     int rowCount;
     void createChart();
@@ -45,7 +47,9 @@ public:
                   QString port,
                   QString username,
                   QString password,
-                  QString name);
+                  QString name,
+                  QString query);
+
     void getLogin(QString filename); //returns the loginvalues from the file sets them to the correct variables
 
     QString address;
@@ -70,8 +74,11 @@ private:
     QModelIndex *modIndex;
     enum valueType {temperature = 0, humidity, windspeed, brightness};
     int sensorAmount = 4;
-    void showGraphWindow();
     bool isRefreshed = false;
+    void showGraphWindow();
+    QMessageBox msg;
+    void ErrorMessage(QString header, QString message, QString extra, QString details);
+    void getAllData();
 };
 
 #endif // MAINWINDOW_H

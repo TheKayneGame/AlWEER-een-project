@@ -7,12 +7,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
   , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    getLogin("login.txt");
+    getAllData();
     settings.setLoginText(address,
                           port,
                           username,
                           password,
-                          databaseName);
+                          databaseName,
+                          queryText);
 }
 
 MainWindow::~MainWindow()
@@ -30,7 +31,7 @@ void MainWindow::on_Settings_clicked()
 {
     settings.show();
     settings.setWindowTitle("Settings");
-    settings.setFixedSize(632,303);
+    settings.setFixedSize(632,340);
 }
 
 void MainWindow::on_ExportData_clicked()
@@ -56,8 +57,7 @@ void MainWindow::on_ExportData_clicked()
     }
     else
     {
-        //give error message
-        qDebug() << "File not found...";
+        ErrorMessage("File", "File not found", file.errorString(), nullptr);
     }
     file.close();
 }
@@ -77,7 +77,24 @@ void MainWindow::showGraphWindow()
     graph.setFixedSize(640,460);
 }
 
+void MainWindow::ErrorMessage(QString header, QString message, QString extra, QString details)
+{
+    msg.setIcon(QMessageBox::Warning);
+    msg.setText(message);
+    msg.setWindowTitle(header);
+    if (extra != nullptr)
+        msg.setInformativeText(extra);
+    if (details != nullptr)
+        msg.setDetailedText(details);
+    msg.show();
+}
+
 void MainWindow::on_ImportData_clicked()
+{
+    getAllData();
+}
+
+void MainWindow::getAllData()
 {
     getLogin("login.txt");
     db = initializeDatabase(db,
@@ -90,16 +107,25 @@ void MainWindow::on_ImportData_clicked()
 
     if(db.open())
     {
+        //declare mod, query and modIndex
         mod         = new QSqlQueryModel;
         query       = new QSqlQuery(db);
         modIndex    = new QModelIndex();
 
-        query->prepare("SELECT Temp as temperature, Humidity, Windsnelheid as Windspeed, Bightness as Brightness FROM alWeer.weer");
-
+        //Prepare the query and execute it
+        query->prepare(settings.getQuery(queryText));
         query->exec();
+
+        //bind the query to the model
         mod->setQuery(*query);
         ui->tableView->setModel(mod);
+        //count the rows of the model for later use
         rowCount = mod->rowCount();
+
+        ui->Temperature->setText(   QString(mod->record(rowCount-1).value("Temperature (C)").toString())    + " C");
+        ui->Humidity->setText(      QString(mod->record(rowCount-1).value("Humidity (%)").toString())       + " %");
+        ui->Windspeed->setText(     QString(mod->record(rowCount-1).value("Windspeed (km/h)").toString())   + " km/h");
+        ui->Brightness->setText(    QString(mod->record(rowCount-1).value("Brightness (Lux)").toString()    + " Lux"));
 
         createChart();
 
@@ -114,10 +140,8 @@ void MainWindow::on_ImportData_clicked()
     else
     {
         QSqlError err = db.lastError();
-        qDebug() << "Database: "    << err.databaseText();
-        qDebug() << "Driver: "      << err.driverText();
-        qDebug() << "Text: "        << err.text();
-        //create a popup window
+        QString debugMessage = "Database: " + err.databaseText() + "\n" + " Driver: " + err.driverText() + "\n" + " Text: " + err.text();
+        ErrorMessage("DatabaseError", "Database Error", nullptr, debugMessage);
     }
 }
 
@@ -150,8 +174,21 @@ void MainWindow::createChart()
     if (!settings.publicSpeed)  chart->removeSeries((series[windspeed]));
     if (!settings.publicBright) chart->removeSeries((series[brightness]));
 
+    series[temperature]->setName("temperature");
+    series[humidity]->setName("humidity");
+    series[windspeed]->setName("windspeed");
+    series[brightness]->setName("brightness");
+
     chart->createDefaultAxes();
     chart->setTitle("Weather graph:");
+
+    if (settings.isLabled)
+        for (int i = 0; i < sensorAmount; i++)
+        {
+            series[i]->setPointLabelsVisible(true);
+            series[i]->setPointLabelsColor(Qt::black);
+            series[i]->setPointLabelsFormat("@yPoint");
+        }
 
     chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
@@ -175,8 +212,8 @@ QSqlDatabase MainWindow::initializeDatabase(QSqlDatabase db,
         return db;
     }
     else
-    {
-        //give error message
+    {        
+        ErrorMessage("Database", "Could not open database: ", db.lastError().text(), nullptr);
         return db;
     }
     return db;
@@ -185,24 +222,31 @@ QSqlDatabase MainWindow::initializeDatabase(QSqlDatabase db,
 void MainWindow::getLogin(QString filename)
 {
     QFile file(filename);
-    file.open(QIODevice::ReadOnly);
-    if (!file.exists())
+    if (file.open(QIODevice::ReadOnly))
     {
-        //give error message
-        qDebug() << "File not found...";
+        if (!file.exists())
+        {
+            ErrorMessage("File", "File not found", file.errorString(), nullptr);
+        }
+        else
+        {
+            QTextStream txt(&file);
+
+            txt.seek(0);
+            address     = txt.readLine();
+            port        = txt.readLine();
+            username    = txt.readLine();
+            password    = txt.readLine();
+            databaseName = txt.readLine();
+
+            queryText   = txt.readLine();
+            for (int i = 0; i < 20; i++)
+                queryText   += txt.readLine();
+        }
     }
     else
     {
-        QTextStream txt(&file);
-
-        txt.seek(0);
-        address     = txt.readLine();
-        port        = txt.readLine();
-        username    = txt.readLine();
-        password    = txt.readLine();
-        databaseName = txt.readLine();
-
-        //qDebug() << address << "\n" << port << "\n" <<  username << "\n" <<  password << "\n" <<  databaseName;
+        ErrorMessage("File", "File could not be opened:", file.errorString(), nullptr);
     }
     file.close();
 }
@@ -212,7 +256,8 @@ void MainWindow::setLogin(QString filename,
                           QString port,
                           QString username,
                           QString password,
-                          QString name)
+                          QString name,
+                          QString query)
 {
     QFile file(filename);
     file.open(QIODevice::WriteOnly);
@@ -225,6 +270,7 @@ void MainWindow::setLogin(QString filename,
         txt << username << "\n";
         txt << password << "\n";
         txt << name     << "\n";
+        txt << query    << "\n";
     }
     else
     {
