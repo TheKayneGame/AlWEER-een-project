@@ -59,6 +59,8 @@
 
 /* Private define ------------------------------------------------------------*/
 
+#define LDR_ON_Pin GPIO_PIN_7
+#define LDR_ON_GPIO_Port GPIOC
 #define Wind_Speed_Pin GPIO_PIN_4
 #define Wind_Speed_GPIO_Port GPIOB
 
