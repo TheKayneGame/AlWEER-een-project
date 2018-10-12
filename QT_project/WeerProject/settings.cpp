@@ -34,20 +34,6 @@ void Settings::on_ApplyAllButton_clicked()
                     ui->NameText->toPlainText(),
                     ui->NameText_2->toPlainText());
     //read the logindata from the file
-<<<<<<< HEAD
-    window.getLogin("Login.txt");
-    //write the logindata to the labels
-    setLoginText(window.address, window.port, window.username, window.password, window.databaseName, window.queryText);
-
-    //read values from the inputbox
-    localAmount = ui->ResolutionValue->toPlainText().toInt();
-    //correct overshoot values
-    localAmount = setLimits(localAmount, 1, amountLimit);
-    //set the correct overshot values back in with the correct number
-    ui->ResolutionValue->setText(QString::number(localAmount));
-    //set public variables to the input values for usage in other functions
-    amount = ui->ResolutionValue->toPlainText().toInt();
-=======
     window->getLogin("Login.txt");
     setLoginText(window->address, window->port, window->username, window->password, window->databaseName, window->queryText);
 
@@ -59,7 +45,6 @@ void Settings::on_ApplyAllButton_clicked()
     ui->AmountValue->setText(QString::number(localAmount));
     //set public variables to the input values for usage in other functions
     amount = ui->AmountValue->toPlainText().toInt();
->>>>>>> 842659d272642211362effbcd332d8a0597c8830
 
     //transfer the local booleans to the public so it can be used outside the function
     publicTemp  = localTemp;

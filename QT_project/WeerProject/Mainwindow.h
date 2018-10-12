@@ -35,7 +35,6 @@ public:
     double** values;
     int rowCount;
     void createChart();
-    void getAllData();
     //database variables/functions
     QSqlDatabase initializeDatabase(QSqlDatabase db,
                                     QString address,
@@ -70,22 +69,18 @@ private:
     Ui::MainWindow *ui;
     GraphWindow graph;
     Settings settings;
+    QSqlDatabase db;
     QSqlQueryModel *mod;
     QSqlQuery *query;
     QModelIndex *modIndex;
-    QSqlDatabase db;
     enum valueType {temperature = 0, humidity, windspeed, brightness};
     int sensorAmount = 4;
     bool isRefreshed = false;
     void showGraphWindow();
     QMessageBox msg;
-<<<<<<< HEAD
-    void ErrorMessage(QString header, QString message, QString extra, QString details);
-=======
     void getAllData();
 
     friend class Setting;
->>>>>>> 842659d272642211362effbcd332d8a0597c8830
 };
 
 #endif // MAINWINDOW_H

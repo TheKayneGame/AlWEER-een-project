@@ -19,11 +19,7 @@ public:
     explicit Settings(QWidget *parent = nullptr);
     ~Settings();
     int amount = 0;
-<<<<<<< HEAD
-    int amountLimit = 20;
-=======
     int amountLimit = 255;
->>>>>>> 842659d272642211362effbcd332d8a0597c8830
     QString query = "";
     bool publicTemp;
     bool publicHumid;
@@ -46,6 +42,7 @@ private slots:
     void on_cbBright_stateChanged(int arg1);
     void on_ApplyAllButton_clicked();
     void on_CancelButton_clicked();
+
     void on_checkBox_stateChanged(int arg1);
 
 private:

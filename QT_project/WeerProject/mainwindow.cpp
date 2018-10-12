@@ -75,6 +75,8 @@ void MainWindow::getAllData()
                             username,
                             password,
                             databaseName);
+
+
     if(db.open())
     {
         //declare mod, query and modIndex
@@ -265,13 +267,17 @@ void MainWindow::on_ExportData_clicked()
     {
         QTextStream txt(&file);
 
-        txt << "Temperature" << "," << "Humidity" << "," << "Windspeed" << "," << "Brightness" << "\n";
+        txt << "Temperature (C)" << ","
+            << "Humidity (%)" << ","
+            << "Windspeed (km/h)" << ","
+            << "Brightness (Lux)" << ","
+            << "Date" <<"\n";
 
-        for (int i = 0; i < settings.amount; i++)
+        for (int i = 0; i < mod->rowCount(); i++)
         {
-            for (int k = 0; k < sensorAmount; k++)
+            for (int k = 0; k < sensorAmount + 1; k++)
             {
-                txt << ui->tableView->model()->data(ui->tableView->model()->index(i,k)).toString().toDouble() << ",";
+                txt << ui->tableView->model()->data(ui->tableView->model()->index(i,k)).toString() << ", ";
             }
             txt << "\n";
         }
