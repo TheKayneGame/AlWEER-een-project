@@ -19,7 +19,11 @@ public:
     explicit Settings(QWidget *parent = nullptr);
     ~Settings();
     int amount = 0;
+<<<<<<< HEAD
     int amountLimit = 20;
+=======
+    int amountLimit = 255;
+>>>>>>> 842659d272642211362effbcd332d8a0597c8830
     QString query = "";
     bool publicTemp;
     bool publicHumid;
@@ -32,7 +36,7 @@ public:
                       QString password,
                       QString name,
                       QString query);
-    void setGraphSettings(int resolution, bool temp, bool humid, bool speed, bool bright);
+    void setGraphSettings(int amount, bool temp, bool humid, bool speed, bool bright);
     QString getQuery(QString q);
 
 private slots:

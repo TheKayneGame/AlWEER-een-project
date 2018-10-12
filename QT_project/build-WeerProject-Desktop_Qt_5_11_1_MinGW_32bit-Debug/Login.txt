@@ -3,4 +3,8 @@ www.sandervandenberk.nl
 weer
 admin
 alWeer
+<<<<<<< HEAD
 SELECT Temp as "Temperature (C)", Humidity as "Humidity (%)", Windsnelheid as "Windspeed (km/h)", Bightess as "Brightness (Lux)" FROM alWeer.weer
+=======
+SELECT Temp as "Temperature (C)", Humidity as "Humidity (%)",  Windsnelheid as "Windspeed (km/h)", Bightness as "Brightness (Lux)", Timestamp as Date  FROM alWeer.weer
+>>>>>>> 842659d272642211362effbcd332d8a0597c8830

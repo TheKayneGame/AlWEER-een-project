@@ -1,6 +1,7 @@
 #include "settings.h"
 #include "ui_settings.h"
 #include "Mainwindow.h"
+#include "Mainwindow.h"
 
 Settings::Settings(QWidget *parent) : QDialog(parent), ui(new Ui::Settings)
 {
@@ -21,9 +22,11 @@ QString Settings::getQuery(QString q)
 
 void Settings::on_ApplyAllButton_clicked()
 {
-    MainWindow window;
+    MainWindow *window;
+    window = new MainWindow();
+
     //set the logindata tot a file
-    window.setLogin("Login.txt",
+    window->setLogin("Login.txt",
                     ui->AddressText->toPlainText(),
                     ui->PortText->toPlainText(),
                     ui->UsernameText->toPlainText(),
@@ -31,6 +34,7 @@ void Settings::on_ApplyAllButton_clicked()
                     ui->NameText->toPlainText(),
                     ui->NameText_2->toPlainText());
     //read the logindata from the file
+<<<<<<< HEAD
     window.getLogin("Login.txt");
     //write the logindata to the labels
     setLoginText(window.address, window.port, window.username, window.password, window.databaseName, window.queryText);
@@ -43,6 +47,19 @@ void Settings::on_ApplyAllButton_clicked()
     ui->ResolutionValue->setText(QString::number(localAmount));
     //set public variables to the input values for usage in other functions
     amount = ui->ResolutionValue->toPlainText().toInt();
+=======
+    window->getLogin("Login.txt");
+    setLoginText(window->address, window->port, window->username, window->password, window->databaseName, window->queryText);
+
+    //read values from the inputbox
+    localAmount = ui->AmountValue->toPlainText().toInt();
+    //correct overshoot values
+    localAmount = setLimits(localAmount, 1, amountLimit);
+    //set the correct overshot values back in with the correct number
+    ui->AmountValue->setText(QString::number(localAmount));
+    //set public variables to the input values for usage in other functions
+    amount = ui->AmountValue->toPlainText().toInt();
+>>>>>>> 842659d272642211362effbcd332d8a0597c8830
 
     //transfer the local booleans to the public so it can be used outside the function
     publicTemp  = localTemp;
@@ -51,6 +68,7 @@ void Settings::on_ApplyAllButton_clicked()
     publicBright = localBright;
 
     this->close();
+    window->ErrorMessage("Message", "Settings applied, please refresh the window", nullptr, nullptr);
 }
 
 void Settings::on_CancelButton_clicked()
@@ -73,9 +91,9 @@ void Settings::setLoginText(QString address,
     ui->NameText_2->setText(query);
 }
 
-void Settings::setGraphSettings(int resolution, bool temp, bool humid, bool speed, bool bright)
+void Settings::setGraphSettings(int amount, bool temp, bool humid, bool speed, bool bright)
 {
-    ui->ResolutionValue->setText(QString::number(resolution));
+    ui->AmountValue->setText(QString::number(amount));
 
     ui->cbTemp->setCheckState(Qt::CheckState(temp));
     ui->cbHumid->setCheckState(Qt::CheckState(humid));

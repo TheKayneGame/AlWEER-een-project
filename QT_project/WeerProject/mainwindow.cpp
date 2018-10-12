@@ -34,34 +34,6 @@ void MainWindow::on_Settings_clicked()
     settings.setFixedSize(632,340);
 }
 
-void MainWindow::on_ExportData_clicked()
-{
-    QString filename = QFileDialog::getSaveFileName(this, "Save as...") + ".csv";
-    QFile file(filename);
-    file.open(QIODevice::WriteOnly);
-
-    if (file.exists())
-    {
-        QTextStream txt(&file);
-
-        txt << "Temperature" << "," << "Humidity" << "," << "Windspeed" << "," << "Brightness" << "\n";
-
-        for (int i = 0; i < settings.amount; i++)
-        {
-            for (int k = 0; k < sensorAmount; k++)
-            {
-                txt << ui->tableView->model()->data(ui->tableView->model()->index(i,k)).toString().toDouble() << ",";
-            }
-            txt << "\n";
-        }
-    }
-    else
-    {
-        ErrorMessage("File", "File not found", file.errorString(), nullptr);
-    }
-    file.close();
-}
-
 void MainWindow::showGraphWindow()
 {
     createChart();
@@ -116,7 +88,11 @@ void MainWindow::getAllData()
 
         //bind the query to the model
         mod->setQuery(*query);
+        //bind the model to the tableview object
         ui->tableView->setModel(mod);
+        //counts the amount of columns the model has and resizes them to fit the data
+        for (int i = 0; i < mod->columnCount(); i ++)
+            ui->tableView->resizeColumnToContents(i);
         //count the rows of the model for later use
         rowCount = mod->rowCount();
 
@@ -124,6 +100,7 @@ void MainWindow::getAllData()
         ui->Humidity->setText(      QString(mod->record(rowCount-1).value("Humidity (%)").toString())       + " %");
         ui->Windspeed->setText(     QString(mod->record(rowCount-1).value("Windspeed (km/h)").toString())   + " km/h");
         ui->Brightness->setText(    QString(mod->record(rowCount-1).value("Brightness (Lux)").toString()    + " Lux"));
+        ui->Date->setText(          QString(mod->record(rowCount-1).value("Date").toString()));
 
         createChart();
 
@@ -274,6 +251,34 @@ void MainWindow::setLogin(QString filename,
     {
         //give error message
         qDebug() << "File not found...";
+    }
+    file.close();
+}
+
+void MainWindow::on_ExportData_clicked()
+{
+    QString filename = QFileDialog::getSaveFileName(this, "Save as...") + ".csv";
+    QFile file(filename);
+    file.open(QIODevice::WriteOnly);
+
+    if (file.exists())
+    {
+        QTextStream txt(&file);
+
+        txt << "Temperature" << "," << "Humidity" << "," << "Windspeed" << "," << "Brightness" << "\n";
+
+        for (int i = 0; i < settings.amount; i++)
+        {
+            for (int k = 0; k < sensorAmount; k++)
+            {
+                txt << ui->tableView->model()->data(ui->tableView->model()->index(i,k)).toString().toDouble() << ",";
+            }
+            txt << "\n";
+        }
+    }
+    else
+    {
+        ErrorMessage("File", "File not found", file.errorString(), nullptr);
     }
     file.close();
 }
