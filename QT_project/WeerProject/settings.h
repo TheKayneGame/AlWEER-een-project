@@ -19,8 +19,6 @@ public:
     explicit Settings(QWidget *parent = nullptr);
     ~Settings();
     int amount = 0;
-    int resolution = 0;
-    int resLimit = 256;
     int amountLimit = 20;
     QString query = "";
     bool publicTemp;
@@ -44,13 +42,11 @@ private slots:
     void on_cbBright_stateChanged(int arg1);
     void on_ApplyAllButton_clicked();
     void on_CancelButton_clicked();
-
     void on_checkBox_stateChanged(int arg1);
 
 private:
     Ui::Settings *ui;
     int localAmount = 32;
-    int localResolution = 1;
     bool localTemp;
     bool localHumid;
     bool localSpeed;

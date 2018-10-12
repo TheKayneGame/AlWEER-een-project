@@ -103,8 +103,6 @@ void MainWindow::getAllData()
                             username,
                             password,
                             databaseName);
-
-
     if(db.open())
     {
         //declare mod, query and modIndex

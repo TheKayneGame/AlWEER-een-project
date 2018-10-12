@@ -6,7 +6,7 @@ Settings::Settings(QWidget *parent) : QDialog(parent), ui(new Ui::Settings)
 {
     ui->setupUi(this);
 
-    setGraphSettings(localResolution, false, false, false, false);
+    setGraphSettings(localAmount, false, false, false, false);
 }
 
 Settings::~Settings()
@@ -32,17 +32,17 @@ void Settings::on_ApplyAllButton_clicked()
                     ui->NameText_2->toPlainText());
     //read the logindata from the file
     window.getLogin("Login.txt");
+    //write the logindata to the labels
     setLoginText(window.address, window.port, window.username, window.password, window.databaseName, window.queryText);
 
     //read values from the inputbox
-    localResolution = ui->ResolutionValue->toPlainText().toInt();
+    localAmount = ui->ResolutionValue->toPlainText().toInt();
     //correct overshoot values
-    localAmount = setLimits(localAmount, 1, resLimit);
-    localResolution = setLimits(localResolution, 1, amountLimit);
+    localAmount = setLimits(localAmount, 1, amountLimit);
     //set the correct overshot values back in with the correct number
-    ui->ResolutionValue->setText(QString::number(localResolution));
+    ui->ResolutionValue->setText(QString::number(localAmount));
     //set public variables to the input values for usage in other functions
-    resolution = ui->ResolutionValue->toPlainText().toInt();
+    amount = ui->ResolutionValue->toPlainText().toInt();
 
     //transfer the local booleans to the public so it can be used outside the function
     publicTemp  = localTemp;
