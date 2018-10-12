@@ -51,6 +51,7 @@ public:
                   QString query);
 
     void getLogin(QString filename); //returns the loginvalues from the file sets them to the correct variables
+    void ErrorMessage(QString header, QString message, QString extra, QString details);
 
     QString address;
     QString port;
@@ -77,8 +78,9 @@ private:
     bool isRefreshed = false;
     void showGraphWindow();
     QMessageBox msg;
-    void ErrorMessage(QString header, QString message, QString extra, QString details);
     void getAllData();
+
+    friend class Setting;
 };
 
 #endif // MAINWINDOW_H
