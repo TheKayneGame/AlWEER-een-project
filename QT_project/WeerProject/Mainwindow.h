@@ -27,15 +27,17 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    //chartview values
     QLineSeries *series[4];
     QLineSeries *test;
     QChart *chart;
     QChartView *chartView;
+    void createChart();
+
+    //database variables/functions
     QString queryText = "";
     double** values;
     int rowCount;
-    void createChart();
-    //database variables/functions
     QSqlDatabase initializeDatabase(QSqlDatabase db,
                                     QString address,
                                     QString port,
@@ -75,6 +77,7 @@ private:
     QModelIndex *modIndex;
     enum valueType {temperature = 0, humidity, windspeed, brightness};
     int sensorAmount = 4;
+    int firstRow = 0;
     bool isRefreshed = false;
     void showGraphWindow();
     QMessageBox msg;

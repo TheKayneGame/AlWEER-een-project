@@ -1,12 +1,10 @@
 #include "settings.h"
 #include "ui_settings.h"
 #include "Mainwindow.h"
-#include "Mainwindow.h"
 
 Settings::Settings(QWidget *parent) : QDialog(parent), ui(new Ui::Settings)
 {
     ui->setupUi(this);
-
     setGraphSettings(localAmount, false, false, false, false);
 }
 
@@ -15,11 +13,17 @@ Settings::~Settings()
     delete ui;
 }
 
+/*
+ * Adds some extra parameters to the query
+*/
 QString Settings::getQuery(QString q)
 {
-    return q + " LIMIT 1000";
+    return q + "  ORDER BY ID DESC LIMIT 10000";
 }
 
+/*
+ * Applies the changes to the settings
+*/
 void Settings::on_ApplyAllButton_clicked()
 {
     MainWindow *window;
@@ -40,7 +44,7 @@ void Settings::on_ApplyAllButton_clicked()
     //read values from the inputbox
     localAmount = ui->AmountValue->toPlainText().toInt();
     //correct overshoot values
-    localAmount = setLimits(localAmount, 1, amountLimit);
+    localAmount = setLimits(localAmount, amountLowerLimit, amountLimit);
     //set the correct overshot values back in with the correct number
     ui->AmountValue->setText(QString::number(localAmount));
     //set public variables to the input values for usage in other functions
@@ -61,6 +65,9 @@ void Settings::on_CancelButton_clicked()
     this->close();
 }
 
+/*
+ * sets the login values to the labels
+*/
 void Settings::setLoginText(QString address,
                             QString port,
                             QString username,
@@ -75,7 +82,9 @@ void Settings::setLoginText(QString address,
     ui->NameText->setText(name);
     ui->NameText_2->setText(query);
 }
-
+/*
+ * sets the graphsettings
+*/
 void Settings::setGraphSettings(int amount, bool temp, bool humid, bool speed, bool bright)
 {
     ui->AmountValue->setText(QString::number(amount));
@@ -86,6 +95,9 @@ void Settings::setGraphSettings(int amount, bool temp, bool humid, bool speed, b
     ui->cbBright->setCheckState(Qt::CheckState(bright));
 }
 
+/*
+ *
+*/
 void Settings::on_cbTemp_stateChanged(int arg1)
 {
     localTemp = arg1;
@@ -106,6 +118,15 @@ void Settings::on_cbSpeed_stateChanged(int arg1)
     localSpeed = arg1;
 }
 
+void Settings::on_checkBox_stateChanged(int arg1)
+{
+    isLabled = arg1;
+}
+
+/*
+ * limit function that checks wether or not a variable overshoots
+ * a upper limit and a lower limit and return that limit if it overshoots it
+*/
 int Settings::setLimits(int var, int min, int max)
 {
     if (var < min)
@@ -119,9 +140,4 @@ int Settings::setLimits(int var, int min, int max)
         return var;
     }
     else return var;
-}
-
-void Settings::on_checkBox_stateChanged(int arg1)
-{
-    isLabled = arg1;
 }

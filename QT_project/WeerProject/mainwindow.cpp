@@ -1,6 +1,9 @@
 #include "Mainwindow.h"
 #include "ui_mainwindow.h"
 
+/*
+ * runs functions for the startup an initalizes the data en login.
+*/
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
   , chart(nullptr)
   , values(nullptr)
@@ -33,7 +36,10 @@ void MainWindow::on_Settings_clicked()
     settings.setWindowTitle("Settings");
     settings.setFixedSize(632,340);
 }
-
+/*
+ * Creates a chart and if our chartwindow is active we close it.
+ * Aftert that we recreate the chart en show the window.
+*/
 void MainWindow::showGraphWindow()
 {
     createChart();
@@ -49,6 +55,10 @@ void MainWindow::showGraphWindow()
     graph.setFixedSize(640,460);
 }
 
+/*
+ * Main error message function. takes in a header, message, extra info and some details.
+ * Always shows up as a warning
+*/
 void MainWindow::ErrorMessage(QString header, QString message, QString extra, QString details)
 {
     msg.setIcon(QMessageBox::Warning);
@@ -61,11 +71,20 @@ void MainWindow::ErrorMessage(QString header, QString message, QString extra, QS
     msg.show();
 }
 
+//button event
 void MainWindow::on_ImportData_clicked()
 {
     getAllData();
 }
 
+/*
+ * function loads in the database and reads out the login.txt file.
+ * If the database opens without error we load in the query and
+ * bind the query to a model. After that we load in the the last values and bind those
+ * to our labes to show to the user. Then if our graphwindow is open we refresh it and
+ * recreate it else we don't do anything.
+ * If our database returns an opening error we return an error to the user.
+*/
 void MainWindow::getAllData()
 {
     getLogin("login.txt");
@@ -98,11 +117,11 @@ void MainWindow::getAllData()
         //count the rows of the model for later use
         rowCount = mod->rowCount();
 
-        ui->Temperature->setText(   QString(mod->record(rowCount-1).value("Temperature (C)").toString())    + " C");
-        ui->Humidity->setText(      QString(mod->record(rowCount-1).value("Humidity (%)").toString())       + " %");
-        ui->Windspeed->setText(     QString(mod->record(rowCount-1).value("Windspeed (km/h)").toString())   + " km/h");
-        ui->Brightness->setText(    QString(mod->record(rowCount-1).value("Brightness (Lux)").toString()    + " Lux"));
-        ui->Date->setText(          QString(mod->record(rowCount-1).value("Date").toString()));
+        ui->Temperature->setText(   QString(mod->record(firstRow).value("Temperature (C)").toString())    + " C");
+        ui->Humidity->setText(      QString(mod->record(firstRow).value("Humidity (%)").toString())       + " %");
+        ui->Windspeed->setText(     QString(mod->record(firstRow).value("Windspeed (km/h)").toString())   + " km/h");
+        ui->Brightness->setText(    QString(mod->record(firstRow).value("Brightness (Lux)").toString()    + " Lux"));
+        ui->Date->setText(          QString(mod->record(firstRow).value("Date").toString()));
 
         createChart();
 
@@ -121,7 +140,14 @@ void MainWindow::getAllData()
         ErrorMessage("DatabaseError", "Database Error", nullptr, debugMessage);
     }
 }
-
+/*
+ * creates a chart by first creating a 2d array for the data.
+ * Then we read the data from the "tableView" model and insert it into the array
+ * After that we create 4 series that the chart can use these are
+ * then filled up with values from the array.
+ * After that we set some additional options for the chart and we
+ * bind it to our chartview model.
+*/
 void MainWindow::createChart()
 {
     values = new double*[sensorAmount];
@@ -171,6 +197,10 @@ void MainWindow::createChart()
     chartView->setRenderHint(QPainter::Antialiasing);
 }
 
+/*
+ * returns a dadabase with all the login credentials needed.
+ * returns an error if we can't open the database.
+*/
 QSqlDatabase MainWindow::initializeDatabase(QSqlDatabase db,
                                             QString address,
                                             QString port,
@@ -195,7 +225,12 @@ QSqlDatabase MainWindow::initializeDatabase(QSqlDatabase db,
     }
     return db;
 }
-
+/*
+ * Read the login values and writes them to variables.
+ * First we open the file with the default name "login.txt"
+ * then we check if we can open this file. If we can't open this
+ * file we return an error to the user.
+*/
 void MainWindow::getLogin(QString filename)
 {
     QFile file(filename);
@@ -227,7 +262,12 @@ void MainWindow::getLogin(QString filename)
     }
     file.close();
 }
-
+/*
+ * Function sets the loginvalues in a text file for the application to use
+ * The textstream will read out the file line by line. ofcourse we first
+ * check weather the file exists and we open the file in write-only mode.
+ * After our operation we close the file.
+*/
 void MainWindow::setLogin(QString filename,
                           QString address,
                           QString port,
@@ -257,6 +297,14 @@ void MainWindow::setLogin(QString filename,
     file.close();
 }
 
+
+/*
+ * Function exports the data to a csv file. First it asks the user to name the file
+ * then it will write the data to this file. ofcourse we first check wether or not the
+ * file can be opened and exists. then we the data line by line. The Query will take
+ * multiple rows. If the file doesn't exists the application will return an error.
+ * at the end we close the file
+*/
 void MainWindow::on_ExportData_clicked()
 {
     QString filename = QFileDialog::getSaveFileName(this, "Save as...") + ".csv";
