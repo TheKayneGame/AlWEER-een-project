@@ -17,5 +17,6 @@ extern ADC_HandleTypeDef hadc;
 
 int16_t ldrCheckVal(); //Reads ldr val and returns
 void viewValOnOLED(float temp, float humd, float wind, int16_t light);
-void huart1toesp(float temp, float humd, float wind, int16_t light);
+void huart1toesp(float temp, float humd, int16_t wind, int16_t light);
+int windfCheckVal();
 

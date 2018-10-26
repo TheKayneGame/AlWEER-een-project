@@ -415,8 +415,10 @@ void StartDefaultTask(void const * argument)
 {
 
   /* USER CODE BEGIN 5 */
+	//This is were all of our main code is.
+	//The for loop keeps running while the stm is connected to the power.
 
-	float result;
+	//Used Variables
 	float humidf;
 	float tempf;
 	float windf = 1.6f;
@@ -424,21 +426,37 @@ void StartDefaultTask(void const * argument)
 	char temp_buf[10];
 	char humd_buf[10];
 	char uartbuf[32] = "test";
+
+	//Turning the screen on, DONT FORGET!
 	ssd1306_Init();
+
+	//Vars used for time measurement of the sending every minute. The timing of the windsensor may misplace the sending by +2 seconds later.
+	unsigned int Time_begin = xTaskGetTickCount();
+	unsigned int Time_end = xTaskGetTickCount();
 	/* Infinite loop */
 	for (;;) {
 
-		result = measHumd(HUMD_MEASURE_NOHOLD);
-		humidf = result;
-		result = measTemp(TEMP_MEASURE_NOHOLD);
-		tempf = result;
+		//Getting the hum and temp values from the sensor.
+		humidf = measHumd(HUMD_MEASURE_NOHOLD);
+		tempf = measHumd(TEMP_MEASURE_NOHOLD);
+
+		//Reading the LDR
 		light = ldrCheckVal();
-		windf = (float) windfCheckVal();
+		//Readint the windspeed
+		windf = (int16_t) windfCheckVal();
+		//Pushing data to OLED screen.
 		viewValOnOLED(tempf, humidf, windf, light);
-		huart1toesp(tempf, humidf, windf, light);
-		//sprintf(uartbuf, "temp: %s humd: %s \n", temp_buf, humd_buf);
-		//HAL_UART_Transmit(&huart1, uartbuf, 32, 100);
-		osDelay(1000);
+		//Update current time
+		Time_begin = xTaskGetTickCount();
+
+		//If time has exceeded 60 seconds go and send the data.
+		if(Time_begin - Time_end > 60000)
+		{
+			huart1toesp(tempf, humidf, windf, light);
+			Time_end = xTaskGetTickCount();
+		}
+
+
 	}
   /* USER CODE END 5 */ 
 }

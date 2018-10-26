@@ -9,7 +9,9 @@
 #include <string.h>
 
 int16_t ldrCheckVal() {
-
+	//This function will return the Value of the LDR.
+	//It has been connected and programmed in such a way that the LDR
+	//only gets power once it needs to be checked. This saves power.
 	int16_t adcResult = 0;
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, 1);
 	HAL_ADC_Start(&hadc);
@@ -20,24 +22,40 @@ int16_t ldrCheckVal() {
 	return adcResult;
 }
 
-GPIO_PinState windfCheckVal() {
+int windfCheckVal() {
+	//This function returns the time for the windspeed sensor.
+	//When the windsensor detects no movement within 5 seconds it will return 0.
+	//It counts the passes, when the sensor detects a pass it will count.
+	//Using the GetTickCount function it will count the time amount of passes and returns a time.
 	GPIO_PinState state = 0;
+	GPIO_PinState state_old = 0;
+	int millis_begin = xTaskGetTickCount();
+	int windspeed = 0;
+	int time = 0;
+	while(xTaskGetTickCount() - millis_begin < 5000)
+	{
+		state_old = state;
+		state = HAL_GPIO_ReadPin( GPIOB, GPIO_PIN_4);
+		if(state != state_old)
+		{
+			windspeed++;
+		}
+		if(windspeed == 8)
+		{
+			time = xTaskGetTickCount() - millis_begin;
+			millis_begin = 0;
+			windspeed = 0;
+		}
+	}
 
-	state = HAL_GPIO_ReadPin( GPIOB, GPIO_PIN_4);
-//	if(state == 1)
-//	{
-//		int millis_begin = 0;
-//		int millis_end = 0;
-//		millis_end = xTaskGetTickCount() - millis_begin;
-//		millis_begin = xTaskGetTickCount();
-//		//count_windspeed++;
-//		//if(count_windspeed == 4)count_windspeed = 0;
-//	}
-	return state;
+	return time;
 
 }
 
 void viewValOnOLED(float temp, float humd, float wind, int16_t light) {
+	//This function will write all values to the screen.
+	//This function is using the ssd1306.h files.
+	//Everything is written in chars to the screen.
 	char tempbuf[6];
 	char humdbuf[6];
 	char windbuf[6];
@@ -58,13 +76,16 @@ void viewValOnOLED(float temp, float humd, float wind, int16_t light) {
 	ssd1306_UpdateScreen();
 }
 
-void huart1toesp(float temp, float humd, float wind, int16_t light) {
+void huart1toesp(float temp, float humd, int16_t wind, int16_t light) {
+	//This function sends data to the wifi controller.
+	//The Temp and Hum values are multiplied by 100 to ensure no data loss.
+	//On the wifi controller they are devided by 100 again.
 	int16_t inputbuf[4];
 	uint8_t huart1buf[8];
 
 	inputbuf[0] = (int16_t) (temp * 100);
 	inputbuf[1] = (int16_t) (humd * 100);
-	inputbuf[2] = (int16_t) (wind * 100);
+	inputbuf[2] = wind;
 	inputbuf[3] = light;
 
 	uint8_t j = 0;
@@ -74,15 +95,5 @@ void huart1toesp(float temp, float humd, float wind, int16_t light) {
 		huart1buf[j] = (uint8_t) ((inputbuf[i] >> 8) & 0xFF);
 		j++;
 	}
-/*
-	huart1buf[0] = (uint8_t) (inputbuf[0] & 0xFF);
-	huart1buf[1] = (uint8_t) ((inputbuf[0] >> 8) & 0xFF);
-	huart1buf[2] = (uint8_t) (inputbuf[1] & 0xFF);
-	huart1buf[3] = (uint8_t) ((inputbuf[1] >> 8) & 0xFF);
-	huart1buf[4] = (uint8_t) (inputbuf[2] & 0xFF);
-	huart1buf[5] = (uint8_t) ((inputbuf[2] >> 8) & 0xFF);
-	huart1buf[6] = (uint8_t) (inputbuf[3] & 0xFF);
-	huart1buf[7] = (uint8_t) ((inputbuf[3] >> 8) & 0xFF);
-*/
 	HAL_UART_Transmit(&huart1, huart1buf, 8, 100);
 }
